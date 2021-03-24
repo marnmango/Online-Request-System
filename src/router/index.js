@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Reg209Student from '../components/student/reg209-student.vue'
-
+import Reg209Staff from '../components/staff/reg209-staff.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,7 +24,13 @@ const routes = [
     name: 'Reg209Student',
     component: Reg209Student
   },
+  {
+    path: '/reg209_staff',
+    name: 'Reg209Staff',
+    component: Reg209Staff
+  },
 ]
+
 
 const router = new VueRouter({
   mode: 'history',

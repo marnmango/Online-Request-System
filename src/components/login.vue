@@ -25,7 +25,11 @@
 						placeholder="Password"
 						required
 					/>
-					<button class="w-100 btn btn-lg btn-success mt-3" type="submit">
+					<button
+						@click="$router.push('/reg209_student')"
+						class="w-100 btn btn-lg btn-success mt-3"
+						type="submit"
+					>
 						Login
 					</button>
 				</form>
