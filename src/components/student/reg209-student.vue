@@ -35,7 +35,29 @@ import NavStudent from "./navStudent.vue";
 import InformationForm from "./form/information.vue";
 import RequestForm from "./form/request.vue";
 import CommentForm from "./form/comment.vue";
+import axios from 'axios';
 export default {
+	data(){
+		return {
+			studentInfo:''
+		}
+	},
+	methods:{
+		getstudentInfo(){
+			const path = 'http://127.0.0.1:5000/?id=6131305010';
+			axios.get(path)
+				.then((res)=>{
+					console.log(res.data)
+					this.studentInfo = res.data;
+				})
+				.catch((error)=>{
+					console.log(error)
+				})
+		}
+	},
+	created(){
+		this.getstudentInfo();
+	},
 	components: {
 		NavStudent,
 		InformationForm,
