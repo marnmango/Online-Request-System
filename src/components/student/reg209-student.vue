@@ -15,7 +15,7 @@
 				<div class="row gy-3 mx-5">
 					<div class="col-6">
 						<div class="p-3 border bg-light">
-							<InformationForm />
+							<InformationForm :info="studentInfo"/>
 						</div>
 					</div>
 					<div class="col-6">
