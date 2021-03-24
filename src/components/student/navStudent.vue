@@ -5,7 +5,7 @@
 			id="sidebar"
 		>
 			<ul class="nav flex-column text-white w-100">
-				<a href="#" class="nav-link h3 text-white my-2">
+				<a href="#" class="my-4 h3 text-white my-2">
 					<img class="logosize d-block mb-2" src="@/assets/logomfu.png" />
 					<div style="text-align:center;">
 						<p class="fontlogo mb-0">MAE FAH LUANG UNIVERSITY</p>
@@ -66,5 +66,10 @@ export default {};
 
 .fontlogo {
 	font-size: 10px;
+}
+
+li,
+a {
+	text-decoration: none !important;
 }
 </style>

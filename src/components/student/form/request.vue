@@ -17,14 +17,45 @@
 			<textarea
 				class="form-control"
 				id="exampleFormControlTextarea1"
-				rows="7"
+				rows="6"
 			></textarea>
+		</div>
+		<div class="mt-3" style="text-align:right">
+			<button
+				type="button"
+				class="btn btn-danger mx-2"
+				id="cancel"
+				v-on:click="disableSubmit(0)"
+				disabled
+			>
+				Cancel
+			</button>
+			<button
+				type="button"
+				class="btn btn-success"
+				id="submit"
+				v-on:click="disableSubmit(1)"
+			>
+				Submit
+			</button>
 		</div>
 	</div>
 </template>
 
 <script>
-export default {};
+export default {
+	methods: {
+		disableSubmit: function(x) {
+			if (x == 1) {
+				document.getElementById("submit").disabled = true;
+				document.getElementById("cancel").disabled = false;
+			} else {
+				document.getElementById("submit").disabled = false;
+				document.getElementById("cancel").disabled = true;
+			}
+		},
+	},
+};
 </script>
 
 <style>
