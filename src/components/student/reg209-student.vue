@@ -15,11 +15,11 @@
 				<div class="row gy-3 mx-5">
 					<div class="col-6">
 						<div class="p-3 border bg-light">
-							<InformationForm :info="studentInfo"/>
+							<InformationForm :info="studentInfo" @onChange="onChange"/>
 						</div>
 					</div>
 					<div class="col-6">
-						<div class="p-3 border bg-light h-100"><RequestForm /></div>
+						<div class="p-3 border bg-light h-100"><RequestForm @onRequest="onRequest"/></div>
 					</div>
 					<div class="col">
 						<div class="p-3 border bg-light"><CommentForm /></div>
@@ -39,7 +39,9 @@ import axios from 'axios';
 export default {
 	data(){
 		return {
-			studentInfo:''
+			studentInfo:'',
+			stphone:'',
+			stRequest:''
 		}
 	},
 	methods:{
@@ -53,6 +55,14 @@ export default {
 				.catch((error)=>{
 					console.log(error)
 				})
+		},
+		onChange(value){
+			this.stphone = value
+			console.log(this.stphone)
+		},
+		onRequest(value){
+			this.stRequest = value
+			console.log(this.stRequest)
 		}
 	},
 	created(){

@@ -43,7 +43,7 @@
 		</div>
 		<div class="mb-1 ">
 			<label for="phoneNumber" class="form-label mb-0">Phone number</label>
-			<input type="text" class="form-control w-25" id="phoneNumber" >
+			<input type="text" v-model=phone class="form-control w-25" id="phoneNumber" @change="sendphone" >
 		</div>
 	</div>
 </template>
@@ -57,7 +57,8 @@ export default {
 		return {
 			studentInfo:'',
 			currentsemester:'',
-			currentacademicyear:''
+			currentacademicyear:'',
+			phone:''
 		}
 	},
 	methods:{
@@ -82,6 +83,8 @@ export default {
 			if(currentday>=firstsemester&&currentday<endsemester){
 				this.currentacademicyear = firstsemester.getFullYear()
 			}
+		},sendphone(){
+			this.$emit("onChange",this.phone)
 		}
 	},
 	mounted(){
