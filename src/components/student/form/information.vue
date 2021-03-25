@@ -3,7 +3,11 @@
 		<h4>Personal Information</h4>
 		<div class="mb-1 ">
 			<label for="semeter" class="form-label mb-0">Semeter</label>
-			<input type="text" class="form-control w-25" id="semeter" disabled />
+			<input type="text" class="form-control w-25" id="semeter" v-model=currentsemester disabled />
+		</div>
+		<div class="mb-1 ">
+			<label for="semeter" class="form-label mb-0">Academic Year</label>
+			<input type="text" class="form-control w-25" id="semeter" v-model=currentacademicyear disabled />
 		</div>
 		<div class="mb-1">
 			<label for="deanof" class="form-label mb-0"
@@ -48,8 +52,43 @@
 export default {
 	props:{
 		info : Object
+	},
+	data(){
+		return {
+			studentInfo:'',
+			currentsemester:'',
+			currentacademicyear:''
+		}
+	},
+	methods:{
+		getSemester(){
+			let currentday = new Date()
+			let	firstsemester = new Date('24 Aug 2020')
+			let secondsemester = new Date('25 Jan 2021')
+			let summersemester = new Date('21 Jun 2021')
+			
+			if(currentday>=firstsemester&&currentday<secondsemester){
+				this.currentsemester = "First"
+			}else if(currentday>=secondsemester&&currentday<summersemester){
+				this.currentsemester = "Second"
+			}else{
+				this.currentsemester = "Summer"
+			}
+		},
+		getAcademicyear(){
+			let currentday = new Date()
+			let	firstsemester = new Date('24 Aug 2020')
+			let endsemester = new Date('22 Aug 2021')
+			if(currentday>=firstsemester&&currentday<endsemester){
+				this.currentacademicyear = firstsemester.getFullYear()
+			}
+		}
+	},
+	mounted(){
+		this.getSemester();
+		this.getAcademicyear();
 	}
-};
+}
 </script>
 
 <style></style>
