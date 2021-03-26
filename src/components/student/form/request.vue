@@ -14,12 +14,12 @@
 		<div>
 			<p class="mb-1 mt-3">Reason for re-entering</p>
 			<p class="mb-0" style="text-indent: 5%; ">To take a leave</p>
-			<!-- <textarea
+			<textarea
 				class="form-control"
 				id="exampleFormControlTextarea1"
 				rows="6"
 				v-model=re_text
-			></textarea> -->
+			></textarea>
 		</div>
 		<div class="mt-3" style="text-align:right">
 			<button

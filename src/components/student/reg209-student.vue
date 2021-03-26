@@ -56,13 +56,27 @@ export default {
 					console.log(error)
 				})
 		},
+		sendformInfo(){
+			const path = 'http://127.0.0.1:5000/send209';
+			const formid ={formId:Date.now()}
+			const {student_id,student_advisor_id} = this.studentInfo
+			const phone = this.stphone
+			const senddata = Object.assign({},this.stRequest,formid,{phone,student_id,student_advisor_id})
+			axios.post(path,senddata)
+				.then((res)=>{
+					console.log(res.data)
+				})
+				.catch((error)=>{
+					console.log(error)
+				})
+		},
 		onChange(value){
 			this.stphone = value
-			console.log(this.stphone)
 		},
 		onRequest(value){
 			this.stRequest = value
 			console.log(this.stRequest)
+			this.sendformInfo()
 		}
 	},
 	created(){
