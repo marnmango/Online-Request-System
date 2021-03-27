@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Reg209Student from '../components/student/reg209-student.vue'
 import Reg209Staff from '../components/staff/reg209-staff.vue'
+import List from '../components/list.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -29,6 +30,12 @@ const routes = [
     name: 'Reg209Staff',
     component: Reg209Staff
   },
+  {
+    path: '/list',
+    name: 'List',
+    component: List
+  },
+ 
 ]
 
 
