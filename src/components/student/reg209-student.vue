@@ -59,9 +59,9 @@ export default {
 		sendformInfo(){
 			const path = 'http://127.0.0.1:5000/send209';
 			const formid ={formId:Date.now()}
-			const {student_id,student_advisor_id,student_school} = this.studentInfo
+			const {student_id,student_advisor_id,student_school,student_name} = this.studentInfo
 			const phone = this.stphone
-			const senddata = Object.assign({},this.stRequest,formid,{phone,student_id,student_advisor_id,student_school})
+			const senddata = Object.assign({},this.stRequest,formid,{phone,student_id,student_advisor_id,student_school,student_name})
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
