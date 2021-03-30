@@ -45,6 +45,9 @@
 
 <script>
 export default {
+	props:{
+		formInfo:Object,
+	},
 	data(){
 		return{
 			re_semester:'first',
@@ -70,7 +73,19 @@ export default {
 			re_semester,re_academic_year,re_text
 		}
 		this.$emit("onRequest",strequest)
+	},getRequesttext(){
+		console.log(this.formInfo)
+		if(this.formInfo){
+		this.re_semester=this.formInfo.request_semester
+		this.re_academic_year=this.formInfo.request_academic_year
+        this.re_text=this.formInfo.request_text
+        document.getElementById("exampleFormControlTextarea1").disabled = true;
+		// document.getElementById("cancel").remove()
+		// document.getElementById("submit").remove()
+      }
 	}
+	},mounted(){
+		this.getRequesttext();
 	}
 };
 </script>

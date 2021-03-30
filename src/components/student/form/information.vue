@@ -51,7 +51,10 @@
 <script>
 export default {
 	props:{
-		info : Object
+	info : Object,
+    Alphone: Number,
+	create_sem: String,
+	create_aca:String
 	},
 	data(){
 		return {
@@ -62,7 +65,16 @@ export default {
 		}
 	},
 	methods:{
-		getSemester(){
+    getPhone(){
+      console.log(this.Alphone)
+      if(this.Alphone){
+        this.phone=this.Alphone
+		this.currentsemester=this.create_sem
+		this.currentacademicyear=this.create_aca
+        document.getElementById("phoneNumber").disabled = true;
+      }
+    }
+		,getSemester(){
 			let currentday = new Date()
 			let	firstsemester = new Date('24 Aug 2020')
 			let secondsemester = new Date('25 Jan 2021')
@@ -84,12 +96,16 @@ export default {
 				this.currentacademicyear = firstsemester.getFullYear()
 			}
 		},sendphone(){
-			this.$emit("onChange",this.phone)
+			const phone = this.phone
+			const create_sem = this.currentsemester
+			const create_academic_year = this.currentacademicyear
+			this.$emit("onChange",{phone,create_sem,create_academic_year})
 		}
 	},
 	mounted(){
 		this.getSemester();
 		this.getAcademicyear();
+		this.getPhone()
 	}
 }
 </script>

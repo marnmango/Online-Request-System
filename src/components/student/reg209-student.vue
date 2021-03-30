@@ -41,7 +41,9 @@ export default {
 		return {
 			studentInfo:'',
 			stphone:'',
-			stRequest:''
+			stRequest:'',
+			create_semester:'',
+			create_academic_year:''
 		}
 	},
 	methods:{
@@ -61,7 +63,9 @@ export default {
 			const formid ={formId:Date.now()}
 			const {student_id,student_advisor_id,student_school,student_name} = this.studentInfo
 			const phone = this.stphone
-			const senddata = Object.assign({},this.stRequest,formid,{phone,student_id,student_advisor_id,student_school,student_name})
+			const create_semester = this.create_semester
+			const create_academic_year = this.create_academic_year
+			const senddata = Object.assign({},this.stRequest,formid,{phone,student_id,student_advisor_id,student_school,student_name,create_semester,create_academic_year})
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
@@ -71,7 +75,9 @@ export default {
 				})
 		},
 		onChange(value){
-			this.stphone = value
+			this.stphone = value.phone
+			this.create_semester = value.create_sem
+			this.create_academic_year = value.create_academic_year
 		},
 		onRequest(value){
 			this.stRequest = value
