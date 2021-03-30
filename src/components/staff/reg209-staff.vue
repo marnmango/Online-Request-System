@@ -48,7 +48,7 @@
 <script>
 import NavStudent from "../student/navStudent.vue";
 import InformationForm from "../student/form/information.vue";
-import RequestForm from "../student/form/request.vue";
+import RequestForm from "../staff/form/request.vue";
 import CommentForm from "../staff/form/comment.vue";
 import axios from 'axios';
 
