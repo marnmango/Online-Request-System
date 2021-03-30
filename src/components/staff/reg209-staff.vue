@@ -9,11 +9,11 @@
         </div>
         <!-- เดี๋ยวมาเพิ่ม -->
         <div class="container">
-          <ul class="progressbar">
-            <li class="active" value="1">Student</li>
-            <li value="2">Staff</li>
-            <li value="3">Advisor</li>
-            <li value="4">Dean</li>
+          <ul class="progressbar ">
+            <li id="1">Student</li>
+            <li id="2">Staff</li>
+            <li id="3">Advisor</li>
+            <li id="4">Dean</li>
           </ul>
         </div>
         <!-- เดี๋ยวมาเพิ่ม -->
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       id: '',
-      formInfo: '',
+      formInfo:'',
       st_phone:'',
       studentInfo:'',
       childDataLoaded:false,
@@ -97,7 +97,29 @@ export default {
         }).then(()=>{
             this.childDataLoaded=true
         })
-		}
+		},
+    checkRole: function () {
+      if (this.formInfo.progress_status==4) {
+        document.getElementById("1").classList.add('active');
+        document.getElementById("2").classList.add('active');
+        document.getElementById("3").classList.add('active');
+        document.getElementById("4").classList.add('active'); //4
+      } else if (this.formInfo.progress_status==3) {
+        document.getElementById("1").classList.add('active');
+        document.getElementById("2").classList.add('active');
+        document.getElementById("3").classList.add('active');
+        document.getElementById("4").classList.add('wait');//3
+      } else if (this.formInfo.progress_status==2) {
+        document.getElementById("1").classList.add('active');
+        document.getElementById("2").classList.add('active');
+        document.getElementById("3").classList.add('wait');//2
+      } else if (this.formInfo.progress_status==1) {
+        document.getElementById("1").classList.add('active');
+        document.getElementById("2").classList.add('wait'); //1
+      } else {
+        return "error";
+      }
+    },
   },
   created() {
     this.id = this.$route.params.id;
@@ -106,6 +128,9 @@ export default {
     }
     this.getformInfo()
   },
+  mounted() {
+    this.checkRole();
+  }
 };
 </script>
 
@@ -130,19 +155,19 @@ export default {
   width: 30px;
   height: 30px;
   line-height: 30px;
-  border: 1px solid #ddd;
+  border: 1px solid #EAECEF;
   border-radius: 100%;
   display: block;
   text-align: center;
   margin: 0 auto 10px auto;
-  background-color: gray;
+  background-color: #EAECEF;
 }
 .progressbar li:after {
   content: "";
   position: absolute;
   width: 100%;
-  height: 1px;
-  background-color: #ddd;
+  height: 3px;
+  background-color: #EAECEF;
   top: 15px;
   left: -50%;
   z-index: -1;
@@ -150,14 +175,17 @@ export default {
 .progressbar li:first-child:after {
   content: none;
 }
-.progressbar li.active {
-  color: green;
-}
+
 .progressbar li.active:before {
-  border-color: green;
-  background-color: green;
+  border-color: #28A745;
+  background-color: #28A745;
 }
 .progressbar li.active + li:after {
-  background-color: green;
+  background-color: #28A745;
 }
+li.wait:before {
+border-color: #FFC107;
+  background-color: #FFC107;
+}
+
 </style>
