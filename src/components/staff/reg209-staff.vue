@@ -96,6 +96,8 @@ export default {
 				})
         }).then(()=>{
             this.childDataLoaded=true
+        }).then(()=>{
+            this.checkRole()
         })
 		},
     checkRole: function () {
@@ -127,9 +129,6 @@ export default {
       this.debug = this.$route.query.debug;
     }
     this.getformInfo()
-  },
-  mounted() {
-    this.checkRole();
   }
 };
 </script>

@@ -70,14 +70,7 @@
 
             <tbody class="text-center">
               <tr v-for="info in formInfo" :key="info">
-                <router-link
-                  style="text-decoration: none; color: inherit;"
-                  :to="{
-                    name: 'Reg209Staff',
-                    params: { id: info.form_id },
-                    query: { debug: true },
-                  }"
-                >
+                <div v-on:click="()=>getFormData(info.form_id)">
                   <td scope="row">
                     <input
                       class="form-check-input"
@@ -97,7 +90,7 @@
                       {{ info.status }}
                     </button>
                   </td>
-                </router-link>
+                </div>
               </tr>
             </tbody>
           </table>
@@ -229,7 +222,12 @@ export default {
 				.catch((error)=>{
 					console.log(error)
 				})
-		}
+		},
+    getFormData(id) { 
+      const address = 'Reg209Staff'      
+      this.$router.push({ name: address ,
+                    params: { id: id }})
+    }
   },
   created(){
 		this.getallform();
