@@ -19,6 +19,7 @@
               </div>
               <div class="col">
                 <input
+                  v-model="search"
                   type="text"
                   class="form-control"
                   style="width: 500px; text-align: left"
@@ -27,7 +28,7 @@
                 />
               </div>
               <div class="col">
-                <button type="button" class="btn btn-outline-success">
+                <button type="button" class="btn btn-outline-success" >
                   Search
                 </button>
               </div>
@@ -69,8 +70,7 @@
             </thead>
 
             <tbody class="text-center">
-              <tr v-for="info in formInfo" :key="info">
-                <div v-on:click="()=>getFormData(info.form_id)">
+              <tr v-for="info in formInfoFilter" :key="info.form_id">
                   <td scope="row">
                     <input
                       class="form-check-input"
@@ -79,6 +79,7 @@
                       id="flexCheckDefault"
                     />
                   </td>
+                  <div v-on:click="()=>getFormData(info.form_id,info.form_cat)">
                   <td>
                     {{ info.create_date }}
                   </td>
@@ -107,11 +108,11 @@
                   <input
                     class="form-check-input"
                     type="radio"
-                    value=""
-                    id="nameAZ"
+                    name="form_Name"
+                    value="form_Name"
                   />
-                  <label class="form-check-label" for="nameAZ">
-                    Name A-Z
+                  <label class="form-check-label" for="form_Name">
+                    Form name
                   </label>
                 </div>
               </li>
@@ -120,19 +121,8 @@
                   <input
                     class="form-check-input"
                     type="radio"
-                    value=""
-                    id="school"
-                  />
-                  <label class="form-check-label" for="school"> School </label>
-                </div>
-              </li>
-              <li href="#" class="mx-3">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    value=""
-                    id="ID"
+                    value="ID"
+                    name="ID"
                   />
                   <label class="form-check-label" for="ID"> ID </label>
                 </div>
@@ -142,8 +132,9 @@
                   <input
                     class="form-check-input"
                     type="radio"
-                    value=""
+                    value="status"
                     id="status"
+                    v-on:click="sortStatus"
                   />
                   <label class="form-check-label" for="status"> Status </label>
                 </div>
@@ -154,10 +145,11 @@
                     class="form-check-input"
                     type="radio"
                     value=""
-                    id="semeter1"
+                    id="descending_date"
+                    v-on:click="sortDateDescend"
                   />
-                  <label class="form-check-label" for="semeter1">
-                    Semeter 1
+                  <label class="form-check-label" for="descending_date">
+                    Descending created date
                   </label>
                 </div>
               </li>
@@ -167,23 +159,11 @@
                     class="form-check-input"
                     type="radio"
                     value=""
-                    id="semeter2"
+                    id="ascending_date"
+                    v-on:click="sortDateAscend"
                   />
-                  <label class="form-check-label" for="semeter2">
-                    Semeter 2
-                  </label>
-                </div>
-              </li>
-              <li href="#" class="mx-3">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    value=""
-                    id="academic"
-                  />
-                  <label class="form-check-label" for="academic">
-                    Academic Year
+                  <label class="form-check-label" for="ascending_date">
+                    Ascending created date
                   </label>
                 </div>
               </li>
@@ -208,12 +188,14 @@ export default {
   },
   data() {
     return {
-      formInfo:''
+      formInfo:[],
+      search:'',
+      checked:''
     };
   },
   methods:{
   getallform(){
-    const path = 'http://127.0.0.1:5000/getall209';
+    const path = 'http://127.0.0.1:5000/getallform';
 			axios.get(path)
 				.then((res)=>{
 					console.log(res.data)
@@ -223,15 +205,74 @@ export default {
 					console.log(error)
 				})
 		},
-    getFormData(id) { 
-      const address = 'Reg209Staff'      
+    getFormData(id,form_cat) { 
+      const address = 'Reg209Staff'    
+      console.log(form_cat)  
       this.$router.push({ name: address ,
                     params: { id: id }})
+    },
+    sortDateAscend(){
+      // this.formInfo.sort(function (first,last) {
+      //   let firstdate = first.create_date
+      //   let seconddate = last.create_date
+      //   if(firstdate<seconddate){
+      //     return -1
+      //   }else if(firstdate>seconddate){
+      //     return 1
+      //   }else{
+      //     return 0
+      //   }
+      // })
+      this.formInfo.sort(function(a, b) { return new Date(a.create_date) - new Date(b.create_date) })
+    },sortDateDescend(){
+      // this.formInfo.sort(function (first,last) {
+      //   let firstdate = first.create_date
+      //   let seconddate = last.create_date
+      //   if(firstdate<seconddate){
+      //     return 1
+      //   }else if(firstdate>seconddate){
+      //     return -1
+      //   }else{
+      //     return 0
+      //   }
+      // })
+      this.formInfo.sort(function(a, b) { return new Date(b.create_date) - new Date(a.create_date) })
+    },
+    sortStatus(){
+      this.formInfo.sort(function (first,last) {
+        let firstdate = first.status
+        let seconddate = last.status
+        if(firstdate<seconddate){
+          return -1
+        }else if(firstdate>seconddate){
+          return 1
+        }else{
+          return 0
+        }
+      })
     }
   },
   created(){
 		this.getallform();
-	}
+	},
+  computed:{
+    formInfoFilter(){
+      let search = this.search.trim().toLowerCase()
+      if(this.checked=="status"){
+        return this.formInfo.filter(form => {
+          return form.status.toLowerCase().indexOf(search)>-1
+      })
+      }else if(this.checked=="form_name"){
+       return this.formInfo.filter(form => {
+        return form.form_aka.toLowerCase().indexOf(search)>-1
+      })
+      }else{
+       return this.formInfo.filter(form => {
+        return form.student_id.toString().indexOf(search)>-1
+      })
+      }
+    }
+  }
 };
 </script>
 
