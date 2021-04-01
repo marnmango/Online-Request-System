@@ -125,8 +125,13 @@ export default {
       }
     },onSubmit(){
 			this.$confirm("Are you sure?").then(() => {
-      const path = 'http://127.0.0.1:5000/staffsubmit?formid='+this.formInfo.form_id+'&staffid='+this.staff_id;
-			axios.post(path)
+      const formid=this.formInfo.form_id;
+      const staffid=this.staff_id
+      const formcat=this.formInfo.form_cat;
+      const advisorid = this.formInfo.advisor_id
+      const senddata = Object.assign({},{formid,staffid,formcat,advisorid})
+      const path = 'http://127.0.0.1:5000/staffsubmit';
+			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
 
@@ -138,8 +143,12 @@ export default {
 })
 		},onCancel(){
       this.$confirm("Are you sure?").then(() => {
-      const path = 'http://127.0.0.1:5000/cancel?formid='+this.formInfo.form_id+'&staffid='+this.staff_id+'&formcat='+this.formInfo.form_cat;
-			axios.post(path)
+      const formid=this.formInfo.form_id;
+      const staffid=this.staff_id
+      const studentid = this.formInfo.student_id
+      const senddata = Object.assign({},{formid,staffid,studentid})
+      const path = 'http://127.0.0.1:5000/cancel';
+			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
 
