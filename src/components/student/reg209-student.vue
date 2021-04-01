@@ -66,13 +66,14 @@ export default {
 			const create_semester = this.create_semester
 			const create_academic_year = this.create_academic_year
 			const senddata = Object.assign({},this.stRequest,formid,{phone,student_id,student_advisor_id,student_school,student_name,create_semester,create_academic_year})
-			axios.post(path,senddata)
+			this.$confirm("Are you sure?").then(() => {axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
 				})
 				.catch((error)=>{
 					console.log(error)
 				})
+});
 		},
 		onChange(value){
 			this.stphone = value.phone

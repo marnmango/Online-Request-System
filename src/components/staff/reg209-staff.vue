@@ -28,7 +28,7 @@
           <div class="col-6">
             <div class="p-3 border bg-light h-100 shadow-sm">
               <template v-if="childDataLoaded">
-              <RequestForm :formInfo="formInfo"/>
+              <RequestForm :formInfo="formInfo" @onCancel="onCancel" @onSubmit="onSubmit"/>
               </template>
             </div>
           </div>
@@ -47,7 +47,7 @@
 
 <script>
 import NavStudent from "../student/navStudent.vue";
-import InformationForm from "../student/form/information.vue";
+import InformationForm from "../staff/form/information.vue";
 import RequestForm from "../staff/form/request.vue";
 import CommentForm from "../staff/form/comment.vue";
 import axios from 'axios';
@@ -61,6 +61,8 @@ export default {
   },
   data() {
     return {
+      // staff_id is prop when log in
+      staff_id:1111,
       id: '',
       formInfo:'',
       st_phone:'',
@@ -121,7 +123,33 @@ export default {
       } else {
         return "error";
       }
-    },
+    },onSubmit(){
+			this.$confirm("Are you sure?").then(() => {
+      const path = 'http://127.0.0.1:5000/staffsubmit?formid='+this.formInfo.form_id+'&staffid='+this.staff_id;
+			axios.post(path)
+				.then((res)=>{
+					console.log(res.data)
+
+          this.$router.push({ name: 'List'})
+				})
+				.catch((error)=>{
+					console.log(error)
+				})
+})
+		},onCancel(){
+      this.$confirm("Are you sure?").then(() => {
+      const path = 'http://127.0.0.1:5000/cancel?formid='+this.formInfo.form_id+'&staffid='+this.staff_id+'&formcat='+this.formInfo.form_cat;
+			axios.post(path)
+				.then((res)=>{
+					console.log(res.data)
+
+          this.$router.push({ name: 'List'})
+				})
+				.catch((error)=>{
+					console.log(error)
+				})
+});
+		}
   },
   created() {
     this.id = this.$route.params.id;

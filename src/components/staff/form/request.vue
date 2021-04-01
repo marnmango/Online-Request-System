@@ -26,8 +26,7 @@
 				type="button"
 				class="btn btn-danger mx-2"
 				id="cancel"
-				v-on:click="disableSubmit(0)"
-				disabled
+				v-on:click="onCancel"
 			>
 				Cancel
 			</button>
@@ -35,7 +34,7 @@
 				type="button"
 				class="btn btn-success"
 				id="submit"
-				v-on:click="sendRequest"
+				v-on:click="onSubmit"
 			>
 				Submit
 			</button>
@@ -56,24 +55,17 @@ export default {
 		}
 	},
 	methods: {
-		disableSubmit: function(x) {
-			if (x == 1) {
+		disableSubmit: function() {
 				document.getElementById("submit").disabled = true;
-				document.getElementById("cancel").disabled = false;
-			} else {
-				document.getElementById("submit").disabled = false;
 				document.getElementById("cancel").disabled = true;
-			}
-		},sendRequest:function(){
-			this.disableSubmit(1)
-		let re_semester =this.re_semester
-		let re_academic_year = this.re_academic_year 
-		let re_text = this.re_text
-		let strequest = {
-			re_semester,re_academic_year,re_text
+		},onCancel:function(){
+			this.$emit("onCancel")
+			this.disableSubmit()
+		},onSubmit:function(){
+			this.$emit("onSubmit")
+			this.disableSubmit()
 		}
-		this.$emit("onRequest",strequest)
-	},getRequesttext(){
+	,getRequesttext(){
 		console.log(this.formInfo)
 		if(this.formInfo){
 		this.re_semester=this.formInfo.request_semester

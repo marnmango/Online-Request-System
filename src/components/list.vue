@@ -190,7 +190,7 @@ export default {
     return {
       formInfo:[],
       search:'',
-      checked:''
+      checked:'id'
     };
   },
   methods:{
