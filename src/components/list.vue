@@ -17,45 +17,16 @@
                   placeholder="Search"
                 />
               </div>
-              <!-- ที่ใส่วันที่filter -->
-              <input type="date" v-model="startDate">
-              <input type="date" v-model="endDate">
-               <!-- ปุ่มรีเฟรชหน้า -->
-              <button
-				type="button"
-				class="btn btn-success"
-				id="refresh"
-				v-on:click="onRefresh"
-			>
-				Refresh
-			</button>
             </div>
           </nav>
 
+          <!-- เปลี่ยนหน้า array -->
           <nav
             class="navbar fixed-bottom navbar-light bg-light active-cont align-self-center justify-content-center"
           >
-            <div
-              style="
-                text-align: center;
-                margin-right: 180px;
-                margin-left: 180px;
-              "
-            >
+            <div style="margin-right: 180px">
               <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
+                <li class="page-item" v-for="item in numChangeTable" :key="item.page"><a class="page-link" href="#">{{item.page}}</a></li>
               </ul>
             </div>
           </nav>
@@ -73,10 +44,7 @@
             </thead>
 
             <tbody class="text-center w-0">
-              <tr
-                v-for="form in formInfoFilter"
-                :key="form.form_id"
-              >
+              <tr v-for="form in formInfoFilter" :key="form.form_id">
                 <td class="text-center">
                   <input
                     class="form-check-input"
@@ -88,10 +56,22 @@
                 <td v-on:click="() => getFormData(form.form_id)">
                   {{ form.create_date }}
                 </td>
-                <td v-on:click="() => getFormData(form.form_id)">{{ form.form_aka }}</td>
-                <td v-on:click="() => getFormData(form.form_id)">{{ form.student_id }}</td>
-                <td v-on:click="() => getFormData(form.form_id)">{{ form.student_name }}</td>
-                <td class="round" v-on:click="() => getFormData(form.form_id)">
+                <td v-on:click="() => getFormData(form.form_id)">
+                  {{ form.form_aka }}
+                </td>
+                <td v-on:click="() => getFormData(form.form_id)">
+                  {{ form.student_id }}
+                </td>
+                <td v-on:click="() => getFormData(form.form_id)">
+                  {{ form.student_name }}
+                </td>
+                <td
+                  class="round"
+                  v-on:click="() => getFormData(form.form_id)"
+                  v-bind:style="{
+                    'background-color': colorStatus[form.status],
+                  }"
+                >
                   <li id="stat" class="w-100 h-25">
                     {{ form.status }}
                   </li>
@@ -103,7 +83,7 @@
 
         <!-- fillter -->
         <div class="col-2">
-          <div class="container side-navbar active-nav bg-light p-3">
+          <div class="container side-navbar active-nav bg-light p-3 w-25">
             <h4>Filter</h4>
             <div class="form-check">
               <input
@@ -165,6 +145,28 @@
                 Ascending created date
               </label>
             </div>
+            <!-- ที่ใส่วันที่filter -->
+            <div style="width: 210px">
+              <div class="form-check mt-4 mb-2">
+                <p class="m-0">Start Date</p>
+                <input type="date" v-model="startDate" class="form-control" />
+              </div>
+              <div class="form-check mb-2">
+                <p class="m-0">End Date</p>
+                <input type="date" v-model="endDate" class="form-control" />
+                <!-- ปุ่มรีเฟรชหน้า -->
+                <div class="d-grid gap-2 mt-3">
+                  <button
+                    type="button"
+                    class="btn btn-outline-success"
+                    id="refresh"
+                    v-on:click="onRefresh"
+                  >
+                    Refresh Date
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- fillter -->
@@ -185,11 +187,18 @@ export default {
   },
   data() {
     return {
-      formInfo:[],
-      search:'',
-      checked:'',
-      startDate:'',
-      endDate:''
+      formInfo: [],
+      search: "",
+      checked: "",
+      startDate: "",
+      endDate: "",
+      colorStatus: {
+        staff: "#b0b6ba",
+        advisor: "#ffc107",
+        dean: "#28a745",
+      },
+      // เปลี่ยนหน้า array
+      numChangeTable: [{page:"1"},{page:"2"},{page:"3"}],
     };
   },
   methods: {
@@ -243,7 +252,7 @@ export default {
       });
     },
     sortStatus() {
-      this.onChangeStatus()
+      this.onChangeStatus();
       this.formInfo.sort(function (first, last) {
         let firstdate = first.status.toLowerCase();
         let seconddate = last.status.toLowerCase();
@@ -257,7 +266,7 @@ export default {
       });
     },
     statusProgress() {
-      console.log(this.formInfo.status)
+      console.log(this.formInfo.status);
       if (this.formInfoFilter.status == "staff") {
         document.getElementById("stat").innerHTML = "New Request";
         console.log("staff");
@@ -271,21 +280,23 @@ export default {
         document.getElementById("stat").classList.add("disapprove");
         document.getElementById("stat").innerHTML = "Disaprrove";
       }
-    },onChangeId() {
-      this.checked='id'
+    },
+    onChangeId() {
+      this.checked = "id";
       this.formInfo.sort(function (first, last) {
         let firstid = first.student_id;
         let secondid = last.student_id;
-        if (firstid< secondid) {
+        if (firstid < secondid) {
           return -1;
         } else if (firstid > secondid) {
           return 1;
         } else {
           return 0;
         }
-      })
-    },onChangeName() {
-      this.checked='form_name'
+      });
+    },
+    onChangeName() {
+      this.checked = "form_name";
       this.formInfo.sort(function (first, last) {
         let firstname = first.form_cat;
         let secondname = last.form_cat;
@@ -296,24 +307,30 @@ export default {
         } else {
           return 0;
         }
-      })
-    },onChangeStatus() {
-      this.checked="status"
-    },filteredDate(filtered){
-      var vm = this
+      });
+    },
+    onChangeStatus() {
+      this.checked = "status";
+    },
+    filteredDate(filtered) {
+      var vm = this;
       var startDate = vm.startDate;
       var endDate = vm.endDate;
-      return filtered.filter((data)=>{
-        if ((!this.startDate && !this.endDate)) {
-          return true
+      return filtered.filter((data) => {
+        if (!this.startDate && !this.endDate) {
+          return true;
         } else {
-          var date = new Date(data.create_date).setHours(0,0,0,0);
-          return (date >= new Date(startDate).setHours(0,0,0,0) && date <= new Date(endDate).setHours(24,0,0,0));
+          var date = new Date(data.create_date).setHours(0, 0, 0, 0);
+          return (
+            date >= new Date(startDate).setHours(0, 0, 0, 0) &&
+            date <= new Date(endDate).setHours(24, 0, 0, 0)
+          );
         }
-      })
-    },onRefresh(){
+      });
+    },
+    onRefresh() {
       location.reload();
-    }
+    },
   },
   created() {
     this.getallform();
@@ -322,22 +339,27 @@ export default {
     formInfoFilter() {
       let search = this.search.trim().toLowerCase();
       if (this.checked == "status") {
-        return this.filteredDate(this.formInfo.filter((form) => {
-          return form.status.toLowerCase().indexOf(search) > -1;
-        }));
+        return this.filteredDate(
+          this.formInfo.filter((form) => {
+            return form.status.toLowerCase().indexOf(search) > -1;
+          })
+        );
       } else if (this.checked == "form_name") {
-        return this.filteredDate(this.formInfo.filter((form) => {
-          return form.form_aka.toLowerCase().indexOf(search) > -1;
-        }));
-      }else if(this.checked == "id"){
-         return this.filteredDate(this.formInfo.filter((form) => {
-          return form.student_id.toString().indexOf(search) > -1;
-        }));
-         
+        return this.filteredDate(
+          this.formInfo.filter((form) => {
+            return form.form_aka.toLowerCase().indexOf(search) > -1;
+          })
+        );
+      } else if (this.checked == "id") {
+        return this.filteredDate(
+          this.formInfo.filter((form) => {
+            return form.student_id.toString().indexOf(search) > -1;
+          })
+        );
       } else {
-        return this.filteredDate(this.formInfo)
+        return this.filteredDate(this.formInfo);
       }
-    }
+    },
   },
 };
 </script>
