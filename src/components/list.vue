@@ -17,8 +17,10 @@
                   placeholder="Search"
                 />
               </div>
+              <!-- ที่ใส่วันที่filter -->
               <input type="date" v-model="startDate">
               <input type="date" v-model="endDate">
+               <!-- ปุ่มรีเฟรชหน้า -->
               <button
 				type="button"
 				class="btn btn-success"
@@ -324,13 +326,13 @@ export default {
           return form.status.toLowerCase().indexOf(search) > -1;
         }));
       } else if (this.checked == "form_name") {
-        return this.formInfo.filter((form) => {
+        return this.filteredDate(this.formInfo.filter((form) => {
           return form.form_aka.toLowerCase().indexOf(search) > -1;
-        });
+        }));
       }else if(this.checked == "id"){
-         return this.formInfo.filter((form) => {
+         return this.filteredDate(this.formInfo.filter((form) => {
           return form.student_id.toString().indexOf(search) > -1;
-        });
+        }));
          
       } else {
         return this.filteredDate(this.formInfo)
