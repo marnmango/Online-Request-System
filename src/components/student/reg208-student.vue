@@ -1,0 +1,128 @@
+<template>
+  <div>
+    <Navbar />
+    <div>
+      <div class="p-1 active-cont" style="text-align: center">
+        <div class="mx-4">
+          <div class="my-4">
+            <h4>REGISTRAR DIVISION, MAE FAH LUANG UNIVERSITY</h4>
+            <h4>Request Form for Leave of Absence : Undergraduate Student</h4>
+          </div>
+          <div class="row gy-3 mx-5">
+            <div class="col-6">
+              <div class="p-3 border bg-light h-100">
+                <InformationForm :info="studentInfo" @onChange="onChange" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 border bg-light h-100">
+                <RequestForm208 @onRequest="onRequest" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 border bg-light h-100"><Comment208 /></div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 border bg-light h-100">
+                <Payment />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Navbar from "../student/navStudent.vue";
+import InformationForm from "./form/information.vue";
+import RequestForm208 from "./form/request-reg208.vue";
+import Comment208 from "./form/comment-reg208.vue";
+import Payment from "./form/payment.vue";
+import axios from "axios";
+export default {
+  components: {
+    Navbar,
+    InformationForm,
+    RequestForm208,
+    Comment208,
+    Payment,
+  },
+
+  data() {
+    return {
+      studentInfo: "",
+      stphone: "",
+      stRequest: "",
+      create_semester: "",
+      create_academic_year: "",
+    };
+  },
+  methods: {
+    getstudentInfo() {
+      const path = "http://127.0.0.1:5000/?id=6131305010";
+      axios
+        .get(path)
+        .then((res) => {
+          console.log(res.data);
+          this.studentInfo = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    sendformInfo() {
+      const path = "http://127.0.0.1:5000/send209";
+      const formid = { formId: Date.now() };
+      const {
+        student_id,
+        student_advisor_id,
+        student_school,
+        student_name,
+      } = this.studentInfo;
+      const phone = this.stphone;
+      const create_semester = this.create_semester;
+      const create_academic_year = this.create_academic_year;
+      const senddata = Object.assign({}, this.stRequest, formid, {
+        phone,
+        student_id,
+        student_advisor_id,
+        student_school,
+        student_name,
+        create_semester,
+        create_academic_year,
+      });
+      this.$confirm("Are you sure?").then(() => {
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
+    onChange(value) {
+      this.stphone = value.phone;
+      this.create_semester = value.create_sem;
+      this.create_academic_year = value.create_academic_year;
+    },
+    onRequest(value) {
+      this.stRequest = value;
+      console.log(this.stRequest);
+      this.sendformInfo();
+    },
+  },
+  created() {
+    this.getstudentInfo();
+  },
+};
+</script>
+
+<style scoped>
+.active-cont {
+  margin-left: 180px;
+}
+</style>
