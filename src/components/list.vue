@@ -26,7 +26,9 @@
           >
             <div style="margin-right: 180px">
               <ul class="pagination">
-                <li class="page-item" v-for="item in numChangeTable" :key="item.page"><a class="page-link" href="#">{{item.page}}</a></li>
+                <li class="page-item" v-for="(item,index) in numChangeTable" :key="index">
+                  <a class="page-link" v-on:click="() => onclickpage(item.start,item.stop)">{{item.i}}</a>
+                </li>
               </ul>
             </div>
           </nav>
@@ -66,7 +68,6 @@
                   {{ form.student_name }}
                 </td>
                 <td
-                  class="round"
                   v-on:click="() => getFormData(form.form_id)"
                   v-bind:style="{
                     'background-color': colorStatus[form.status],
@@ -196,9 +197,11 @@ export default {
         staff: "#b0b6ba",
         advisor: "#ffc107",
         dean: "#28a745",
+        Disapproved: 'red'
       },
-      // เปลี่ยนหน้า array
-      numChangeTable: [{page:"1"},{page:"2"},{page:"3"}],
+      head:0,
+      last:'',
+      numChangeTable: []
     };
   },
   methods: {
@@ -209,10 +212,18 @@ export default {
         .then((res) => {
           console.log(res.data);
           this.formInfo = res.data;
+          return this.formInfo
         })
         .catch((error) => {
           console.log(error);
-        });
+        }).then((form)=>{
+          this.allPage(form)
+          if(form.length<10){
+              this.last=form.length
+          }else{
+              this.last=10
+          }
+          })
     },
     getFormData(id, form_cat) {
       const address = "Reg209Staff";
@@ -330,10 +341,24 @@ export default {
     },
     onRefresh() {
       location.reload();
-    },
+    },allPage(form){
+      let newArrayPage =[]
+      for(let i= 0;i<Math.ceil((form.length/10));i++){
+          if(form.length<=10*(i+1)){
+              newArrayPage.push({i:i+1,start:i*10,stop:form.length})
+          }
+          else{
+            newArrayPage.push({i:i+1,start:i*10,stop:10*(i+1)})
+          }
+      }
+      this.numChangeTable = newArrayPage
+    },onclickpage(start,stop){
+      this.head=start
+      this.last=stop
+    }
   },
   created() {
-    this.getallform();
+    this.getallform()
   },
   computed: {
     formInfoFilter() {
@@ -343,24 +368,29 @@ export default {
           this.formInfo.filter((form) => {
             return form.status.toLowerCase().indexOf(search) > -1;
           })
-        );
+        ).slice(this.head,this.last)
       } else if (this.checked == "form_name") {
         return this.filteredDate(
           this.formInfo.filter((form) => {
             return form.form_aka.toLowerCase().indexOf(search) > -1;
           })
-        );
+        ).slice(this.head,this.last)
       } else if (this.checked == "id") {
         return this.filteredDate(
           this.formInfo.filter((form) => {
             return form.student_id.toString().indexOf(search) > -1;
           })
-        );
+        ).slice(this.head,this.last)
       } else {
-        return this.filteredDate(this.formInfo);
+        return this.filteredDate(this.formInfo).slice(this.head,this.last);
       }
-    },
-  },
+    }
+  },watch:{
+      search:function() {
+          this.head='0'
+          this.last=10
+      }
+  }
 };
 </script>
 
