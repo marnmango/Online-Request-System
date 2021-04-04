@@ -41,12 +41,6 @@ export default {
 		disableSubmit: function() {
 				document.getElementById("submit").disabled = true;
 				document.getElementById("cancel").disabled = true;
-		},onCancel:function(){
-			this.$emit("onCancel")
-			this.disableSubmit()
-		},onSubmit:function(){
-			this.$emit("onSubmit")
-			this.disableSubmit()
 		}
 	,getRequesttext(){
 		console.log(this.formInfo)
@@ -55,8 +49,6 @@ export default {
 		this.re_academic_year=this.formInfo.request_academic_year
         this.re_text=this.formInfo.request_text
         document.getElementById("exampleFormControlTextarea1").disabled = true;
-		// document.getElementById("cancel").remove()
-		// document.getElementById("submit").remove()
       }
 	}
 	},mounted(){

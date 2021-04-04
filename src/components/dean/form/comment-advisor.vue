@@ -17,33 +17,21 @@
 
 <script>
 export default {
+	props:{
+		advisorComments:String,
+	},
 	data() {
 		return {
-			advisorComment: "123123",
-			deanComment: "123123",
+			advisorComment: "",
 		};
 	},
 	methods: {
-		disableSubmit: function() {
-			if (
-				document.getElementById("deanComment") == "" &&
-				document.getElementById("advisorComment") == ""
-			) {
-				alert("Waitting comment from Advisor and Dean");
-			} else if (document.getElementById("deanComment") == "") {
-				alert("Waitting comment from Advisor");
-			} else if (document.getElementById("advisorComment") == "") {
-				alert("Waitting comment from Dean");
-			} else if (
-				document.getElementById("deanComment") != " " &&
-				document.getElementById("advisorComment") != " "
-			) {
-				document.getElementById("submit").disabled = true;
-			} else {
-				alert("error");
-			}
-		},
-	},
+		getadvisorcomment(){
+		this.advisorComment=this.advisorComments
+      }
+	},mounted(){
+		this.getadvisorcomment()
+	}
 };
 </script>
 

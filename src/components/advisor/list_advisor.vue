@@ -177,7 +177,7 @@
 </template>
 
 <script>
-import Navbar from "../components/student/navStudent.vue";
+import Navbar from "../student/navStudent";
 import axios from "axios";
 export default {
   props: {
@@ -206,7 +206,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getallform";
+      const path = "http://127.0.0.1:5000/getformadvisor";
       axios
         .get(path)
         .then((res) => {
@@ -226,7 +226,7 @@ export default {
           })
     },
     getFormData(id, form_cat) {
-      const address = "Reg209Staff";
+      const address = "Reg209Advisor";
       console.log(form_cat);
       this.$router.push({ name: address, params: { id: id } });
     },

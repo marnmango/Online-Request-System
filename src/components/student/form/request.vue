@@ -65,7 +65,10 @@ export default {
 				document.getElementById("cancel").disabled = true;
 			}
 		},sendRequest:function(){
-			this.disableSubmit(1)
+			if(this.re_text.trim()==""){
+				this.$alert("please enter the request")
+			}else{
+				this.disableSubmit(1)
 		let re_semester =this.re_semester
 		let re_academic_year = this.re_academic_year 
 		let re_text = this.re_text
@@ -73,6 +76,7 @@ export default {
 			re_semester,re_academic_year,re_text
 		}
 		this.$emit("onRequest",strequest)
+			}
 	},getRequesttext(){
 		console.log(this.formInfo)
 		if(this.formInfo){

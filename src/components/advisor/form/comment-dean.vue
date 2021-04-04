@@ -19,8 +19,8 @@
 export default {
 	data() {
 		return {
-			advisorComment: "123123",
-			deanComment: "123123",
+			advisorComment: "",
+			deanComment: "",
 		};
 	},
 	methods: {

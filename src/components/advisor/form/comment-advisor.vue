@@ -29,26 +29,18 @@
 export default {
 	data() {
 		return {
-			advisorComment: "123123",
-			deanComment: "123123",
+			advisorComment: ""
 		};
 	},
 	methods: {
 		disableSubmit: function() {
-			if (
-				document.getElementById("deanComment") == "" &&
-				document.getElementById("advisorComment") == ""
-			) {
-				alert("Waitting comment from Advisor and Dean");
-			} else if (document.getElementById("deanComment") == "") {
-				alert("Waitting comment from Advisor");
-			} else if (document.getElementById("advisorComment") == "") {
-				alert("Waitting comment from Dean");
+			if (this.advisorComment.trim() == "") {
+				this.$alert("please enter the comment")
 			} else if (
-				document.getElementById("deanComment") != " " &&
-				document.getElementById("advisorComment") != " "
+				this.advisorComment.trim() != ""
 			) {
 				document.getElementById("submit").disabled = true;
+				this.$emit("onSubmit",this.advisorComment)
 			} else {
 				alert("error");
 			}
