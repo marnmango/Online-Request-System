@@ -10,17 +10,24 @@
 				>
 				</textarea>
 			</div>
-			<div class="text-end ">
-				<button
-					type="button"
-					id="submit"
-					class="btn btn-success my-2 mx-2"
-					style="width: 100px"
-					v-on:click="disableSubmit()"
-				>
-					Submit
-				</button>
-			</div>
+			<div class="mt-3" style="text-align:right">
+			<button
+				type="button"
+				class="btn btn-danger mx-2"
+				id="cancel"
+				v-on:click="onCancel"
+			>
+				Cancel
+			</button>
+			<button
+				type="button"
+				class="btn btn-success"
+				id="submit"
+				v-on:click="onSubmit"
+			>
+				Submit
+			</button>
+		</div>
 		</div>
 	</div>
 </template>
@@ -29,30 +36,35 @@
 export default {
 	data() {
 		return {
-			advisorComment: "123123",
-			deanComment: "123123",
+			deanComment: "",
 		};
 	},
 	methods: {
-		disableSubmit: function() {
-			if (
-				document.getElementById("deanComment") == "" &&
-				document.getElementById("advisorComment") == ""
-			) {
-				alert("Waitting comment from Advisor and Dean");
-			} else if (document.getElementById("deanComment") == "") {
-				alert("Waitting comment from Advisor");
-			} else if (document.getElementById("advisorComment") == "") {
-				alert("Waitting comment from Dean");
+		onCancel:function(){
+			if (this.deanComment.trim() == "") {
+				this.$alert("please enter the comment")
 			} else if (
-				document.getElementById("deanComment") != " " &&
-				document.getElementById("advisorComment") != " "
+				this.deanComment.trim() != ""
 			) {
 				document.getElementById("submit").disabled = true;
+				document.getElementById("cancel").disabled = true;
+				this.$emit("onCancel",this.deanComment)
 			} else {
 				alert("error");
 			}
-		},
+		},onSubmit:function(){
+			if (this.deanComment.trim() == "") {
+				this.$alert("please enter the comment")
+			} else if (
+				this.deanComment.trim() != ""
+			) {
+				document.getElementById("submit").disabled = true;
+				document.getElementById("cancel").disabled = true;
+				this.$emit("onSubmit",this.deanComment)
+			} else {
+				alert("error");
+			}
+		}
 	},
 };
 </script>

@@ -28,14 +28,14 @@
           <div class="col-6">
             <div class="p-3 border bg-light h-100 shadow-sm">
               <template v-if="childDataLoaded">
-              <RequestForm :formInfo="formInfo" @onCancel="onCancel" @onSubmit="onSubmit"/>
+              <RequestForm :formInfo="formInfo"/>
               </template>
             </div>
           </div>
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm ">
               <template v-if="childDataLoaded">
-              <CommentAdvisor />
+              <CommentAdvisor @onSubmit="onSubmit"/>
               </template>
             </div>
           </div>
@@ -132,41 +132,24 @@ export default {
       } else {
         return "error";
       }
-    },onSubmit(){
+    },onSubmit(value){
 			this.$confirm("Are you sure?").then(() => {
       const formid=this.formInfo.form_id;
-      const staffid=this.staff_id
       const formcat=this.formInfo.form_cat;
-      const advisorid = this.formInfo.advisor_id
-      const senddata = Object.assign({},{formid,staffid,formcat,advisorid})
-      const path = 'http://127.0.0.1:5000/staffsubmit';
+      const advisorComment = value
+      const deanid = this.formInfo.dean_id
+      const senddata = Object.assign({},{formid,advisorComment,formcat,deanid})
+      const path = 'http://127.0.0.1:5000/advisorsubmit';
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
-
-          this.$router.push({ name: 'List'})
+          this.$alert("The comment had added")
+          this.$router.push({ name: 'Listadvisor'})
 				})
 				.catch((error)=>{
 					console.log(error)
 				})
 })
-		},onCancel(){
-      this.$confirm("Are you sure?").then(() => {
-      const formid=this.formInfo.form_id;
-      const staffid=this.staff_id
-      const studentid = this.formInfo.student_id
-      const senddata = Object.assign({},{formid,staffid,studentid})
-      const path = 'http://127.0.0.1:5000/cancel';
-			axios.post(path,senddata)
-				.then((res)=>{
-					console.log(res.data)
-
-          this.$router.push({ name: 'List'})
-				})
-				.catch((error)=>{
-					console.log(error)
-				})
-});
 		}
   },
   created() {

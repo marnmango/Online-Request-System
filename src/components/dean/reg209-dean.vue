@@ -28,21 +28,21 @@
           <div class="col-6">
             <div class="p-3 border bg-light h-100 shadow-sm">
               <template v-if="childDataLoaded">
-              <RequestForm :formInfo="formInfo" @onCancel="onCancel" @onSubmit="onSubmit"/>
+              <RequestForm :formInfo="formInfo"/>
               </template>
             </div>
           </div>
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm  h-100">
               <template v-if="childDataLoaded">
-              <CommentAdvisor />
+              <CommentAdvisor :advisorComments="formInfo.advisor_comment"/>
               </template>
             </div>
           </div>
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm mb-3 h-100">
               <template v-if="childDataLoaded">
-              <CommentDean />
+              <CommentDean @onCancel="onCancel" @onSubmit="onSubmit"/>
               </template>
             </div>
           </div>
@@ -132,36 +132,37 @@ export default {
       } else {
         return "error";
       }
-    },onSubmit(){
+    },onSubmit(Value){
 			this.$confirm("Are you sure?").then(() => {
       const formid=this.formInfo.form_id;
-      const staffid=this.staff_id
+      const stuid=this.formInfo.student_id
       const formcat=this.formInfo.form_cat;
-      const advisorid = this.formInfo.advisor_id
-      const senddata = Object.assign({},{formid,staffid,formcat,advisorid})
-      const path = 'http://127.0.0.1:5000/staffsubmit';
+      const deancomment = Value
+      const senddata = Object.assign({},{formid,stuid,formcat,deancomment})
+      const path = 'http://127.0.0.1:5000/deanonesubmit';
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
-
-          this.$router.push({ name: 'List'})
+          this.$alert("The request had commented")
+          this.$router.push({ name: 'Listdean'})
 				})
 				.catch((error)=>{
 					console.log(error)
 				})
 })
-		},onCancel(){
+		},onCancel(Value){
       this.$confirm("Are you sure?").then(() => {
       const formid=this.formInfo.form_id;
-      const staffid=this.staff_id
       const studentid = this.formInfo.student_id
-      const senddata = Object.assign({},{formid,staffid,studentid})
-      const path = 'http://127.0.0.1:5000/cancel';
+      const formcat=this.formInfo.form_cat;
+      const deancomment = Value
+      const senddata = Object.assign({},{formid,studentid,formcat,deancomment})
+      const path = 'http://127.0.0.1:5000/canceldean';
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
-
-          this.$router.push({ name: 'List'})
+          this.$alert("The request had canceled")
+          this.$router.push({ name: 'Listdean'})
 				})
 				.catch((error)=>{
 					console.log(error)

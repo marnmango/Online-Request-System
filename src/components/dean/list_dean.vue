@@ -17,9 +17,27 @@
                   placeholder="Search"
                 />
               </div>
+              <button
+					type="button"
+					id="submit"
+					class="btn btn-success my-2 mx-2"
+					style="width: 100px"
+					v-on:click="confirmRequest"
+				>
+					Confirm selected request
+				</button>
+         <button
+					type="button"
+					id="submit"
+					class="btn btn-success my-2 mx-2"
+					style="width: 100px"
+					v-on:click="confirmAllRequest"
+				>
+					Confirm all request
+				</button>
             </div>
           </nav>
-
+         
           <!-- เปลี่ยนหน้า array -->
           <nav
             class="navbar fixed-bottom navbar-light bg-light active-cont align-self-center justify-content-center"
@@ -49,10 +67,12 @@
               <tr v-for="form in formInfoFilter" :key="form.form_id">
                 <td class="text-center">
                   <input
+                    v-bind:checked="selectedformid.includes(form.form_id) ? true:false"
                     class="form-check-input"
                     type="checkbox"
                     id="flexCheckDefault"
                     scope="row"
+                    v-on:click="() => addSelected(form.form_id,form.form_aka,form.student_id)"
                   />
                 </td>
                 <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
@@ -177,7 +197,7 @@
 </template>
 
 <script>
-import Navbar from "../components/student/navStudent.vue";
+import Navbar from "../student/navStudent";
 import axios from "axios";
 export default {
   props: {
@@ -201,12 +221,15 @@ export default {
       },
       head:0,
       last:'',
-      numChangeTable: []
+      numChangeTable: [],
+      selectedformid:[],
+      selectrdformcat:[],
+      selectrdformstuid:[]
     };
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getallform";
+      const path = "http://127.0.0.1:5000/getformdean";
       axios
         .get(path)
         .then((res) => {
@@ -226,7 +249,7 @@ export default {
           })
     },
     getFormData(id, form_cat) {
-      const address = "Reg209Staff";
+      const address = "Reg209Dean";
       console.log(form_cat);
       this.$router.push({ name: address, params: { id: id } });
     },
@@ -355,6 +378,45 @@ export default {
     },onclickpage(start,stop){
       this.head=start
       this.last=stop
+    },addSelected(id,formcat,stuid){
+        if(!this.selectedformid.includes(id)){
+            this.selectedformid.push(id)
+            this.selectrdformcat.push(formcat)
+            this.selectrdformstuid.push(stuid)
+        }else{
+            const index = this.selectedformid.indexOf(id);
+            if (index > -1) {
+           this.selectedformid.splice(index, 1);
+           this.selectrdformcat.splice(index,1)
+           this.selectrdformstuid.splice(index,1)
+          }
+          console.log(this.selectedformid,this.selectrdformcat)
+        }
+    },confirmRequest(){
+        this.$confirm("Are you sure?").then(() => {
+        const formid=this.selectedformid;
+        const formcat=this.selectrdformcat
+        const formstuid=this.selectrdformstuid
+      const senddata = Object.assign({},{formid,formcat,formstuid})
+      console.log(senddata)
+      const path = 'http://127.0.0.1:5000/deansubmit';
+			axios.post(path,senddata)
+				.then((res)=>{
+					console.log(res.data)
+          this.$alert("The comment had added")
+          location.reload();
+				})
+				.catch((error)=>{
+					console.log(error)
+				})
+})
+    },confirmAllRequest(){
+      for(let ecform in this.formInfoFilter){
+            this.selectedformid.push(this.formInfoFilter[ecform].form_id)
+            this.selectrdformcat.push(this.formInfoFilter[ecform].form_aka)
+            this.selectrdformstuid.push(this.formInfoFilter[ecform].student_id)
+      }
+      this.confirmRequest()
     }
   },
   created() {

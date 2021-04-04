@@ -7,6 +7,8 @@ import Reg209Staff from '../components/staff/reg209-staff.vue'
 import Reg209Advisor from '../components/advisor/reg209-advisor.vue'
 import Reg209Dean from '../components/dean/reg209-dean.vue'
 import List from '../components/list.vue'
+import Listadvisor from '../components/advisor/list_advisor.vue'
+import Listdean from '../components/dean/list_dean.vue'
 
 Vue.use(VueRouter)
 
@@ -59,7 +61,27 @@ const routes = [{
         path: '/list',
         name: 'List',
         component: List
+    },{
+        path: '/list-advisor',
+        redirect: {
+            name: "Listadvisor"
+        }
     },
+    {
+        path: '/list-advisor',
+        name: 'Listadvisor',
+        component: Listadvisor
+    },{
+        path: '/list-dean',
+        redirect: {
+            name: "Listdean"
+        }
+    },
+    {
+        path: '/list-dean',
+        name: 'Listdean',
+        component: Listdean
+    }
 
 ]
 

@@ -69,6 +69,7 @@ export default {
 			this.$confirm("Are you sure?").then(() => {axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
+					this.$alert("the request had sent")
 				})
 				.catch((error)=>{
 					console.log(error)

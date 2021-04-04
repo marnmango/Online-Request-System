@@ -134,7 +134,7 @@ export default {
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
-
+          this.$alert("the request had confirm")
           this.$router.push({ name: 'List'})
 				})
 				.catch((error)=>{
@@ -151,7 +151,7 @@ export default {
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
-
+          this.$alert("the request be canceled")
           this.$router.push({ name: 'List'})
 				})
 				.catch((error)=>{
