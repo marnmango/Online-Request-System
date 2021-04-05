@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Reg209Student from '../components/student/reg209-student.vue'
+import Reg208Student from '../components/student/reg208-student.vue'
 import Reg209Staff from '../components/staff/reg209-staff.vue'
 import Reg209Advisor from '../components/advisor/reg209-advisor.vue'
 import Reg209Dean from '../components/dean/reg209-dean.vue'
@@ -29,6 +30,11 @@ const routes = [{
         path: '/reg209_student',
         name: 'Reg209Student',
         component: Reg209Student
+    },
+    {
+        path: '/reg208_student',
+        name: 'Reg208Student',
+        component: Reg208Student
     },
     {
         path: '/reg209_staff/:id',
