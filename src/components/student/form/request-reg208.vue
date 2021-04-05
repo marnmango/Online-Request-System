@@ -8,11 +8,11 @@
           <input
             class="form-check-input"
             type="checkbox"
-            name="request_radio"
-            id="request_semeter_1"
-            v-model="request_semeter_1"
+            name="request_checkbox"
+            id="request_checkbox_1"
+            v-model="reason_checkbox_1"
           />
-          <label class="form-check-label" for="request_semeter_1">
+          <label class="form-check-label" for="request_checkbox_1">
             Semeter 1
           </label>
         </div>
@@ -20,11 +20,11 @@
           <input
             class="form-check-input"
             type="checkbox"
-            name="request_radio"
-            id="request_semeter_2"
-            v-model="request_semeter_2"
+            name="request_checkbox"
+            id="request_checkbox_2"
+            v-model="reason_checkbox_2"
           />
-          <label class="form-check-label" for="request_semeter_2">
+          <label class="form-check-label" for="request_checkbox_2">
             Semeter 2
           </label>
         </div>
@@ -56,7 +56,6 @@
             v-model="request_from_academicyear"
             required
           />
-          <div class="invalid-feedback"><p>Please provide academic.</p></div>
         </div>
         <div class="col-3">
           <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
@@ -68,7 +67,6 @@
             v-model="request_to_semeter"
             required
           />
-          <div class="invalid-feedback"><p>Please provide semeter.</p></div>
         </div>
         <div class="col-3">
           <label for="toAcademic" class="form-label mb-0">Academic Year</label>
@@ -80,7 +78,6 @@
             v-model="request_to_academicyear"
             required
           />
-          <div class="invalid-feedback"><p>Please provide academic.</p></div>
         </div>
       </div>
       <!-- radio check -->
@@ -92,12 +89,12 @@
           <input
             class="form-check-input"
             type="radio"
-            name="request_checkbox"
-            id="request_checkbox_1"
-            v-model="request_checkbox_1"
+            name="request_readio"
+            id="request_readio_1"
+            v-model="reason_radio_1"
             v-on:click="disableIllnessRadio"
           />
-          <label class="form-check-label" for="request_checkbox_1">
+          <label class="form-check-label" for="request_readio_1">
             Illness with a document and the name of a medical provider
           </label>
         </div>
@@ -105,9 +102,9 @@
           <input
             class="form-check-input"
             type="radio"
-            name="request_checkbox"
-            id="request_checkbox_2"
-            v-model="request_checkbox_2"
+            name="request_readio"
+            id="request_readio_2"
+            v-model="reason_radio_2"
             v-on:click="disableOtherRadio"
           />
           <label class="form-check-label" for="request_checkbox_2">
@@ -121,7 +118,7 @@
             class="form-control"
             id="Other"
             rows="3"
-            v-model="reason_radio_2"
+            v-model="re_text"
             required
           ></textarea>
         </div>

@@ -2,15 +2,34 @@
   <div style="text-align: left">
     <h4>Request</h4>
     <div class="row mb-1 g-3 w-75">
-      <div class="col-4">
-        <label for="name" class="form-label mb-0">Semeter</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          v-model="re_semester"
-          disabled
-        />
+      <p class="mb-0">Semeter</p>
+      <div class="row ms-2 mt-0">
+        <div class="col-3 form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="request_checkbox"
+            id="request_checkbox_1"
+            v-model="reason_checkbox_1"
+            disabled
+          />
+          <label class="form-check-label" for="request_checkbox_1">
+            Semeter 1
+          </label>
+        </div>
+        <div class="col-3 form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="request_checkbox"
+            id="request_checkbox_2"
+            v-model="reason_checkbox_2"
+            disabled
+          />
+          <label class="form-check-label" for="request_checkbox_2">
+            Semeter 2
+          </label>
+        </div>
       </div>
     </div>
     <!-- select semeter -->
@@ -68,12 +87,12 @@
           <input
             class="form-check-input"
             type="radio"
-            name="request_checkbox"
-            id="request_checkbox_1"
-            v-model="request_checkbox_1"
-            v-on:click="disableIllnessRadio"
+            name="request_readio"
+            id="request_radio_1"
+            v-model="request_radio_1"
+            disabled
           />
-          <label class="form-check-label" for="request_checkbox_1">
+          <label class="form-check-label" for="request_radio_1">
             Illness with a document and the name of a medical provider
           </label>
         </div>
@@ -81,12 +100,12 @@
           <input
             class="form-check-input"
             type="radio"
-            name="request_checkbox"
-            id="request_checkbox_2"
-            v-model="request_checkbox_2"
-            v-on:click="disableOtherRadio"
+            name="request_radio"
+            id="request_radio_2"
+            v-model="request_radio_2"
+            disabled
           />
-          <label class="form-check-label" for="request_checkbox_2">
+          <label class="form-check-label" for="request_radio_2">
             Other reason ( indicate )
           </label>
         </div>
@@ -97,7 +116,7 @@
             class="form-control"
             id="Other"
             rows="3"
-            v-model="reason_radio_2"
+            v-model="re_text"
             readonly
           ></textarea>
         </div>
@@ -159,16 +178,27 @@ export default {
       // document.getElementById("Other").innerHTML.replace(this.re_text);
     },
     checkedRadio() {
-      if (this.request_checkbox_1 == 1) {
+      if (this.request_radio_1 == 1) {
+        document.getElementById("request_radio_1").checked = true;
+      } else if (this.request_radio_2 == 1) {
+        document.getElementById("request_radio_2").checked = true;
+      }
+    },
+    checkedCheckbox() {
+      if (this.request_checkbox_1 == 1 && this.request_checkbox_2 == 1) {
         document.getElementById("request_checkbox_1").checked = true;
+        document.getElementById("request_checkbox_2").checked = true;
       } else if (this.request_checkbox_2 == 1) {
         document.getElementById("request_checkbox_2").checked = true;
+      } else if (this.request_checkbox_1 == 1) {
+        document.getElementById("request_checkbox_1").checked = true;
       }
     },
   },
   mounted() {
     this.getRequesttext();
     this.checkedRadio();
+    this.checkedCheckbox();
   },
 };
 </script>
