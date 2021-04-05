@@ -14,139 +14,140 @@
       </div>
     </div>
     <!-- select semeter -->
-    <form class="row mb-1 g-3">
-      <div class="col-3">
-        <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
-        <input
-          type="number"
-          id="fromSemeter"
-          class="form-control"
-          placeholder="Semeter"
-          v-model="request_from_semeter"
-          required
-        />
-        <div class="invalid-feedback"><p>Please provide semeter.</p></div>
-      </div>
-      <div class="col-3">
-        <label for="fromAcademic" class="form-label mb-0">Academic Year</label>
-        <input
-          type="number"
-          class="form-control"
-          id="fromAcademic"
-          placeholder="Year"
-          v-model="request_from_academicyear"
-          required
-        />
-        <div class="invalid-feedback"><p>Please provide academic.</p></div>
-      </div>
-      <div class="col-3">
-        <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
-        <input
-          type="number"
-          class="form-control"
-          id="fromSemeter"
-          placeholder="Semeter"
-          v-model="request_to_semeter"
-          required
-        />
-        <div class="invalid-feedback"><p>Please provide semeter.</p></div>
-      </div>
-      <div class="col-3">
-        <label for="toAcademic" class="form-label mb-0">Academic Year</label>
-        <input
-          type="number"
-          class="form-control"
-          id="toAcademic"
-          placeholder="Year"
-          v-model="request_to_academicyear"
-          required
-        />
-        <div class="invalid-feedback"><p>Please provide academic.</p></div>
-      </div>
-    </form>
-    <!-- radio check -->
-    <div>
-      <label for="name" class="form-label mb-0 mt-3"
-        >Reasons for on leave</label
-      >
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="request_checkbox"
-          id="request_checkbox_1"
-          v-model="request_checkbox_1"
-          v-on:click="disableIllnessRadio"
-        />
-        <label class="form-check-label" for="request_checkbox_1">
-          Illness with a document and the name of a medical provider
-        </label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="request_checkbox"
-          id="request_checkbox_2"
-          v-model="request_checkbox_2"
-          v-on:click="disableOtherRadio"
-        />
-        <label class="form-check-label" for="request_checkbox_2">
-          Other reason ( indicate )
-        </label>
-      </div>
-    </div>
-    <div class="form-check">
-      <div class="mb-3">
-        <textarea
-          class="form-control"
-          id="Other"
-          rows="3"
-          v-model="reason_radio_2"
-        ></textarea>
-      </div>
-      <!-- choose file -->
-      <div class="row mt-3">
-        <div class="col-6 input-group w-50">
+    <form>
+      <div class="row mb-1 g-3">
+        <div class="col-3">
+          <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
           <input
-            type="file"
+            type="number"
+            id="fromSemeter"
             class="form-control"
-            id="inputFile"
-            aria-label="Upload"
+            placeholder="Semeter"
+            v-model="request_from_semeter"
+            required
           />
-          <div class="row-12">
-            <p class="m-0 ms-1">Documents that need to be attached</p>
-            <ol>
-              <li class="w-100"><p class="m-0">Medical certificate</p></li>
-              <li class="w-100">
-                <p class="m-0">Confirmation documents from parents</p>
-              </li>
-              <li class="w-100">
-                <p class="m-0">ID card copy (With parents’s signature)</p>
-              </li>
-            </ol>
+        </div>
+        <div class="col-3">
+          <label for="fromAcademic" class="form-label mb-0"
+            >Academic Year</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="fromAcademic"
+            placeholder="Year"
+            v-model="request_from_academicyear"
+            required
+          />
+          <div class="invalid-feedback"><p>Please provide academic.</p></div>
+        </div>
+        <div class="col-3">
+          <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
+          <input
+            type="number"
+            class="form-control"
+            id="fromSemeter"
+            placeholder="Semeter"
+            v-model="request_to_semeter"
+            required
+          />
+          <div class="invalid-feedback"><p>Please provide semeter.</p></div>
+        </div>
+        <div class="col-3">
+          <label for="toAcademic" class="form-label mb-0">Academic Year</label>
+          <input
+            type="number"
+            class="form-control"
+            id="toAcademic"
+            placeholder="Year"
+            v-model="request_to_academicyear"
+            required
+          />
+          <div class="invalid-feedback"><p>Please provide academic.</p></div>
+        </div>
+      </div>
+      <!-- radio check -->
+      <div>
+        <label for="name" class="form-label mb-0 mt-3"
+          >Reasons for on leave</label
+        >
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="request_checkbox"
+            id="request_checkbox_1"
+            v-model="request_checkbox_1"
+            v-on:click="disableIllnessRadio"
+          />
+          <label class="form-check-label" for="request_checkbox_1">
+            Illness with a document and the name of a medical provider
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="request_checkbox"
+            id="request_checkbox_2"
+            v-model="request_checkbox_2"
+            v-on:click="disableOtherRadio"
+          />
+          <label class="form-check-label" for="request_checkbox_2">
+            Other reason ( indicate )
+          </label>
+        </div>
+      </div>
+      <div class="form-check">
+        <div class="mb-3">
+          <textarea
+            class="form-control"
+            id="Other"
+            rows="3"
+            v-model="reason_radio_2"
+            required
+          ></textarea>
+        </div>
+        <!-- choose file -->
+        <div class="row mt-3">
+          <div class="col-6 input-group w-50">
+            <input
+              type="file"
+              class="form-control"
+              id="inputFile"
+              aria-label="Upload"
+              required
+            />
+            <div class="row-12">
+              <p class="m-0 ms-1">Documents that need to be attached</p>
+              <ol>
+                <li class="w-100"><p class="m-0">Medical certificate</p></li>
+                <li class="w-100">
+                  <p class="m-0">Confirmation documents from parents</p>
+                </li>
+                <li class="w-100">
+                  <p class="m-0">ID card copy (With parents’s signature)</p>
+                </li>
+              </ol>
+            </div>
+          </div>
+          <div class="col-6" style="text-align: right">
+            <button
+              type="button"
+              class="btn btn-danger mx-2"
+              id="cancel"
+              v-on:click="onCancel"
+            >
+              Cancel
+            </button>
+            <!-- ถ้าใส่ v-onclick มันเช็คให้ขึ้นเตือนไม่ได้ -->
+            <button type="submit" class="btn btn-success" id="submit">
+              Submit
+            </button>
           </div>
         </div>
-        <div class="col-6" style="text-align: right">
-          <button
-            type="button"
-            class="btn btn-danger mx-2"
-            id="cancel"
-            v-on:click="onCancel"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            class="btn btn-success"
-            id="submit"
-            v-on:click="onSubmit"
-          >
-            Submit
-          </button>
-        </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
