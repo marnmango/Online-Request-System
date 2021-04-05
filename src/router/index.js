@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Reg209Student from '../components/student/reg209-student.vue'
 import Reg208Student from '../components/student/reg208-student.vue'
 import Reg209Staff from '../components/staff/reg209-staff.vue'
+import Reg208Staff from '../components/staff/reg208-staff.vue'
 import Reg209Advisor from '../components/advisor/reg209-advisor.vue'
 import Reg209Dean from '../components/dean/reg209-dean.vue'
 import List from '../components/list.vue'
@@ -42,6 +43,11 @@ const routes = [{
         component: Reg209Staff
     },
     {
+        path: '/reg208_staff/:id',
+        name: 'Reg208Staff',
+        component: Reg208Staff
+    },
+    {
         path: '/reg209_advisor/:id',
         name: 'Reg209Advisor',
         component: Reg209Advisor
@@ -61,7 +67,7 @@ const routes = [{
         path: '/list',
         name: 'List',
         component: List
-    },{
+    }, {
         path: '/list-advisor',
         redirect: {
             name: "Listadvisor"
@@ -71,7 +77,7 @@ const routes = [{
         path: '/list-advisor',
         name: 'Listadvisor',
         component: Listadvisor
-    },{
+    }, {
         path: '/list-dean',
         redirect: {
             name: "Listdean"

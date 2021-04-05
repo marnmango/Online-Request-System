@@ -14,97 +14,138 @@
       </div>
     </div>
     <!-- select semeter -->
-    <div class="row mb-1 g-3 w-75">
-      <div class="col-4">
-        <label for="name" class="form-label mb-0">From Semeter</label>
-        <select class="form-select text-center form-control" id="fromSemeter">
-          <option selected>Semeter</option>
-          <option v-for="fromsemeter in select_semeter" :key="fromsemeter">
-            {{ fromsemeter.semeter }}
-          </option>
-        </select>
+    <form class="row mb-1 g-3">
+      <div class="col-3">
+        <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
+        <input
+          type="number"
+          id="fromSemeter"
+          class="form-control"
+          placeholder="Semeter"
+          v-model="request_from_semeter"
+          required
+        />
+        <div class="invalid-feedback"><p>Please provide semeter.</p></div>
       </div>
-      <div class="col-4">
-        <label for="name" class="form-label mb-0">Academic Year</label>
-        <select class="form-select text-center form-control" id="fromSemeter">
-          <option selected></option>
-          <option v-for="year in select_year" :key="year">
-            {{ year.year }}
-          </option>
-        </select>
+      <div class="col-3">
+        <label for="fromAcademic" class="form-label mb-0">Academic Year</label>
+        <input
+          type="number"
+          class="form-control"
+          id="fromAcademic"
+          placeholder="Year"
+          v-model="request_from_academicyear"
+          required
+        />
+        <div class="invalid-feedback"><p>Please provide academic.</p></div>
       </div>
-    </div>
-    <div class="row mb-1 g-3 w-75">
-      <div class="col-4">
-        <label for="name" class="form-label mb-0">To Semeter</label>
-        <select class="form-select text-center form-control" id="fromSemeter">
-          <option selected></option>
-          <option v-for="fromsemeter in select_semeter" :key="fromsemeter">
-            {{ fromsemeter.semeter }}
-          </option>
-        </select>
+      <div class="col-3">
+        <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
+        <input
+          type="number"
+          class="form-control"
+          id="fromSemeter"
+          placeholder="Semeter"
+          v-model="request_to_semeter"
+          required
+        />
+        <div class="invalid-feedback"><p>Please provide semeter.</p></div>
       </div>
-      <div class="col-4">
-        <label for="name" class="form-label mb-0">Academic Year</label>
-        <select class="form-select text-center form-control" id="fromSemeter">
-          <option selected></option>
-          <option v-for="year in select_year" :key="year">
-            {{ year.year }}
-          </option>
-        </select>
+      <div class="col-3">
+        <label for="toAcademic" class="form-label mb-0">Academic Year</label>
+        <input
+          type="number"
+          class="form-control"
+          id="toAcademic"
+          placeholder="Year"
+          v-model="request_to_academicyear"
+          required
+        />
+        <div class="invalid-feedback"><p>Please provide academic.</p></div>
       </div>
-    </div>
+    </form>
+    <!-- radio check -->
     <div>
-      <!-- radio check -->
-      <label for="name" class="form-label mb-0">Reasons for on leave</label>
+      <label for="name" class="form-label mb-0 mt-3"
+        >Reasons for on leave</label
+      >
       <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          name="flexRadioDefault"
-          id="illnessselect"
+          name="request_checkbox"
+          id="request_checkbox_1"
+          v-model="request_checkbox_1"
           v-on:click="disableIllnessRadio"
         />
-        <label class="form-check-label" for="illnessselect">
+        <label class="form-check-label" for="request_checkbox_1">
           Illness with a document and the name of a medical provider
         </label>
-        <div class="mb-3">
-          <textarea class="form-control" id="Illness" rows="3"></textarea>
-        </div>
       </div>
       <div class="form-check">
         <input
           class="form-check-input"
           type="radio"
-          name="flexRadioDefault"
-          id="otherreason"
+          name="request_checkbox"
+          id="request_checkbox_2"
+          v-model="request_checkbox_2"
           v-on:click="disableOtherRadio"
         />
-        <label class="form-check-label" for="otherreason">
+        <label class="form-check-label" for="request_checkbox_2">
           Other reason ( indicate )
         </label>
-        <div class="mb-3">
-          <textarea class="form-control" id="Other" rows="3"></textarea>
-        </div>
       </div>
     </div>
-    <div class="mt-3" style="text-align: right">
-      <button
-        type="button"
-        class="btn btn-danger mx-2"
-        id="cancel"
-        v-on:click="onCancel"
-      >
-        Cancel
-      </button>
-      <button
-        type="button"
-        class="btn btn-success"
-        id="submit"
-        v-on:click="onSubmit"
-      >
-        Submit
-      </button>
+    <div class="form-check">
+      <div class="mb-3">
+        <textarea
+          class="form-control"
+          id="Other"
+          rows="3"
+          v-model="reason_radio_2"
+        ></textarea>
+      </div>
+      <!-- choose file -->
+      <div class="row mt-3">
+        <div class="col-6 input-group w-50">
+          <input
+            type="file"
+            class="form-control"
+            id="inputFile"
+            aria-label="Upload"
+          />
+          <div class="row-12">
+            <p class="m-0 ms-1">Documents that need to be attached</p>
+            <ol>
+              <li class="w-100"><p class="m-0">Medical certificate</p></li>
+              <li class="w-100">
+                <p class="m-0">Confirmation documents from parents</p>
+              </li>
+              <li class="w-100">
+                <p class="m-0">ID card copy (With parents’s signature)</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div class="col-6" style="text-align: right">
+          <button
+            type="button"
+            class="btn btn-danger mx-2"
+            id="cancel"
+            v-on:click="onCancel"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-success"
+            id="submit"
+            v-on:click="onSubmit"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -119,20 +160,10 @@ export default {
       re_semester: "first",
       re_academic_year: 2021,
       re_text: "",
-      select_semeter: [{ semeter: "1" }, { semeter: "2" }, { semeter: "3" }],
-      select_year: [
-        { year: "2018" },
-        { year: "2019" },
-        { year: "2020" },
-        { year: "2021" },
-        { year: "2022" },
-        { year: "2023" },
-        { year: "2024" },
-        { year: "2025" },
-        { year: "2026" },
-        { year: "2027" },
-        { year: "2028" },
-      ],
+      request_from_semeter: null,
+      request_to_semeter: "",
+      request_from_academicyear: "",
+      request_to_academicyear: "",
     };
   },
   methods: {
@@ -162,10 +193,12 @@ export default {
     disableOtherRadio: function () {
       document.getElementById("Illness").disabled = true;
       document.getElementById("Other").disabled = false;
+      // document.getElementById("Illness").innerHTML.replace(this.re_text);
     },
     disableIllnessRadio: function () {
-      document.getElementById("Other").disabled = true;
       document.getElementById("Illness").disabled = false;
+      document.getElementById("Other").disabled = true;
+      // document.getElementById("Other").innerHTML.replace(this.re_text);
     },
   },
   mounted() {
@@ -181,5 +214,16 @@ label {
 }
 input {
   text-align: center;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>
