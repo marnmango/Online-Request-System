@@ -6,11 +6,12 @@
       <div class="row ms-2 mt-0">
         <div class="col-3 form-check">
           <input
+            v-bind:checked="request_checkbox_1"
             class="form-check-input"
             type="checkbox"
             name="request_checkbox"
             id="request_checkbox_1"
-            v-model="reason_checkbox_1"
+            v-on:click="oncheckbox1"
           />
           <label class="form-check-label" for="request_checkbox_1">
             Semeter 1
@@ -18,11 +19,12 @@
         </div>
         <div class="col-3 form-check">
           <input
+            v-bind:checked="request_checkbox_2"
             class="form-check-input"
             type="checkbox"
             name="request_checkbox"
             id="request_checkbox_2"
-            v-model="reason_checkbox_2"
+            v-on:click="oncheckbox2"
           />
           <label class="form-check-label" for="request_checkbox_2">
             Semeter 2
@@ -89,9 +91,9 @@
           <input
             class="form-check-input"
             type="radio"
-            name="request_readio"
-            id="request_readio_1"
-            v-model="reason_radio_1"
+            name="request_radio"
+            id="request_radio_1"
+            v-bind:checked="request_radio_1"
             v-on:click="disableIllnessRadio"
           />
           <label class="form-check-label" for="request_readio_1">
@@ -102,9 +104,9 @@
           <input
             class="form-check-input"
             type="radio"
-            name="request_readio"
-            id="request_readio_2"
-            v-model="reason_radio_2"
+            name="request_radio"
+            id="request_radio_2"
+            v-bind:checked="request_radio_2"
             v-on:click="disableOtherRadio"
           />
           <label class="form-check-label" for="request_checkbox_2">
@@ -128,8 +130,10 @@
             <input
               type="file"
               class="form-control"
-              id="inputFile"
+              id="files"
               aria-label="Upload"
+              ref="files"
+              multiple v-on:change="handleFileUploads()"
               required
             />
             <div class="row-12">
@@ -145,6 +149,9 @@
               </ol>
             </div>
           </div>
+          <!-- <div class="large-12 medium-12 small-12 cell">
+      <div v-for="(file, key) in files" class="file-listing"  v-bind:key="file">{{ file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></div>
+    </div> -->
           <div class="col-6" style="text-align: right">
             <button
               type="button"
@@ -172,13 +179,16 @@ export default {
   },
   data() {
     return {
-      re_semester: "first",
-      re_academic_year: 2021,
       re_text: "",
-      request_from_semeter: null,
+      request_from_semeter: "",
       request_to_semeter: "",
       request_from_academicyear: "",
       request_to_academicyear: "",
+      request_checkbox_1:false,
+      request_checkbox_2:false,
+      request_radio_1:false,
+      request_radio_2:false,
+      files:''
     };
   },
   methods: {
@@ -194,32 +204,43 @@ export default {
       this.$emit("onSubmit");
       this.disableSubmit();
     },
-    getRequesttext() {
-      console.log(this.formInfo);
-      if (this.formInfo) {
-        this.re_semester = this.formInfo.request_semester;
-        this.re_academic_year = this.formInfo.request_academic_year;
-        this.re_text = this.formInfo.request_text;
-        document.getElementById("exampleFormControlTextarea1").disabled = true;
-        // document.getElementById("cancel").remove()
-        // document.getElementById("submit").remove()
-      }
-    },
     disableOtherRadio: function () {
-      document.getElementById("Illness").disabled = true;
-      document.getElementById("Other").disabled = false;
-      // document.getElementById("Illness").innerHTML.replace(this.re_text);
+      this.request_radio_1=false,
+      this.request_radio_2=true
     },
     disableIllnessRadio: function () {
-      document.getElementById("Illness").disabled = false;
-      document.getElementById("Other").disabled = true;
-      // document.getElementById("Other").innerHTML.replace(this.re_text);
+      this.request_radio_1=true,
+      this.request_radio_2=false
     },
-  },
-  mounted() {
-    this.getRequesttext();
-  },
-};
+    oncheckbox1(){
+      if(this.request_checkbox_1){
+        this.request_checkbox_1=false
+      }else{
+        this.request_checkbox_1=true
+      } 
+    },oncheckbox2(){
+      if(this.request_checkbox_2){
+        this.request_checkbox_2=false
+      }else{
+        this.request_checkbox_2=true
+      } 
+    },handleFilesUpload(){
+  let uploadedFiles = this.$refs.files.files;
+        for( var i = 0; i < uploadedFiles.length; i++ ){
+          this.files.push( uploadedFiles[i] );
+        }
+  },submitFiles(){
+         let formData = new FormData();
+        for( var i = 0; i < this.files.length; i++ ){
+          let file = this.files[i];
+
+          formData.append('files[' + i + ']', file);
+        }
+        return formData ;
+  }, removeFile( key ){
+        this.files.splice( key, 1 );
+      }
+}};
 </script>
 
 <style>
@@ -241,4 +262,18 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+/* input[type="file"]{
+    position: absolute;
+    top: -500px;
+  }
+
+  div.file-listing{
+    width: 200px;
+  }
+
+  span.remove-file{
+    color: red;
+    cursor: pointer;
+    float: right;
+  } */
 </style>
