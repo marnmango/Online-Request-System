@@ -126,33 +126,45 @@
         </div>
         <!-- choose file -->
         <div class="row mt-3">
-          <div class="col-6 input-group w-50">
+          <div class="col-6 input-group w-50 h-100">
             <input
               type="file"
               class="form-control"
               id="files"
               aria-label="Upload"
               ref="files"
-              multiple v-on:change="handleFileUploads()"
+              multiple
+              v-on:change="handleFileUploads()"
               required
             />
-            <div class="row-12">
-              <p class="m-0 ms-1">Documents that need to be attached</p>
-              <ol>
-                <li class="w-100"><p class="m-0">Medical certificate</p></li>
-                <li class="w-100">
-                  <p class="m-0">Confirmation documents from parents</p>
-                </li>
-                <li class="w-100">
-                  <p class="m-0">ID card copy (With parents’s signature)</p>
-                </li>
-              </ol>
-            </div>
           </div>
-          <!-- <div class="large-12 medium-12 small-12 cell">
-      <div v-for="(file, key) in files" class="file-listing"  v-bind:key="file">{{ file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></div>
-    </div> -->
-          <div class="col-6" style="text-align: right">
+          <div
+            class="col-2"
+            style="text-align: right"
+            v-for="(file, key) in files"
+            v-bind:key="file"
+          >
+            <p class="m-0 fixlength">{{ file.name }}</p>
+            <span class="m-0" v-on:click="removeFile(key)"> Remove </span>
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col">
+            <p class="m-0">Documents that need to be attached</p>
+            <ol>
+              <li class="w-100 ms-3">
+                <p class="m-0">Medical certificate</p>
+              </li>
+              <li class="w-100 ms-3">
+                <p class="m-0">Confirmation documents from parents</p>
+              </li>
+              <li class="w-100 ms-3">
+                <p class="m-0">ID card copy (With parents’s signature)</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="col mt-5 text-end">
             <button
               type="button"
               class="btn btn-danger mx-2"
@@ -184,11 +196,15 @@ export default {
       request_to_semeter: "",
       request_from_academicyear: "",
       request_to_academicyear: "",
-      request_checkbox_1:false,
-      request_checkbox_2:false,
-      request_radio_1:false,
-      request_radio_2:false,
-      files:''
+      request_checkbox_1: false,
+      request_checkbox_2: false,
+      request_radio_1: false,
+      request_radio_2: false,
+      files: [
+        { name: "1231231231231212312312" },
+        { name: "123123" },
+        { name: "123123" },
+      ],
     };
   },
   methods: {
@@ -205,45 +221,48 @@ export default {
       this.disableSubmit();
     },
     disableOtherRadio: function () {
-      this.request_radio_1=false,
-      this.request_radio_2=true
+      (this.request_radio_1 = false), (this.request_radio_2 = true);
     },
     disableIllnessRadio: function () {
-      this.request_radio_1=true,
-      this.request_radio_2=false
+      (this.request_radio_1 = true), (this.request_radio_2 = false);
     },
-    oncheckbox1(){
-      if(this.request_checkbox_1){
-        this.request_checkbox_1=false
-      }else{
-        this.request_checkbox_1=true
-      } 
-    },oncheckbox2(){
-      if(this.request_checkbox_2){
-        this.request_checkbox_2=false
-      }else{
-        this.request_checkbox_2=true
-      } 
-    },handleFilesUpload(){
-  let uploadedFiles = this.$refs.files.files;
-        for( var i = 0; i < uploadedFiles.length; i++ ){
-          this.files.push( uploadedFiles[i] );
-        }
-  },submitFiles(){
-         let formData = new FormData();
-        for( var i = 0; i < this.files.length; i++ ){
-          let file = this.files[i];
-
-          formData.append('files[' + i + ']', file);
-        }
-        return formData ;
-  }, removeFile( key ){
-        this.files.splice( key, 1 );
+    oncheckbox1() {
+      if (this.request_checkbox_1) {
+        this.request_checkbox_1 = false;
+      } else {
+        this.request_checkbox_1 = true;
       }
-}};
+    },
+    oncheckbox2() {
+      if (this.request_checkbox_2) {
+        this.request_checkbox_2 = false;
+      } else {
+        this.request_checkbox_2 = true;
+      }
+    },
+    handleFilesUpload() {
+      let uploadedFiles = this.$refs.files.files;
+      for (var i = 0; i < uploadedFiles.length; i++) {
+        this.files.push(uploadedFiles[i]);
+      }
+    },
+    submitFiles() {
+      let formData = new FormData();
+      for (var i = 0; i < this.files.length; i++) {
+        let file = this.files[i];
+
+        formData.append("files[" + i + "]", file);
+      }
+      return formData;
+    },
+    removeFile(key) {
+      this.files.splice(key, 1);
+    },
+  },
+};
 </script>
 
-<style>
+<style scoped>
 p,
 label {
   font-size: 14px;
@@ -257,10 +276,23 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+span {
+  text-decoration: underline;
+  font-size: 14px;
+}
+span:hover {
+  opacity: 0.5;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.fixlength {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* input[type="file"]{
     position: absolute;
