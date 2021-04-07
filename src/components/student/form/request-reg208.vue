@@ -38,7 +38,6 @@
         <div class="col-3">
           <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
           <input
-            type="number"
             id="fromSemeter"
             class="form-control"
             placeholder="Semeter"
@@ -62,7 +61,6 @@
         <div class="col-3">
           <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
           <input
-            type="number"
             class="form-control"
             id="fromSemeter"
             placeholder="Semeter"
@@ -134,7 +132,7 @@
               aria-label="Upload"
               ref="files"
               multiple
-              v-on:change="handleFileUploads()"
+              v-on:change="handleFilesUpload"
               required
             />
           </div>
@@ -142,7 +140,7 @@
             class="col-2"
             style="text-align: right"
             v-for="(file, key) in files"
-            v-bind:key="file"
+            v-bind:key="key"
           >
             <p class="m-0 fixlength">{{ file.name }}</p>
             <span class="m-0" v-on:click="removeFile(key)"> Remove </span>
@@ -163,7 +161,6 @@
               </li>
             </ol>
           </div>
-
           <div class="col mt-5 text-end">
             <button
               type="button"
@@ -174,7 +171,7 @@
               Cancel
             </button>
             <!-- ถ้าใส่ v-onclick มันเช็คให้ขึ้นเตือนไม่ได้ -->
-            <button type="submit" class="btn btn-success" id="submit">
+            <button type="submit" class="btn btn-success" id="submit" @click="onSubmit">
               Submit
             </button>
           </div>
@@ -200,24 +197,31 @@ export default {
       request_checkbox_2: false,
       request_radio_1: false,
       request_radio_2: false,
-      files: [
-        { name: "1231231231231212312312" },
-        { name: "123123" },
-        { name: "123123" },
-      ],
+      files: [],
+      re_doc:'',
     };
   },
   methods: {
     disableSubmit: function () {
-      document.getElementById("submit").disabled = true;
-      document.getElementById("cancel").disabled = true;
+      // document.getElementById("submit").disabled = true;
+      // document.getElementById("cancel").disabled = true;
     },
     onCancel: function () {
-      this.$emit("onCancel");
       this.disableSubmit();
     },
     onSubmit: function () {
-      this.$emit("onSubmit");
+     this.submitFiles()
+     let checkbox_1=this.request_checkbox_1
+     let checkbox_2=this.request_checkbox_2
+     let from_semester=this.request_from_semeter
+     let from_academic=this.request_from_academicyear
+     let to_semester=this.request_to_semeter
+     let to_academic=this.request_to_academicyear
+     let radio_1=this.request_radio_1
+     let radio_2=this.request_radio_2
+     let re_doc= this.re_doc
+     let re_text= this.re_text
+      this.$emit("onSubmit",{checkbox_1,checkbox_2,from_semester,from_academic,to_semester,to_academic,radio_1,radio_2,re_doc,re_text});
       this.disableSubmit();
     },
     disableOtherRadio: function () {
@@ -242,18 +246,27 @@ export default {
     },
     handleFilesUpload() {
       let uploadedFiles = this.$refs.files.files;
+      let match = ["image/jpeg","image/png","image/jpg","image/gif"]
+      console.log(uploadedFiles)
       for (var i = 0; i < uploadedFiles.length; i++) {
-        this.files.push(uploadedFiles[i]);
+        var ecuploadedFile = uploadedFiles[i]
+        var imagefile = ecuploadedFile.type
+        if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]) || (imagefile==match[3]))){
+          alert('Please select a valid image file (JPEG/JPG/PNG/GIF).');
+        }else{
+            this.files.push(ecuploadedFile);
+        }
       }
+      console.log(this.files)
     },
     submitFiles() {
       let formData = new FormData();
       for (var i = 0; i < this.files.length; i++) {
         let file = this.files[i];
-
         formData.append("files[" + i + "]", file);
       }
-      return formData;
+      this.re_doc = formData
+       console.log(this.re_doc)
     },
     removeFile(key) {
       this.files.splice(key, 1);
@@ -294,18 +307,4 @@ span:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* input[type="file"]{
-    position: absolute;
-    top: -500px;
-  }
-
-  div.file-listing{
-    width: 200px;
-  }
-
-  span.remove-file{
-    color: red;
-    cursor: pointer;
-    float: right;
-  } */
 </style>

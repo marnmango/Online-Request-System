@@ -16,7 +16,7 @@
             </div>
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
-                <RequestForm208 @onRequest="onRequest" />
+                <RequestForm208 @onSubmit="onSubmit" />
               </div>
             </div>
             <div class="col-6">
@@ -54,9 +54,18 @@ export default {
     return {
       studentInfo: "",
       stphone: "",
-      stRequest: "",
       create_semester: "",
       create_academic_year: "",
+      checkbox_1:'',
+      checkbox_2:'',
+      from_semester:'',
+      from_academic:'',
+      to_semester:'',
+      to_academic:'',
+      radio_1:'',
+      radio_2:'',
+      re_text:'',
+      re_doc:''
     };
   },
   methods: {
@@ -73,8 +82,18 @@ export default {
         });
     },
     sendformInfo() {
-      const path = "http://127.0.0.1:5000/send209";
+      const path = "http://127.0.0.1:5000/send208";
       const formid = { formId: Date.now() };
+      const checkbox_1=this.checkbox_1
+      const checkbox_2=this.checkbox_2
+      const from_semester=this.from_semester
+      const from_academic=this.from_academic
+      const to_semester=this.to_semester
+      const to_academic=this.to_academic
+      const radio_1=this.radio_1
+      const radio_2=this.radio_2
+      const re_text=this.re_text
+      const re_doc=this.re_doc
       const {
         student_id,
         student_advisor_id,
@@ -84,7 +103,7 @@ export default {
       const phone = this.stphone;
       const create_semester = this.create_semester;
       const create_academic_year = this.create_academic_year;
-      const senddata = Object.assign({}, this.stRequest, formid, {
+      const senddata = Object.assign({},formid, {
         phone,
         student_id,
         student_advisor_id,
@@ -92,6 +111,16 @@ export default {
         student_name,
         create_semester,
         create_academic_year,
+        checkbox_1,
+        checkbox_2,
+        from_semester,
+        from_academic,
+        to_semester,
+        to_academic,
+        radio_1,
+        radio_2,
+        re_text,
+        re_doc
       });
       this.$confirm("Are you sure?").then(() => {
         axios
@@ -109,9 +138,17 @@ export default {
       this.create_semester = value.create_sem;
       this.create_academic_year = value.create_academic_year;
     },
-    onRequest(value) {
-      this.stRequest = value;
-      console.log(this.stRequest);
+    onSubmit(value) {
+      this.checkbox_1=value.checkbox_1
+      this.checkbox_2=value.checkbox_2
+      this.from_semester=value.from_semester
+      this.from_academic=value.from_academic
+      this.to_semester=value.to_semester
+      this.to_academic=value.to_academic
+      this.radio_1=value.radio_1
+      this.radio_2=value.radio_2
+      this.re_text=value.re_text
+      this.re_doc=value.re_doc
       this.sendformInfo();
     },
   },

@@ -129,7 +129,8 @@ export default {
       const staffid=this.staff_id
       const formcat=this.formInfo.form_cat;
       const advisorid = this.formInfo.advisor_id
-      const senddata = Object.assign({},{formid,staffid,formcat,advisorid})
+      const staffcomment =''
+      const senddata = Object.assign({},{formid,staffid,formcat,advisorid,staffcomment})
       const path = 'http://127.0.0.1:5000/staffsubmit';
 			axios.post(path,senddata)
 				.then((res)=>{
