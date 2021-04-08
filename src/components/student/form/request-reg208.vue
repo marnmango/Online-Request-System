@@ -170,7 +170,6 @@
             >
               Cancel
             </button>
-            <!-- ถ้าใส่ v-onclick มันเช็คให้ขึ้นเตือนไม่ได้ -->
             <button type="submit" class="btn btn-success" id="submit" @click="onSubmit">
               Submit
             </button>
@@ -198,19 +197,19 @@ export default {
       request_radio_1: false,
       request_radio_2: false,
       files: [],
-      re_doc:'',
+      re_doc:[],
     };
   },
   methods: {
     disableSubmit: function () {
-      // document.getElementById("submit").disabled = true;
-      // document.getElementById("cancel").disabled = true;
+      document.getElementById("submit").disabled = true;
+      document.getElementById("cancel").disabled = true;
     },
     onCancel: function () {
       this.disableSubmit();
     },
-    onSubmit: function () {
-     this.submitFiles()
+    onSubmit: async function () {
+    //  this.submitFiles()
      let checkbox_1=this.request_checkbox_1
      let checkbox_2=this.request_checkbox_2
      let from_semester=this.request_from_semeter
@@ -220,6 +219,10 @@ export default {
      let radio_1=this.request_radio_1
      let radio_2=this.request_radio_2
      let re_doc= this.re_doc
+     for(let x in this.files){
+       this.getBase64(this.files[x])
+     }
+     console.log(re_doc)
      let re_text= this.re_text
       this.$emit("onSubmit",{checkbox_1,checkbox_2,from_semester,from_academic,to_semester,to_academic,radio_1,radio_2,re_doc,re_text});
       this.disableSubmit();
@@ -259,18 +262,28 @@ export default {
       }
       console.log(this.files)
     },
-    submitFiles() {
-      let formData = new FormData();
-      for (var i = 0; i < this.files.length; i++) {
-        let file = this.files[i];
-        formData.append("files[" + i + "]", file);
-      }
-      this.re_doc = formData
-       console.log(this.re_doc)
-    },
+    // submitFiles() {
+    //   let formData = new FormData();
+    //   for (var i = 0; i < this.files.length; i++) {
+    //     let file = this.files[i];
+    //     formData.append("files[" + i + "]", file);
+    //   }
+    //   this.re_doc = formData
+    //    console.log(this.re_doc)
+    // },
     removeFile(key) {
       this.files.splice(key, 1);
-    },
+    }, getBase64(file) {
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = () => { 
+      this.re_doc.push(reader.result)
+   };
+   console.log(this.re_doc)
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+}
   },
 };
 </script>

@@ -21,19 +21,24 @@
           <div class="row gy-3 mx-5">
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
+                <template v-if="childDataLoaded">
                 <InformationForm
                   :info="studentInfo"
                   :Alphone="formInfo.phone"
                   :create_sem="create_semester"
                   :create_aca="create_academic_year"
                 />
+                </template>
               </div>
             </div>
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
-                <RequestForm208 @onRequest="onRequest" />
+                <template v-if="childDataLoaded">
+                <RequestForm208 :formInfo="formInfo" />
+                </template>
               </div>
             </div>
+            <template v-if="childDataLoaded">
             <div
               class="col-6"
               v-for="(name, index) in nameTitleImg"
@@ -43,6 +48,7 @@
                 <RequestImg208 :nametitle="nameTitleImg[index]" />
               </div>
             </div>
+            </template>
             <div class="col-6 h-100">
               <div class="p-3 border bg-light"><Comment208 /></div>
               <div class="row-6 p-3 border bg-light mt-3">
@@ -100,7 +106,7 @@ export default {
   },
   methods: {
     getformInfo() {
-      let path = "http://127.0.0.1:5000/get209?id=" + this.id;
+      let path = "http://127.0.0.1:5000/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {

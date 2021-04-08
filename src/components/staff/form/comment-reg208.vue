@@ -56,13 +56,9 @@
 export default {
   data() {
     return {
-      staffcomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
-      advisorcomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
-      deancomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
-    };
+      staffcomment:"",
+      advisorcomment: "",
+      deancomment:""    };
   },
 };
 </script>

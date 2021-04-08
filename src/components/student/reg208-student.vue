@@ -82,6 +82,7 @@ export default {
         });
     },
     sendformInfo() {
+      // run function check เงื่อนไข gpax กับ radio2==true
       const path = "http://127.0.0.1:5000/send208";
       const formid = { formId: Date.now() };
       const checkbox_1=this.checkbox_1
@@ -122,6 +123,7 @@ export default {
         re_text,
         re_doc
       });
+      console.log(senddata)
       this.$confirm("Are you sure?").then(() => {
         axios
           .post(path, senddata)
