@@ -41,11 +41,11 @@
             <template v-if="childDataLoaded">
             <div
               class="col-6"
-              v-for="(name, index) in nameTitleImg"
-              :key="name"
+              v-for="(pic, index) in picture"
+              :key="index"
             >
               <div class="p-3 border bg-light">
-                <RequestImg208 :nametitle="nameTitleImg[index]" />
+                <RequestImg208 :picture="pic" />
               </div>
             </div>
             </template>
@@ -91,17 +91,7 @@ export default {
       childDataLoaded: false,
       create_semester: "",
       create_academic_year: "",
-      nameTitleImg: [
-        { name: "Medical Certificate", path: "ex-receipt.jpeg" },
-        {
-          name: "Confirmation documents from parents",
-          path: "logo.png",
-        },
-        {
-          name: "ID card copy (With parents’s signature)",
-          path: "logomfu.png",
-        },
-      ],
+      picture: [],
     };
   },
   methods: {
@@ -115,6 +105,7 @@ export default {
           this.st_phone = this.formInfo.phone;
           this.create_semester = this.formInfo.create_semester;
           this.create_academic_year = this.formInfo.create_academic_year;
+          this.picture = JSON.parse(this.formInfo.reason_doc)
           return this.formInfo.student_id;
         })
         .catch((error) => {

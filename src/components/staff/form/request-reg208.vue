@@ -13,7 +13,7 @@
             v-model="reason_checkbox_1"
             disabled
           />
-          <label class="form-check-label" for="request_checkbox_1">
+          <label  for="request_checkbox_1">
             Semeter 1
           </label>
         </div>
@@ -26,7 +26,7 @@
             v-model="reason_checkbox_2"
             disabled
           />
-          <label class="form-check-label" for="request_checkbox_2">
+          <label  for="request_checkbox_2">
             Semeter 2
           </label>
         </div>
@@ -90,7 +90,7 @@
             v-model="request_radio_1"
             disabled
           />
-          <label class="form-check-label" for="request_radio_1">
+          <label  for="request_radio_1">
             Illness with a document and the name of a medical provider
           </label>
         </div>
@@ -103,7 +103,7 @@
             v-model="request_radio_2"
             disabled
           />
-          <label class="form-check-label" for="request_radio_2">
+          <label  for="request_radio_2">
             Other reason ( indicate )
           </label>
         </div>
