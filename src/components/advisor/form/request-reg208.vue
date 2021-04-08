@@ -4,7 +4,7 @@
     <div class="row mb-1 g-3 w-75">
       <p class="mb-0">Semeter</p>
       <div class="row ms-2 mt-0">
-        <div class="col-3 form-check">
+        <div class="col-4 form-check">
           <input
             class="form-check-input"
             type="checkbox"
@@ -17,7 +17,7 @@
             Semeter 1
           </label>
         </div>
-        <div class="col-3 form-check">
+        <div class="col-4 form-check">
           <input
             class="form-check-input"
             type="checkbox"

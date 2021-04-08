@@ -4,7 +4,7 @@
     <div class="row mb-1 g-3 w-75">
       <p class="mb-0">Semeter</p>
       <div class="row ms-2 mt-0">
-        <div class="col-3 form-check">
+        <div class="col-4 form-check">
           <input
             class="form-check-input"
             type="checkbox"
@@ -17,7 +17,7 @@
             Semeter 1
           </label>
         </div>
-        <div class="col-3 form-check">
+        <div class="col-4 form-check">
           <input
             class="form-check-input"
             type="checkbox"
@@ -131,14 +131,14 @@ export default {
   data() {
     return {
       re_text: "",
-      request_from_semester:"",
+      request_from_semester: "",
       request_to_semester: "",
       request_from_academicyear: "",
       request_to_academicyear: "",
       request_checkbox_1: false,
       request_checkbox_2: false,
-      request_radio_1:false,
-      request_radio_2:false,
+      request_radio_1: false,
+      request_radio_2: false,
     };
   },
   methods: {
@@ -157,17 +157,22 @@ export default {
     getRequesttext() {
       console.log(this.formInfo);
       if (this.formInfo) {
-        this.request_from_semester=this.formInfo.request_from_semester
-      this.request_to_semester=this.formInfo.request_to_semester
-      this.request_from_academicyear =this.formInfo.request_from_academicyear
-      this.request_to_academicyear=this.formInfo.request_to_academicyear
-        this.re_text = this.formInfo.request_text
-        this.request_checkbox_1 = this.formInfo.request_checkbox1
-        this.request_checkbox_2 = this.formInfo.request_checkbox2
-        this.request_radio_1 = this.formInfo.reason_radio1
-        this.request_radio_2 = this.formInfo.reason_radio2
+        this.request_from_semester = this.formInfo.request_from_semester;
+        this.request_to_semester = this.formInfo.request_to_semester;
+        this.request_from_academicyear = this.formInfo.request_from_academicyear;
+        this.request_to_academicyear = this.formInfo.request_to_academicyear;
+        this.re_text = this.formInfo.request_text;
+        this.request_checkbox_1 = this.formInfo.request_checkbox1;
+        this.request_checkbox_2 = this.formInfo.request_checkbox2;
+        this.request_radio_1 = this.formInfo.reason_radio1;
+        this.request_radio_2 = this.formInfo.reason_radio2;
       }
-      console.log(this.request_checkbox_1,this.request_checkbox_2,this.request_radio_1,this.request_radio_2)
+      console.log(
+        this.request_checkbox_1,
+        this.request_checkbox_2,
+        this.request_radio_1,
+        this.request_radio_2
+      );
     },
     disableOtherRadio: function () {
       document.getElementById("Illness").disabled = true;
