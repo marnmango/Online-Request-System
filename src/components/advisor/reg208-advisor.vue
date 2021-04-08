@@ -21,30 +21,31 @@
           <div class="row gy-3 mx-5">
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
-                <InformationForm
-                  :info="studentInfo"
-                  :Alphone="formInfo.phone"
-                  :create_sem="create_semester"
-                  :create_aca="create_academic_year"
-                />
+                <template v-if="childDataLoaded">
+              <InformationForm :info="studentInfo" :Alphone="formInfo.phone" :create_sem="create_semester" :create_aca="create_academic_year"/>
+              </template>
               </div>
             </div>
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
-                <RequestForm208 @onRequest="onRequest" />
+                <template v-if="childDataLoaded">
+                <RequestForm208 :formInfo="formInfo" />
+                </template>
               </div>
             </div>
+            <template v-if="childDataLoaded">
             <div
               class="col-6"
-              v-for="(name, index) in nameTitleImg"
-              :key="name"
+              v-for="(pic, index) in picture"
+              :key="index"
             >
               <div class="p-3 border bg-light">
-                <RequestImg208 :nametitle="nameTitleImg[index]" />
+                <RequestImg208 :picture="pic" />
               </div>
             </div>
+            </template>
             <div class="col-6">
-              <div class="p-3 border bg-light h-100"><Comment208 /></div>
+              <div class="p-3 border bg-light h-100"><Comment208 :staffcomment="formInfo.staff_comment" @onSubmit="onSubmit"/></div>
             </div>
           </div>
         </div>
@@ -81,22 +82,12 @@ export default {
       childDataLoaded: false,
       create_semester: "",
       create_academic_year: "",
-      nameTitleImg: [
-        { name: "Medical Certificate", path: "ex-receipt.jpeg" },
-        {
-          name: "Confirmation documents from parents",
-          path: "logo.png",
-        },
-        {
-          name: "ID card copy (With parents’s signature)",
-          path: "logomfu.png",
-        },
-      ],
+      picture: []
     };
   },
   methods: {
     getformInfo() {
-      let path = "http://127.0.0.1:5000/get209?id=" + this.id;
+      let path = "http://127.0.0.1:5000/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
@@ -105,6 +96,7 @@ export default {
           this.st_phone = this.formInfo.phone;
           this.create_semester = this.formInfo.create_semester;
           this.create_academic_year = this.formInfo.create_academic_year;
+          this.picture = JSON.parse(this.formInfo.reason_doc)
           return this.formInfo.student_id;
         })
         .catch((error) => {
@@ -166,48 +158,25 @@ export default {
         return "error";
       }
     },
-    onSubmit() {
-      this.$confirm("Are you sure?").then(() => {
-        const formid = this.formInfo.form_id;
-        const staffid = this.staff_id;
-        const formcat = this.formInfo.form_cat;
-        const advisorid = this.formInfo.advisor_id;
-        const senddata = Object.assign(
-          {},
-          { formid, staffid, formcat, advisorid }
-        );
-        const path = "http://127.0.0.1:5000/staffsubmit";
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-
-            this.$router.push({ name: "List" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    },
-    onCancel() {
-      this.$confirm("Are you sure?").then(() => {
-        const formid = this.formInfo.form_id;
-        const staffid = this.staff_id;
-        const studentid = this.formInfo.student_id;
-        const senddata = Object.assign({}, { formid, staffid, studentid });
-        const path = "http://127.0.0.1:5000/cancel";
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-
-            this.$router.push({ name: "List" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    },
+    onSubmit(value){
+			this.$confirm("Are you sure?").then(() => {
+      const formid=this.formInfo.form_id;
+      const formcat=this.formInfo.form_cat;
+      const advisorComment = value
+      const deanid = this.formInfo.dean_id
+      const senddata = Object.assign({},{formid,advisorComment,formcat,deanid})
+      const path = 'http://127.0.0.1:5000/advisorsubmit';
+			axios.post(path,senddata)
+				.then((res)=>{
+					console.log(res.data)
+          this.$alert("The comment had added")
+          this.$router.push({ name: 'Listadvisor'})
+				})
+				.catch((error)=>{
+					console.log(error)
+				})
+})
+		}
   },
   created() {
     this.id = this.$route.params.id;

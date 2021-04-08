@@ -249,8 +249,13 @@ export default {
           })
     },
     getFormData(id, form_cat) {
-      const address = "Reg209Dean";
-      console.log(form_cat);
+      let address =""
+      if(form_cat==209){
+         address = "Reg209Dean";
+      }
+      else if(form_cat==208){
+         address = "Reg208Dean"
+      }
       this.$router.push({ name: address, params: { id: id } });
     },
     sortDateAscend() {

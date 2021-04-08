@@ -1,54 +1,25 @@
 <template>
-  <div>
-    <h4 class="text-start">{{ nametitle.name }}</h4>
-    <div class="mx-4">
-      <!-- trigger modal -->
-      <img
-        v-bind:src="require('@/assets/' + nametitle.path)"
-        class="img-fluid border shadow-sm pic imgh"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      />
-
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                {{ nametitle.name }}
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <img
-                v-bind:src="require('@/assets/' + nametitle.path)"
-                class="img-fluid"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+   <img class="preview" :src="picture">
 </template>
 
 <script>
 export default {
   props: {
-    nametitle: Array,
+    picture: String,
   },
+  // methods:{
+  //   dataURLtoFile(dataurl, filename) {
+  //       var arr = dataurl.split(','),
+  //           mime = arr[0].match(/:(.*?);/)[1],
+  //           bstr = atob(arr[1]), 
+  //           n = bstr.length, 
+  //           u8arr = new Uint8Array(n);
+  //       while(n--){
+  //           u8arr[n] = bstr.charCodeAt(n);
+  //       }
+  //       return new File([u8arr], filename, {type:mime});
+  //   }
+  // },
 };
 </script>
 

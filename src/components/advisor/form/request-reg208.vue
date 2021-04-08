@@ -13,7 +13,7 @@
             v-model="reason_checkbox_1"
             disabled
           />
-          <label class="form-check-label" for="request_checkbox_1">
+          <label  for="request_checkbox_1">
             Semeter 1
           </label>
         </div>
@@ -26,7 +26,7 @@
             v-model="reason_checkbox_2"
             disabled
           />
-          <label class="form-check-label" for="request_checkbox_2">
+          <label  for="request_checkbox_2">
             Semeter 2
           </label>
         </div>
@@ -38,10 +38,9 @@
         <div class="col-3">
           <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
           <input
-            type="number"
             id="fromSemeter"
             class="form-control"
-            v-model="request_from_semeter"
+            v-model="request_from_semester"
             readonly
           />
         </div>
@@ -60,10 +59,9 @@
         <div class="col-3">
           <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
           <input
-            type="number"
             class="form-control"
             id="fromSemeter"
-            v-model="request_to_semeter"
+            v-model="request_to_semester"
             readonly
           />
         </div>
@@ -92,7 +90,7 @@
             v-model="request_radio_1"
             disabled
           />
-          <label class="form-check-label" for="request_radio_1">
+          <label  for="request_radio_1">
             Illness with a document and the name of a medical provider
           </label>
         </div>
@@ -105,7 +103,7 @@
             v-model="request_radio_2"
             disabled
           />
-          <label class="form-check-label" for="request_radio_2">
+          <label  for="request_radio_2">
             Other reason ( indicate )
           </label>
         </div>
@@ -132,15 +130,15 @@ export default {
   },
   data() {
     return {
-      re_semester: "first",
-      re_academic_year: 2021,
       re_text: "",
-      request_from_semeter: null,
-      request_to_semeter: "",
+      request_from_semester: "",
+      request_to_semester: "",
       request_from_academicyear: "",
       request_to_academicyear: "",
-      request_checkbox_1: 1,
-      request_checkbox_2: 0,
+      request_checkbox_1: false,
+      request_checkbox_2: false,
+      request_radio_1: false,
+      request_radio_2: false,
     };
   },
   methods: {
@@ -159,13 +157,22 @@ export default {
     getRequesttext() {
       console.log(this.formInfo);
       if (this.formInfo) {
-        this.re_semester = this.formInfo.request_semester;
-        this.re_academic_year = this.formInfo.request_academic_year;
+        this.request_from_semester = this.formInfo.request_from_semester;
+        this.request_to_semester = this.formInfo.request_to_semester;
+        this.request_from_academicyear = this.formInfo.request_from_academicyear;
+        this.request_to_academicyear = this.formInfo.request_to_academicyear;
         this.re_text = this.formInfo.request_text;
-        document.getElementById("exampleFormControlTextarea1").disabled = true;
-        // document.getElementById("cancel").remove()
-        // document.getElementById("submit").remove()
+        this.request_checkbox_1 = this.formInfo.request_checkbox1;
+        this.request_checkbox_2 = this.formInfo.request_checkbox2;
+        this.request_radio_1 = this.formInfo.reason_radio1;
+        this.request_radio_2 = this.formInfo.reason_radio2;
       }
+      console.log(
+        this.request_checkbox_1,
+        this.request_checkbox_2,
+        this.request_radio_1,
+        this.request_radio_2
+      );
     },
     disableOtherRadio: function () {
       document.getElementById("Illness").disabled = true;

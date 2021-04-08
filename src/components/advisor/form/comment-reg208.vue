@@ -8,7 +8,7 @@
       <textarea
         class="form-control"
         id="exampleFormControlTextarea1"
-        v-model="staff_comment"
+        v-model="staffcomment"
         rows="5"
         readonly
       ></textarea>
@@ -27,7 +27,7 @@
       <div class="text-center mt-3">
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-success" v-on:click="onSubmit" >Submit</button>
           </div>
         </div>
       </div>
@@ -49,16 +49,19 @@
 
 <script>
 export default {
+  props:{
+		staffcomment:String,
+	},
   data() {
     return {
-      staffcomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
-      advisorcomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
-      deancomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
+      advisor_comment:'',
+      dean_comment:'',
     };
-  },
+  },methods:{
+    onSubmit:function(){
+			this.$emit("onSubmit",this.advisor_comment)
+		}
+  }
 };
 </script>
 

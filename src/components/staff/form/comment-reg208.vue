@@ -14,12 +14,12 @@
       <div class="text-center mt-3">
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-outline-danger">
+            <button type="button" class="btn btn-outline-danger" v-on:click="onCancel">
               Disapprove
             </button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-success">Approve</button>
+            <button type="button" class="btn btn-success" v-on:click="onSubmit">Approve</button>
           </div>
         </div>
       </div>
@@ -60,6 +60,13 @@ export default {
       advisorcomment: "",
       deancomment:""    };
   },
+  methods:{
+    onSubmit:function(){
+			this.$emit("onSubmit",this.staffcomment)
+		},onCancel:function(){
+			this.$emit("onCancel",this.staffcomment)
+		}
+  }
 };
 </script>
 
