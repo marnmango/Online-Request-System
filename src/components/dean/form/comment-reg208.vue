@@ -8,7 +8,7 @@
       <textarea
         class="form-control"
         id="exampleFormControlTextarea1"
-        v-model="staff_comment"
+        v-model="staffcomment"
         rows="5"
         readonly
       ></textarea>
@@ -22,7 +22,7 @@
         id="exampleFormControlTextarea1"
         style="font-size: 14px"
         rows="5"
-        v-model="advisor_comment"
+        v-model="advisorcomment"
         readonly
       ></textarea>
     </div>
@@ -39,12 +39,12 @@
       <div class="text-center mt-3">
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-outline-danger">
+            <button type="button" class="btn btn-outline-danger" v-on:click="onCancel">
               Disapprove
             </button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-success">Approve</button>
+            <button type="button" class="btn btn-success" v-on:click="onSubmit">Approve</button>
           </div>
         </div>
       </div>
@@ -54,16 +54,22 @@
 
 <script>
 export default {
+  props:{
+		staffcomment:String,
+    advisorcomment:String
+	},
   data() {
     return {
-      staffcomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
-      advisorcomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
-      deancomment:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae aliquam eius cupiditate magni possimus amet non assumenda modi, distinctio illo cumque maxime, voluptatem quas quod nobis. Numquam consequuntur quos ratione repellendus blanditiis fugiat itaque debitis tempore nihil ab, possimus a omnis cumque nulla saepe et eius? Repellendus voluptas quo sunt.",
+      dean_comment:'',
     };
   },
+  methods:{
+    onSubmit:function(){
+			this.$emit("onSubmit",this.dean_comment)
+		},onCancel:function(){
+			this.$emit("onCancel",this.dean_comment)
+		}
+  }
 };
 </script>
 

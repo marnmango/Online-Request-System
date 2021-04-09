@@ -73,8 +73,6 @@ export default {
 
   data() {
     return {
-      // staff_id is prop when log in
-      staff_id: 1111,
       id: "",
       formInfo: "",
       st_phone: "",
