@@ -14,12 +14,12 @@
       <div class="text-center mt-3">
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-outline-danger" v-on:click="onCancel">
+            <button type="button" id="can" class="btn btn-outline-danger" v-on:click="onCancel">
               Disapprove
             </button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-success" v-on:click="onSubmit">Approve</button>
+            <button type="button" class="btn btn-success" id="sub" v-on:click="onSubmit">Approve</button>
           </div>
         </div>
       </div>
@@ -54,6 +54,9 @@
 
 <script>
 export default {
+  props:{
+    staff_comment:String
+  },
   data() {
     return {
       staffcomment:"",
@@ -66,6 +69,13 @@ export default {
 		},onCancel:function(){
 			this.$emit("onCancel",this.staffcomment)
 		}
+  },mounted(){
+    if(this.staff_comment!=undefined){
+      this.staffcomment=this.staff_comment
+      document.getElementById("sub").remove()
+      document.getElementById("can").remove()
+      document.getElementById("exampleFormControlTextarea1").disabled = true
+    }
   }
 };
 </script>

@@ -50,7 +50,16 @@
             </div>
             </template>
             <div class="col-6 h-100">
-              <div class="p-3 border bg-light"><Comment208 @onCancel="onCancel" @onSubmit="onSubmit"/></div>
+              <template v-if="childDataLoaded && formInfo.progress_status==1">
+              <div class="p-3 border bg-light">
+                <Comment208 @onCancel="onCancel" @onSubmit="onSubmit"/>
+                </div>
+              </template>
+                 <template v-if="childDataLoaded && formInfo.progress_status==4">
+                <div class="p-3 border bg-light">
+                <Comment208 :staff_comment="formInfo.staff_comment"/>
+                </div>
+                 </template>
               <div class="row-6 p-3 border bg-light mt-3">
                 <template v-if="childDataLoaded && formInfo.progress_status==4">
                 <Payment />
