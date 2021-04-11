@@ -55,7 +55,9 @@
 <script>
 export default {
   props:{
-    staff_comment:String
+    staff_comment:String,
+    dean_comment:String,
+    advisor_comment:String
   },
   data() {
     return {
@@ -72,6 +74,9 @@ export default {
   },mounted(){
     if(this.staff_comment!=undefined){
       this.staffcomment=this.staff_comment
+      this.deancomment=this.dean_comment
+      this.advisorcomment=this.advisor_comment
+      console.log(this.staff_comment,this.dean_comment,this.advisor_comment)
       document.getElementById("sub").remove()
       document.getElementById("can").remove()
       document.getElementById("exampleFormControlTextarea1").disabled = true

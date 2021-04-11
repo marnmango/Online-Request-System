@@ -57,7 +57,7 @@
               </template>
                  <template v-if="childDataLoaded && formInfo.progress_status==4">
                 <div class="p-3 border bg-light">
-                <Comment208 :staff_comment="formInfo.staff_comment"/>
+                <Comment208 :staff_comment="formInfo.staff_comment" :advisor_comment="formInfo.advisor_comment" :dean_comment="formInfo.dean_comment"/>
                 </div>
                  </template>
               <div class="row-6 p-3 border bg-light mt-3">
