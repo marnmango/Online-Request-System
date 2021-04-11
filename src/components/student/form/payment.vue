@@ -5,7 +5,7 @@
       <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
         <label>Total</label>
         <div class="input-group">
-          <input type="text" class="form-control" readonly />
+          <input type="number" min="0" class="form-control" readonly />
           <span class="input-group-text">BATH</span>
         </div>
         <div class="input-group mt-3">

@@ -51,6 +51,9 @@
           >
           <input
             type="number"
+            min="2018"
+            max="2100"
+            maxlength="4"
             class="form-control"
             id="fromAcademic"
             placeholder="Year"
@@ -72,6 +75,9 @@
           <label for="toAcademic" class="form-label mb-0">Academic Year</label>
           <input
             type="number"
+            min="2018"
+            max="2100"
+            maxlength="4"
             class="form-control"
             id="toAcademic"
             placeholder="Year"
@@ -122,61 +128,68 @@
             required
           ></textarea>
         </div>
-        <!-- choose file -->
-        <div class="row mt-3">
-          <div class="col-6 input-group w-50 h-100">
-            <input
-              type="file"
-              class="form-control"
-              id="files"
-              aria-label="Upload"
-              ref="files"
-              multiple
-              v-on:change="handleFilesUpload"
-              required
-            />
-          </div>
-          <div
-            class="col-2"
-            style="text-align: right"
-            v-for="(file, key) in files"
-            v-bind:key="key"
-          >
-            <p class="m-0 fixlength">{{ file.name }}</p>
-            <span class="m-0" v-on:click="removeFile(key)"> Remove </span>
-          </div>
-        </div>
-        <div class="row mt-1">
-          <div class="col">
-            <p class="m-0">Documents that need to be attached</p>
-            <ol>
-              <li class="w-100 ms-3">
-                <p class="m-0">Medical certificate</p>
-              </li>
-              <li class="w-100 ms-3">
-                <p class="m-0">Confirmation documents from parents</p>
-              </li>
-              <li class="w-100 ms-3">
-                <p class="m-0">ID card copy (With parents’s signature)</p>
-              </li>
-            </ol>
-          </div>
-          <div class="col mt-5 text-end">
-            <button
-              type="button"
-              class="btn btn-danger mx-2"
-              id="cancel"
-              v-on:click="onCancel"
-            >
-              Cancel
-            </button>
-            <button type="submit" class="btn btn-success" id="submit" @click="onSubmit">
-              Submit
-            </button>
-          </div>
-        </div>
       </div>
     </form>
+    <!-- choose file -->
+    <div class="row mt-3">
+      <div class="col-6 input-group w-50 h-100">
+        <input
+          type="file"
+          class="form-control"
+          id="files"
+          aria-label="Upload"
+          ref="files"
+          multiple
+          v-on:change="handleFilesUpload"
+          required
+        />
+      </div>
+      <div class="col-6 text-end">
+        <button
+          type="button"
+          class="btn btn-danger mx-2"
+          id="cancel"
+          v-on:click="onCancel"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-success"
+          id="submit"
+          @click="onSubmit"
+        >
+          Submit
+        </button>
+      </div>
+      <div
+        class="row text-start"
+        style="text-align: right"
+        v-for="(file, key) in files"
+        v-bind:key="key"
+      >
+        <p class="m-0 mt-3">
+          {{ file.name
+          }}<span class="m-0 ms-3" v-on:click="removeFile(key)"> Remove </span>
+        </p>
+      </div>
+    </div>
+    <div class="row mt-1 g-3">
+      <div class="col-6 text-start">
+        <p class="m-0">Documents that need to be attached</p>
+        <ol>
+          <li class="w-100 ms-3">
+            <p class="m-0">Medical certificate</p>
+          </li>
+          <li class="w-100 ms-3">
+            <p class="m-0">Confirmation documents from parents</p>
+          </li>
+          <li class="w-100 ms-3">
+            <p class="m-0">ID card copy (With parents’s signature)</p>
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -197,7 +210,7 @@ export default {
       request_radio_1: false,
       request_radio_2: false,
       files: [],
-      re_doc:[],
+      re_doc: [],
     };
   },
   methods: {
@@ -209,22 +222,33 @@ export default {
       this.disableSubmit();
     },
     onSubmit: async function () {
-    //  this.submitFiles()
-     let checkbox_1=this.request_checkbox_1
-     let checkbox_2=this.request_checkbox_2
-     let from_semester=this.request_from_semeter
-     let from_academic=this.request_from_academicyear
-     let to_semester=this.request_to_semeter
-     let to_academic=this.request_to_academicyear
-     let radio_1=this.request_radio_1
-     let radio_2=this.request_radio_2
-     let re_doc= this.re_doc
-     for(let x in this.files){
-       this.getBase64(this.files[x])
-     }
-     console.log(re_doc)
-     let re_text= this.re_text
-      this.$emit("onSubmit",{checkbox_1,checkbox_2,from_semester,from_academic,to_semester,to_academic,radio_1,radio_2,re_doc,re_text});
+      //  this.submitFiles()
+      let checkbox_1 = this.request_checkbox_1;
+      let checkbox_2 = this.request_checkbox_2;
+      let from_semester = this.request_from_semeter;
+      let from_academic = this.request_from_academicyear;
+      let to_semester = this.request_to_semeter;
+      let to_academic = this.request_to_academicyear;
+      let radio_1 = this.request_radio_1;
+      let radio_2 = this.request_radio_2;
+      let re_doc = this.re_doc;
+      for (let x in this.files) {
+        this.getBase64(this.files[x]);
+      }
+      console.log(re_doc);
+      let re_text = this.re_text;
+      this.$emit("onSubmit", {
+        checkbox_1,
+        checkbox_2,
+        from_semester,
+        from_academic,
+        to_semester,
+        to_academic,
+        radio_1,
+        radio_2,
+        re_doc,
+        re_text,
+      });
       this.disableSubmit();
     },
     disableOtherRadio: function () {
@@ -249,18 +273,25 @@ export default {
     },
     handleFilesUpload() {
       let uploadedFiles = this.$refs.files.files;
-      let match = ["image/jpeg","image/png","image/jpg","image/gif"]
-      console.log(uploadedFiles)
+      let match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+      console.log(uploadedFiles);
       for (var i = 0; i < uploadedFiles.length; i++) {
-        var ecuploadedFile = uploadedFiles[i]
-        var imagefile = ecuploadedFile.type
-        if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]) || (imagefile==match[3]))){
-          alert('Please select a valid image file (JPEG/JPG/PNG/GIF).');
-        }else{
-            this.files.push(ecuploadedFile);
+        var ecuploadedFile = uploadedFiles[i];
+        var imagefile = ecuploadedFile.type;
+        if (
+          !(
+            imagefile == match[0] ||
+            imagefile == match[1] ||
+            imagefile == match[2] ||
+            imagefile == match[3]
+          )
+        ) {
+          alert("Please select a valid image file (JPEG/JPG/PNG/GIF).");
+        } else {
+          this.files.push(ecuploadedFile);
         }
       }
-      console.log(this.files)
+      console.log(this.files);
     },
     // submitFiles() {
     //   let formData = new FormData();
@@ -273,17 +304,18 @@ export default {
     // },
     removeFile(key) {
       this.files.splice(key, 1);
-    }, getBase64(file) {
-   var reader = new FileReader();
-   reader.readAsDataURL(file);
-   reader.onload = () => { 
-      this.re_doc.push(reader.result)
-   };
-   console.log(this.re_doc)
-   reader.onerror = function (error) {
-     console.log('Error: ', error);
-   };
-}
+    },
+    getBase64(file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.re_doc.push(reader.result);
+      };
+      console.log(this.re_doc);
+      reader.onerror = function (error) {
+        console.log("Error: ", error);
+      };
+    },
   },
 };
 </script>

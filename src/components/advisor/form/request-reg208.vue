@@ -13,9 +13,7 @@
             v-model="reason_checkbox_1"
             disabled
           />
-          <label  for="request_checkbox_1">
-            Semeter 1
-          </label>
+          <label for="request_checkbox_1"> Semeter 1 </label>
         </div>
         <div class="col-4 form-check">
           <input
@@ -26,9 +24,7 @@
             v-model="reason_checkbox_2"
             disabled
           />
-          <label  for="request_checkbox_2">
-            Semeter 2
-          </label>
+          <label for="request_checkbox_2"> Semeter 2 </label>
         </div>
       </div>
     </div>
@@ -50,6 +46,9 @@
           >
           <input
             type="number"
+            min="2018"
+            max="2100"
+            maxlength="4"
             class="form-control"
             id="fromAcademic"
             v-model="request_from_academicyear"
@@ -69,6 +68,9 @@
           <label for="toAcademic" class="form-label mb-0">Academic Year</label>
           <input
             type="number"
+            min="2018"
+            max="2100"
+            maxlength="4"
             class="form-control"
             id="toAcademic"
             v-model="request_to_academicyear"
@@ -90,7 +92,7 @@
             v-model="request_radio_1"
             disabled
           />
-          <label  for="request_radio_1">
+          <label for="request_radio_1">
             Illness with a document and the name of a medical provider
           </label>
         </div>
@@ -103,9 +105,7 @@
             v-model="request_radio_2"
             disabled
           />
-          <label  for="request_radio_2">
-            Other reason ( indicate )
-          </label>
+          <label for="request_radio_2"> Other reason ( indicate ) </label>
         </div>
       </div>
       <div class="form-check">
