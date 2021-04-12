@@ -43,12 +43,12 @@ const routes = [{
         component: Reg208Student
     },
     {
-        path: '/reg209_view',
+        path: '/reg209_view/:id',
         name: 'ViewReg209',
         component: ViewReg209
     },
     {
-        path: '/reg208_view',
+        path: '/reg208_view/:id',
         name: 'ViewReg208',
         component: ViewReg208
     },
