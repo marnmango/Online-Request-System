@@ -10,6 +10,7 @@
         id="exampleFormControlTextarea1"
         v-model="staffcomment"
         rows="5"
+        readonly
       ></textarea>
     </div>
     <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
