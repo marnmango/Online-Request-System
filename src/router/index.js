@@ -10,8 +10,11 @@ import Reg208Advisor from '../components/advisor/reg208-advisor.vue'
 import Reg209Dean from '../components/dean/reg209-dean.vue'
 import Reg208Dean from '../components/dean/reg208-dean.vue'
 import List from '../components/list.vue'
+import Liststudent from '../components/student/list_student.vue'
 import Listadvisor from '../components/advisor/list_advisor.vue'
 import Listdean from '../components/dean/list_dean.vue'
+import ViewReg209 from '../components/student/view/reg209-view.vue'
+import ViewReg208 from '../components/student/view/reg208-view.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +41,16 @@ const routes = [{
         path: '/reg208_student',
         name: 'Reg208Student',
         component: Reg208Student
+    },
+    {
+        path: '/reg209_view',
+        name: 'ViewReg209',
+        component: ViewReg209
+    },
+    {
+        path: '/reg208_view',
+        name: 'ViewReg208',
+        component: ViewReg208
     },
     {
         path: '/reg209_staff/:id',
@@ -79,6 +92,15 @@ const routes = [{
         path: '/list',
         name: 'List',
         component: List
+    }, {
+        path: '/list-student',
+        redirect: {
+            name: "Liststudent"
+        }
+    }, {
+        path: '/list-student',
+        name: 'Liststudent',
+        component: Liststudent
     }, {
         path: '/list-advisor',
         redirect: {
