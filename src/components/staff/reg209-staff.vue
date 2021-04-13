@@ -27,15 +27,18 @@
           </div>
           <div class="col-6">
             <div class="p-3 border bg-light h-100 shadow-sm">
-              <template v-if="childDataLoaded">
+              <template v-if="childDataLoaded && formInfo.progress_status==1">
               <RequestForm :formInfo="formInfo" @onCancel="onCancel" @onSubmit="onSubmit"/>
+              </template>
+              <template v-if="childDataLoaded && formInfo.progress_status!=1">
+              <RequestForm :formInfo="formInfo"/>
               </template>
             </div>
           </div>
           <div class="col">
             <div class="p-3 border bg-light shadow-sm mb-3">
               <template v-if="childDataLoaded">
-              <CommentForm />
+              <CommentForm :formInfo="formInfo"/>
               </template>
             </div>
           </div>

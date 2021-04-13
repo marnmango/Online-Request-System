@@ -89,8 +89,10 @@ export default {
         this.re_academic_year = this.formInfo.request_academic_year;
         this.re_text = this.formInfo.request_text;
         document.getElementById("exampleFormControlTextarea1").disabled = true;
-        // document.getElementById("cancel").remove()
-        // document.getElementById("submit").remove()
+        if(this.formInfo.progress_status!=1){
+        document.getElementById("cancel").remove()
+        document.getElementById("submit").remove()
+        }
       }
     },
   },

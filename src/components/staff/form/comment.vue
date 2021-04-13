@@ -8,7 +8,7 @@
 				>
 				<textarea
 					class="form-control"
-					v-model="advisorComment"
+					v-model="advisorcomment"
 					rows="3"
 					readonly
 				>
@@ -18,7 +18,7 @@
 				<label for="exampleFormControlTextarea1" class="form-label"
 					>Dean's comment</label
 				>
-				<textarea class="form-control" v-model="deanComment" rows="3" readonly>
+				<textarea class="form-control" v-model="deancomment" rows="3" readonly>
 				</textarea>
 			</div>
 			<div class="text-end ">
@@ -29,6 +29,19 @@
 
 <script>
 export default {
+props:{
+    formInfo:Object
+  },
+data() {
+    return {
+      advisorcomment: "",
+      deancomment:""    };
+  },mounted(){
+    if(this.formInfo.dean_comment!=null||this.formInfo.advisor_comment!=null){
+      this.deancomment=this.formInfo.dean_comment
+      this.advisorcomment=this.formInfo.advisor_comment
+    }
+  }
 	}
 </script>
 

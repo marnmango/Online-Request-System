@@ -55,15 +55,18 @@
                 <Comment208 @onCancel="onCancel" @onSubmit="onSubmit"/>
                 </div>
               </template>
-                 <template v-if="childDataLoaded && formInfo.progress_status==4">
+                 <template v-if="childDataLoaded && formInfo.progress_status!=1">
                 <div class="p-3 border bg-light">
                 <Comment208 :staff_comment="formInfo.staff_comment" :advisor_comment="formInfo.advisor_comment" :dean_comment="formInfo.dean_comment"/>
                 </div>
                  </template>
               <div class="row-6 p-3 border bg-light mt-3">
                 <template v-if="childDataLoaded && formInfo.progress_status==4">
-                <Payment />
+                <Payment @onSetDept="onSetDept"/>
                 </template>
+                <!--<template v-if="childDataLoaded && formInfo.payment_status">
+                <สร้างcomponentใหม่ไว้โชว์รูปหลักฐานการโอนเงินและปุ่มยกเลิกกับยืนยันเมื่อนักเรียนส่งหลักฐานการชำระเงินมาแล้ว/>
+                </template> -->
               </div>
             </div>
           </div>
@@ -211,7 +214,7 @@ export default {
           .post(path, senddata)
           .then((res) => {
             console.log(res.data);
-
+              this.$alert("the request had cancel")
             this.$router.push({ name: "List" });
           })
           .catch((error) => {
@@ -219,6 +222,25 @@ export default {
           });
       });
     },
+    onSetDept(value){
+        this.$confirm("Are you sure?").then(() => {
+        const formid = this.formInfo.form_id;
+        const studentid = this.formInfo.student_id;
+        const amount =value
+        const senddata = Object.assign({}, { formid,studentid,amount});
+        const path = "http://127.0.0.1:5000/setdept";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+              this.$alert("the Dept has set")
+            this.$router.push({ name: "List" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }
   },
   created() {
     this.id = this.$route.params.id;
