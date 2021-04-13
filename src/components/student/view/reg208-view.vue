@@ -46,21 +46,20 @@
               </div>
             </template>
             <div class="col-6 h-100">
-              <template v-if="childDataLoaded && formInfo.progress_status == 1">
+              <template v-if="childDataLoaded">
                 <div class="p-3 border bg-light">
-                  <Comment208 @onCancel="onCancel" @onSubmit="onSubmit" />
-                </div>
-              </template>
-              <template v-if="childDataLoaded && formInfo.progress_status == 4">
-                <div class="p-3 border bg-light">
-                  <Comment208 :staff_comment="formInfo.staff_comment" />
+                  <Comment208
+                    :staff_comment="formInfo.staff_comment"
+                    :advisor_comment="formInfo.advisor_comment"
+                    :dean_comment="formInfo.dean_comment"
+                  />
                 </div>
               </template>
               <div class="row-6 p-3 border bg-light mt-3">
                 <template
                   v-if="childDataLoaded && formInfo.progress_status == 4"
                 >
-                  <Payment />
+                  <Payment :amount="formInfo.payment_amount" @onSubmit="onSubmit"/>
                 </template>
               </div>
             </div>
@@ -177,47 +176,19 @@ export default {
       }
     },
     onSubmit(value) {
+      console.log(value)
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
-        const staffid = this.staff_id;
-        const formcat = this.formInfo.form_cat;
-        const advisorid = this.formInfo.advisor_id;
-        const staffcomment = value;
-        const senddata = Object.assign(
-          {},
-          { formid, staffid, formcat, advisorid, staffcomment }
-        );
-        const path = "http://127.0.0.1:5000/staffsubmit";
+        const staffid = this.formInfo.staff_id
+        const payment_doc = value;
+        const senddata = Object.assign({},{ formid,payment_doc,staffid });
+        const path = "http://127.0.0.1:5000/paymentsubmit";
         axios
           .post(path, senddata)
           .then((res) => {
             console.log(res.data);
-            this.$alert("the request had confirm");
-            this.$router.push({ name: "List" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    },
-    onCancel(value) {
-      this.$confirm("Are you sure?").then(() => {
-        const formid = this.formInfo.form_id;
-        const staffid = this.staff_id;
-        const studentid = this.formInfo.student_id;
-        const formcat = this.formInfo.form_cat;
-        const staffcomment = value;
-        const senddata = Object.assign(
-          {},
-          { formid, staffid, studentid, staffcomment, formcat }
-        );
-        const path = "http://127.0.0.1:5000/cancel";
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-
-            this.$router.push({ name: "List" });
+            this.$alert("the evidence has sent");
+            this.$router.push({ name: "Liststudent" });
           })
           .catch((error) => {
             console.log(error);

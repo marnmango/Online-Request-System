@@ -47,7 +47,7 @@
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm mb-3 h-100">
               <template v-if="childDataLoaded">
-                <CommentDean @onCancel="onCancel" @onSubmit="onSubmit" />
+                <CommentDean :deanComments="formInfo.dean_comment"/>
               </template>
             </div>
           </div>
@@ -140,52 +140,6 @@ export default {
       } else {
         return "error";
       }
-    },
-    onSubmit(Value) {
-      this.$confirm("Are you sure?").then(() => {
-        const formid = this.formInfo.form_id;
-        const stuid = this.formInfo.student_id;
-        const formcat = this.formInfo.form_cat;
-        const deancomment = Value;
-        const senddata = Object.assign(
-          {},
-          { formid, stuid, formcat, deancomment }
-        );
-        const path = "http://127.0.0.1:5000/deanonesubmit";
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-            this.$alert("The request had commented");
-            this.$router.push({ name: "Listdean" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    },
-    onCancel(Value) {
-      this.$confirm("Are you sure?").then(() => {
-        const formid = this.formInfo.form_id;
-        const studentid = this.formInfo.student_id;
-        const formcat = this.formInfo.form_cat;
-        const deancomment = Value;
-        const senddata = Object.assign(
-          {},
-          { formid, studentid, formcat, deancomment }
-        );
-        const path = "http://127.0.0.1:5000/canceldean";
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-            this.$alert("The request had canceled");
-            this.$router.push({ name: "Listdean" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
     },
   },
   created() {

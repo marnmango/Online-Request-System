@@ -62,13 +62,13 @@
               </template>
               <div class="row-6 p-3 border bg-light mt-3">
                 <template
-                  v-if="childDataLoaded && formInfo.progress_status == 4"
+                  v-if="childDataLoaded && formInfo.progress_status == 4 && !formInfo.payment_status"
                 >
                   <Payment @onSetDept="onSetDept" />
                 </template>
                 <template v-if="childDataLoaded && formInfo.payment_status">
                   <!-- <สร้างcomponentใหม่ไว้โชว์รูปหลักฐานการโอนเงินและปุ่มยกเลิกกับยืนยันเมื่อนักเรียนส่งหลักฐานการชำระเงินมาแล้ว/> -->
-                  <PaymentView />
+                  <PaymentView :picture="formInfo.payment_doc" :amount="formInfo.payment_amount"/>
                 </template>
               </div>
             </div>

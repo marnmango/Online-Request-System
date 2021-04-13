@@ -44,7 +44,9 @@
 <script>
 export default {
   props: {
-    staff_comment: String,
+    staff_comment:String,
+    dean_comment:String,
+    advisor_comment:String
   },
   data() {
     return {
@@ -53,21 +55,10 @@ export default {
       deancomment: "",
     };
   },
-  methods: {
-    onSubmit: function () {
-      this.$emit("onSubmit", this.staffcomment);
-    },
-    onCancel: function () {
-      this.$emit("onCancel", this.staffcomment);
-    },
-  },
   mounted() {
-    if (this.staff_comment != undefined) {
-      this.staffcomment = this.staff_comment;
-      document.getElementById("sub").remove();
-      document.getElementById("can").remove();
-      document.getElementById("exampleFormControlTextarea1").disabled = true;
-    }
+      this.staffcomment=this.staff_comment
+      this.deancomment=this.dean_comment
+      this.advisorcomment=this.advisor_comment
   },
 };
 </script>

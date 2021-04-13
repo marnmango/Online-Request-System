@@ -203,6 +203,8 @@ export default {
   },
   data() {
     return {
+      // receive id from log in
+      student_id: 6131305010,
       formInfo: [],
       search: "",
       checked: "",
@@ -221,7 +223,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getallform";
+      const path = "http://127.0.0.1:5000/getstudentform?id="+this.student_id;
       axios
         .get(path)
         .then((res) => {
@@ -244,9 +246,9 @@ export default {
     getFormData(id, form_cat) {
       let address = "";
       if (form_cat == 209) {
-        address = "Reg209Staff";
+        address = "ViewReg209";
       } else if (form_cat == 208) {
-        address = "Reg208Staff";
+        address = "ViewReg208";
       }
       this.$router.push({ name: address, params: { id: id } });
     },

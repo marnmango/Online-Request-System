@@ -12,34 +12,21 @@
 
 <script>
 export default {
+  props: {
+    deanComments: String,
+  },
   data() {
     return {
       deanComment: "",
     };
   },
   methods: {
-    onCancel: function () {
-      if (this.deanComment.trim() == "") {
-        this.$alert("please enter the comment");
-      } else if (this.deanComment.trim() != "") {
-        document.getElementById("submit").disabled = true;
-        document.getElementById("cancel").disabled = true;
-        this.$emit("onCancel", this.deanComment);
-      } else {
-        alert("error");
-      }
+    getdeancomment() {
+      this.deanComment = this.deanComments;
     },
-    onSubmit: function () {
-      if (this.deanComment.trim() == "") {
-        this.$alert("please enter the comment");
-      } else if (this.deanComment.trim() != "") {
-        document.getElementById("submit").disabled = true;
-        document.getElementById("cancel").disabled = true;
-        this.$emit("onSubmit", this.deanComment);
-      } else {
-        alert("error");
-      }
-    },
+  },
+  mounted() {
+    this.getdeancomment();
   },
 };
 </script>

@@ -2,6 +2,7 @@
   <!-- <img class="preview" :src="picture" @click="newTab()" /> -->
   <div id="over">
     <h4 class="text-start">Payment</h4>
+    <input type="number" min="0" class="form-control" v-model="payment_amount"/>
     <img class="myImages img-fluid pic" id="myImg" :src="picture" />
     <div id="myModal" class="modal">
       <span class="close">&times;</span>
@@ -15,7 +16,13 @@
 export default {
   props: {
     picture: String,
+    amount:Number
   },
+  data(){
+      return{
+        payment_amount:''
+      }
+  }
   // methods:{
   //   dataURLtoFile(dataurl, filename) {
   //       var arr = dataurl.split(','),
@@ -29,7 +36,7 @@ export default {
   //       return new File([u8arr], filename, {type:mime});
   //   }
   // },
-  methods: {
+  ,methods: {
     newTab() {
       var modal = document.getElementById("myModal");
       var images = document.getElementsByClassName("myImages");
@@ -50,6 +57,7 @@ export default {
     },
   },
   mounted() {
+    this.payment_amount=this.amount
     this.newTab();
   },
 };
