@@ -22,30 +22,36 @@
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-              <InformationForm :info="studentInfo" :Alphone="formInfo.phone" :create_sem="create_semester" :create_aca="create_academic_year"/>
-              </template>
+                  <InformationForm
+                    :info="studentInfo"
+                    :Alphone="formInfo.phone"
+                    :create_sem="create_semester"
+                    :create_aca="create_academic_year"
+                  />
+                </template>
               </div>
             </div>
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                <RequestForm208 :formInfo="formInfo" />
+                  <RequestForm208 :formInfo="formInfo" />
                 </template>
               </div>
             </div>
             <template v-if="childDataLoaded">
-            <div
-              class="col-6"
-              v-for="(pic, index) in picture"
-              :key="index"
-            >
-              <div class="p-3 border bg-light">
-                <RequestImg208 :picture="pic" />
+              <div class="col-6" v-for="(pic, index) in picture" :key="index">
+                <div class="p-3 border bg-light h-100">
+                  <RequestImg208 :picture="pic" />
+                </div>
               </div>
-            </div>
             </template>
             <div class="col-6">
-              <div class="p-3 border bg-light h-100"><Comment208 :staffcomment="formInfo.staff_comment" @onSubmit="onSubmit"/></div>
+              <div class="p-3 border bg-light">
+                <Comment208
+                  :staffcomment="formInfo.staff_comment"
+                  @onSubmit="onSubmit"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -80,7 +86,7 @@ export default {
       childDataLoaded: false,
       create_semester: "",
       create_academic_year: "",
-      picture: []
+      picture: [],
     };
   },
   methods: {
@@ -94,7 +100,7 @@ export default {
           this.st_phone = this.formInfo.phone;
           this.create_semester = this.formInfo.create_semester;
           this.create_academic_year = this.formInfo.create_academic_year;
-          this.picture = JSON.parse(this.formInfo.reason_doc)
+          this.picture = JSON.parse(this.formInfo.reason_doc);
           return this.formInfo.student_id;
         })
         .catch((error) => {
@@ -156,25 +162,29 @@ export default {
         return "error";
       }
     },
-    onSubmit(value){
-			this.$confirm("Are you sure?").then(() => {
-      const formid=this.formInfo.form_id;
-      const formcat=this.formInfo.form_cat;
-      const advisorComment = value
-      const deanid = this.formInfo.dean_id
-      const senddata = Object.assign({},{formid,advisorComment,formcat,deanid})
-      const path = 'http://127.0.0.1:5000/advisorsubmit';
-			axios.post(path,senddata)
-				.then((res)=>{
-					console.log(res.data)
-          this.$alert("The comment had added")
-          this.$router.push({ name: 'Listadvisor'})
-				})
-				.catch((error)=>{
-					console.log(error)
-				})
-})
-		}
+    onSubmit(value) {
+      this.$confirm("Are you sure?").then(() => {
+        const formid = this.formInfo.form_id;
+        const formcat = this.formInfo.form_cat;
+        const advisorComment = value;
+        const deanid = this.formInfo.dean_id;
+        const senddata = Object.assign(
+          {},
+          { formid, advisorComment, formcat, deanid }
+        );
+        const path = "http://127.0.0.1:5000/advisorsubmit";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("The comment had added");
+            this.$router.push({ name: "Listadvisor" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
   },
   created() {
     this.id = this.$route.params.id;

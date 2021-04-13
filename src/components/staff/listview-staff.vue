@@ -192,7 +192,7 @@
 </template>
 
 <script>
-import Navbar from "./navStudent.vue";
+import Navbar from "../student/navStudent.vue";
 import axios from "axios";
 export default {
   props: {

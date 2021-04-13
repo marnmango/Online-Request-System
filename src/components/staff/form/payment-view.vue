@@ -1,7 +1,7 @@
 <template>
   <!-- <img class="preview" :src="picture" @click="newTab()" /> -->
   <div id="over">
-    <h4 class="text-start">Document</h4>
+    <h4 class="text-start">Payment</h4>
     <img class="myImages img-fluid pic" id="myImg" :src="picture" />
     <div id="myModal" class="modal">
       <span class="close">&times;</span>
@@ -58,7 +58,6 @@ export default {
 <style scoped>
 .pic {
   max-width: 100%;
-  width: 50rem;
   height: auto !important;
 }
 

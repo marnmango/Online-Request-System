@@ -22,51 +22,54 @@
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                <InformationForm
-                  :info="studentInfo"
-                  :Alphone="formInfo.phone"
-                  :create_sem="create_semester"
-                  :create_aca="create_academic_year"
-                />
+                  <InformationForm
+                    :info="studentInfo"
+                    :Alphone="formInfo.phone"
+                    :create_sem="create_semester"
+                    :create_aca="create_academic_year"
+                  />
                 </template>
               </div>
             </div>
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                <RequestForm208 :formInfo="formInfo" />
+                  <RequestForm208 :formInfo="formInfo" />
                 </template>
               </div>
             </div>
             <template v-if="childDataLoaded">
-            <div
-              class="col-6"
-              v-for="(pic, index) in picture"
-              :key="index"
-            >
-              <div class="p-3 border bg-light">
-                <RequestImg208 :picture="pic" />
+              <div class="col-6" v-for="(pic, index) in picture" :key="index">
+                <div class="p-3 border bg-light h-100">
+                  <RequestImg208 :picture="pic" />
+                </div>
               </div>
-            </div>
             </template>
             <div class="col-6 h-100">
-              <template v-if="childDataLoaded && formInfo.progress_status==1">
-              <div class="p-3 border bg-light">
-                <Comment208 @onCancel="onCancel" @onSubmit="onSubmit"/>
+              <template v-if="childDataLoaded && formInfo.progress_status == 1">
+                <div class="p-3 border bg-light">
+                  <Comment208 @onCancel="onCancel" @onSubmit="onSubmit" />
                 </div>
               </template>
-                 <template v-if="childDataLoaded && formInfo.progress_status!=1">
+              <template v-if="childDataLoaded && formInfo.progress_status != 1">
                 <div class="p-3 border bg-light">
-                <Comment208 :staff_comment="formInfo.staff_comment" :advisor_comment="formInfo.advisor_comment" :dean_comment="formInfo.dean_comment"/>
+                  <Comment208
+                    :staff_comment="formInfo.staff_comment"
+                    :advisor_comment="formInfo.advisor_comment"
+                    :dean_comment="formInfo.dean_comment"
+                  />
                 </div>
-                 </template>
+              </template>
               <div class="row-6 p-3 border bg-light mt-3">
-                <template v-if="childDataLoaded && formInfo.progress_status==4">
-                <Payment @onSetDept="onSetDept"/>
+                <template
+                  v-if="childDataLoaded && formInfo.progress_status == 4"
+                >
+                  <Payment @onSetDept="onSetDept" />
                 </template>
-                <!--<template v-if="childDataLoaded && formInfo.payment_status">
-                <สร้างcomponentใหม่ไว้โชว์รูปหลักฐานการโอนเงินและปุ่มยกเลิกกับยืนยันเมื่อนักเรียนส่งหลักฐานการชำระเงินมาแล้ว/>
-                </template> -->
+                <template v-if="childDataLoaded && formInfo.payment_status">
+                  <!-- <สร้างcomponentใหม่ไว้โชว์รูปหลักฐานการโอนเงินและปุ่มยกเลิกกับยืนยันเมื่อนักเรียนส่งหลักฐานการชำระเงินมาแล้ว/> -->
+                  <PaymentView />
+                </template>
               </div>
             </div>
           </div>
@@ -83,6 +86,7 @@ import RequestForm208 from "./form/request-reg208.vue";
 import Comment208 from "./form/comment-reg208.vue";
 import RequestImg208 from "./form/requestimg-reg208.vue";
 import Payment from "./form/payment.vue";
+import PaymentView from "./form/payment-view.vue";
 import axios from "axios";
 export default {
   components: {
@@ -92,6 +96,7 @@ export default {
     Comment208,
     RequestImg208,
     Payment,
+    PaymentView,
   },
 
   data() {
@@ -119,7 +124,7 @@ export default {
           this.st_phone = this.formInfo.phone;
           this.create_semester = this.formInfo.create_semester;
           this.create_academic_year = this.formInfo.create_academic_year;
-          this.picture = JSON.parse(this.formInfo.reason_doc)
+          this.picture = JSON.parse(this.formInfo.reason_doc);
           return this.formInfo.student_id;
         })
         .catch((error) => {
@@ -181,40 +186,23 @@ export default {
         return "error";
       }
     },
-    onSubmit(value){
-			this.$confirm("Are you sure?").then(() => {
-      const formid=this.formInfo.form_id;
-      const staffid=this.staff_id
-      const formcat=this.formInfo.form_cat;
-      const advisorid = this.formInfo.advisor_id
-      const staffcomment =value
-      const senddata = Object.assign({},{formid,staffid,formcat,advisorid,staffcomment})
-      const path = 'http://127.0.0.1:5000/staffsubmit';
-			axios.post(path,senddata)
-				.then((res)=>{
-					console.log(res.data)
-          this.$alert("the request had confirm")
-          this.$router.push({ name: 'List'})
-				})
-				.catch((error)=>{
-					console.log(error)
-				})
-})
-		},
-    onCancel(value) {
+    onSubmit(value) {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
         const staffid = this.staff_id;
-        const studentid = this.formInfo.student_id;
-        const formcat=this.formInfo.form_cat;
-        const staffcomment =value
-        const senddata = Object.assign({}, { formid, staffid, studentid,staffcomment,formcat });
-        const path = "http://127.0.0.1:5000/cancel";
+        const formcat = this.formInfo.form_cat;
+        const advisorid = this.formInfo.advisor_id;
+        const staffcomment = value;
+        const senddata = Object.assign(
+          {},
+          { formid, staffid, formcat, advisorid, staffcomment }
+        );
+        const path = "http://127.0.0.1:5000/staffsubmit";
         axios
           .post(path, senddata)
           .then((res) => {
             console.log(res.data);
-              this.$alert("the request had cancel")
+            this.$alert("the request had confirm");
             this.$router.push({ name: "List" });
           })
           .catch((error) => {
@@ -222,25 +210,49 @@ export default {
           });
       });
     },
-    onSetDept(value){
-        this.$confirm("Are you sure?").then(() => {
+    onCancel(value) {
+      this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
+        const staffid = this.staff_id;
         const studentid = this.formInfo.student_id;
-        const amount =value
-        const senddata = Object.assign({}, { formid,studentid,amount});
-        const path = "http://127.0.0.1:5000/setdept";
+        const formcat = this.formInfo.form_cat;
+        const staffcomment = value;
+        const senddata = Object.assign(
+          {},
+          { formid, staffid, studentid, staffcomment, formcat }
+        );
+        const path = "http://127.0.0.1:5000/cancel";
         axios
           .post(path, senddata)
           .then((res) => {
             console.log(res.data);
-              this.$alert("the Dept has set")
+            this.$alert("the request had cancel");
             this.$router.push({ name: "List" });
           })
           .catch((error) => {
             console.log(error);
           });
       });
-    }
+    },
+    onSetDept(value) {
+      this.$confirm("Are you sure?").then(() => {
+        const formid = this.formInfo.form_id;
+        const studentid = this.formInfo.student_id;
+        const amount = value;
+        const senddata = Object.assign({}, { formid, studentid, amount });
+        const path = "http://127.0.0.1:5000/setdept";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("the Dept has set");
+            this.$router.push({ name: "List" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
   },
   created() {
     this.id = this.$route.params.id;
