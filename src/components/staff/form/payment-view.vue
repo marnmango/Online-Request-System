@@ -9,6 +9,10 @@
       <img class="modal-content" id="imgInModal" />
       <div id="caption"></div>
     </div>
+    <button type="button" class="btn btn-outline-danger" v-on:click="onDisapprove">
+              Disapprove
+            </button>
+            <button type="button" class="btn btn-success" v-on:click="onApprove">Approve</button>
   </div>
 </template>
 
@@ -54,7 +58,11 @@ export default {
       span.onclick = function () {
         modal.style.display = "none";
       };
-    },
+    },onApprove(){
+      this.$emit("onApprove")
+    },onDisapprove(){
+      this.$emit("onDisapprove")
+    }
   },
   mounted() {
     this.payment_amount=this.amount

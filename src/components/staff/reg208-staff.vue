@@ -68,7 +68,7 @@
                 </template>
                 <template v-if="childDataLoaded && formInfo.payment_status">
                   <!-- <สร้างcomponentใหม่ไว้โชว์รูปหลักฐานการโอนเงินและปุ่มยกเลิกกับยืนยันเมื่อนักเรียนส่งหลักฐานการชำระเงินมาแล้ว/> -->
-                  <PaymentView :picture="formInfo.payment_doc" :amount="formInfo.payment_amount"/>
+                  <PaymentView :picture="formInfo.payment_doc" :amount="formInfo.payment_amount" @onApprove="onApprove" @onDisapprove="onDisapprove"/>
                 </template>
               </div>
             </div>
@@ -252,7 +252,41 @@ export default {
             console.log(error);
           });
       });
-    },
+    },onApprove(){
+      this.$confirm("Are you sure?").then(() => {
+        const formid = this.formInfo.form_id;
+        const studentid = this.formInfo.student_id;
+        const senddata = Object.assign({}, { formid, studentid });
+        const path = "http://127.0.0.1:5000/approvepayment";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("form has approve");
+            this.$router.push({ name: "List" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },onDisapprove(){
+      this.$confirm("Are you sure?").then(() => {
+        const formid = this.formInfo.form_id;
+        const studentid = this.formInfo.student_id;
+        const senddata = Object.assign({}, { formid, studentid });
+        const path = "http://127.0.0.1:5000/disapprovepayment";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("form has dis approve");
+            this.$router.push({ name: "List" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }
   },
   created() {
     this.id = this.$route.params.id;
