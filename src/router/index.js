@@ -16,6 +16,7 @@ import Listadvisor from '../components/advisor/list_advisor.vue'
 import Listdean from '../components/dean/list_dean.vue'
 import ViewReg209 from '../components/student/view/reg209-view.vue'
 import ViewReg208 from '../components/student/view/reg208-view.vue'
+import login from '../components/login.vue'
 
 Vue.use(VueRouter)
 
@@ -82,6 +83,11 @@ const routes = [{
         path: '/reg208_dean/:id',
         name: 'Reg208Dean',
         component: Reg208Dean
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: login
     },
     {
         path: '/list',

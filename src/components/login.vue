@@ -7,13 +7,13 @@
 					<p class="fontlogo mb-0 fs-6">MAE FAH LUANG UNIVERSITY</p>
 					<p class="fontlogo mt-0 fs-6">มหาวิทยาลัยแม่ฟ้าหลวง</p>
 				</div>
-				<form class="text-start">
 					<label for="inputID" style="text-align:left">ID</label>
 					<input
 						type="text"
 						id="inputID"
 						class="form-control"
 						placeholder="ID number"
+						v-model="userid"
 						required
 						autofocus
 					/>
@@ -23,23 +23,56 @@
 						id="inputPassword"
 						class="form-control"
 						placeholder="Password"
+						v-model="password"
 						required
 					/>
 					<button
-						@click="$router.push('/reg209_student')"
 						class="w-100 btn btn-lg btn-success mt-3"
 						type="submit"
+						v-on:click="handlesubmit"
 					>
 						Login
 					</button>
-				</form>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+	data(){
+		return{
+			userid:'',
+			password:''
+		}
+	},
+	methods:{
+		handlesubmit(){
+        const userid = this.userid;
+        const password = this.password;
+        const senddata = Object.assign({},{ userid,password});
+        const path = "http://127.0.0.1:5000/login";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+			if(!res.data){
+				this.$alert("error");
+			}else{
+				if(res.data.user_role=="student"){
+					this.$router.push({ name: "Liststudent", params: { userid: userid } });
+				}else if(res.data.user_role=="staff"){
+					this.$router.push({ name: "List", params: { userid: userid } });
+				}
+			}
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+		}
+	}
+};
 </script>
 
 <style scoped>

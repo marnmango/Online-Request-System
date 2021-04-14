@@ -381,6 +381,11 @@ export default {
     },
   },
   created() {
+    this.userid = this.$route.params.userid;
+    if (this.$route.query.debug) {
+      this.debug = this.$route.query.debug;
+    }
+    console.log(this.userid)
     this.getallform();
   },
   computed: {
