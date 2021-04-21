@@ -25,7 +25,7 @@
             class="navbar fixed-bottom navbar-light bg-light active-cont align-self-center justify-content-center"
           >
             <div style="margin-right: 180px">
-              <ul class="pagination">
+              <ul class="pagination pagination-sm">
                 <li
                   class="page-item"
                   v-for="(item, index) in numChangeTable"
@@ -44,7 +44,7 @@
           <table class="table table-hover">
             <thead class="text-center">
               <tr>
-                <th scope="col">#</th>
+                <th scope="col"></th>
                 <th scope="col" class="w-25">Date</th>
                 <th scope="col">Request Form</th>
                 <th scope="col">ID</th>
@@ -55,14 +55,7 @@
 
             <tbody class="text-center w-0">
               <tr v-for="form in formInfoFilter" :key="form.form_id">
-                <td class="text-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexCheckDefault"
-                    scope="row"
-                  />
-                </td>
+                <td class="text-center"></td>
                 <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.create_date }}
                 </td>
@@ -234,10 +227,10 @@ export default {
         })
         .then((form) => {
           this.allPage(form);
-          if (form.length < 10) {
+          if (form.length < 13) {
             this.last = form.length;
           } else {
-            this.last = 10;
+            this.last = 13;
           }
         });
     },
@@ -364,11 +357,11 @@ export default {
     },
     allPage(form) {
       let newArrayPage = [];
-      for (let i = 0; i < Math.ceil(form.length / 10); i++) {
-        if (form.length <= 10 * (i + 1)) {
-          newArrayPage.push({ i: i + 1, start: i * 10, stop: form.length });
+      for (let i = 0; i < Math.ceil(form.length / 13); i++) {
+        if (form.length <= 13 * (i + 1)) {
+          newArrayPage.push({ i: i + 1, start: i * 13, stop: form.length });
         } else {
-          newArrayPage.push({ i: i + 1, start: i * 10, stop: 10 * (i + 1) });
+          newArrayPage.push({ i: i + 1, start: i * 13, stop: 13 * (i + 1) });
         }
       }
       this.numChangeTable = newArrayPage;

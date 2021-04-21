@@ -7,11 +7,6 @@
           <h4>REGISTRAR DIVISION, MAE FAH LUANG UNIVERSITY</h4>
           <h4>Request Form for Re-entering Student</h4>
         </div>
-        <!-- เดี๋ยวมาเพิ่ม -->
-        <div>
-          <p>Progress flow</p>
-        </div>
-        <!-- เดี๋ยวมาเพิ่ม -->
         <div class="row gy-3 mx-5">
           <div class="col-6">
             <div class="p-3 border bg-light">
