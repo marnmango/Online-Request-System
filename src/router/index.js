@@ -50,32 +50,50 @@ const routes = [{
     {
         path: '/reg209_student',
         name: 'Reg209Student',
-        component: Reg209Student
+        component: Reg209Student,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg208_student',
         name: 'Reg208Student',
-        component: Reg208Student
+        component: Reg208Student,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg209_view/:id',
         name: 'ViewReg209',
-        component: ViewReg209
+        component: ViewReg209,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg208_view/:id',
         name: 'ViewReg208',
-        component: ViewReg208
+        component: ViewReg208,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg209_staff/:id',
         name: 'Reg209Staff',
-        component: Reg209Staff
+        component: Reg209Staff,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg208_staff/:id',
         name: 'Reg208Staff',
-        component: Reg208Staff
+        component: Reg208Staff,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/dashboard',
@@ -85,22 +103,34 @@ const routes = [{
     {
         path: '/reg209_advisor/:id',
         name: 'Reg209Advisor',
-        component: Reg209Advisor
+        component: Reg209Advisor,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg208_advisor/:id',
         name: 'Reg208Advisor',
-        component: Reg208Advisor
+        component: Reg208Advisor,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg209_dean/:id',
         name: 'Reg209Dean',
-        component: Reg209Dean
+        component: Reg209Dean,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/reg208_dean/:id',
         name: 'Reg208Dean',
-        component: Reg208Dean
+        component: Reg208Dean,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/login',
@@ -116,7 +146,10 @@ const routes = [{
     {
         path: '/list',
         name: 'List',
-        component: List
+        component: List,
+        meta: {
+            requiresAuth: true
+        }
     }, {
         path: '/list-student',
         redirect: {
@@ -125,7 +158,10 @@ const routes = [{
     }, {
         path: '/list-student',
         name: 'Liststudent',
-        component: Liststudent
+        component: Liststudent,
+        meta: {
+            requiresAuth: true
+        }
     }, {
         path: '/list-advisor',
         redirect: {
@@ -135,7 +171,10 @@ const routes = [{
     {
         path: '/list-advisor',
         name: 'Listadvisor',
-        component: Listadvisor
+        component: Listadvisor,
+        meta: {
+            requiresAuth: true
+        }
     }, {
         path: '/list-dean',
         redirect: {
@@ -145,7 +184,10 @@ const routes = [{
     {
         path: '/list-dean',
         name: 'Listdean',
-        component: Listdean
+        component: Listdean,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/list-view',
@@ -156,7 +198,10 @@ const routes = [{
     {
         path: '/list-view',
         name: 'ListViewStaff',
-        component: ListViewStaff
+        component: ListViewStaff,
+        meta: {
+            requiresAuth: true
+        }
     }
 
 ]
@@ -166,6 +211,19 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
+})
+router.beforeEach((to, from, next) => {
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+        if (localStorage.getItem('jwt') == null) {
+            next({
+                path: '/login'
+            })
+        }else{
+            next()
+        }
+    }else {
+        next()
+    }
 })
 
 export default router
