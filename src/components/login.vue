@@ -57,12 +57,14 @@ export default {
           .post(path, senddata)
           .then((res) => {
             console.log(res.data);
-			if(!res.data){
+			if(!res.data.auth){
 				this.$alert("error");
 			}else{
-				if(res.data.user_role=="student"){
+				localStorage.setItem('user',JSON.stringify(res.data.user))
+                localStorage.setItem('jwt',res.data.token)
+				if(res.data.user.user_role=="student"){
 					this.$router.push({ name: "Liststudent", params: { userid: userid } });
-				}else if(res.data.user_role=="staff"){
+				}else if(res.data.user.user_role=="staff"){
 					this.$router.push({ name: "List", params: { userid: userid } });
 				}
 			}
@@ -71,6 +73,9 @@ export default {
             console.log(error);
           });
 		}
+	},created(){
+		localStorage.removeItem("jwt");
+		localStorage.removeItem("user");
 	}
 };
 </script>
