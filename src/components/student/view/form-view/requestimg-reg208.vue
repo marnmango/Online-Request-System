@@ -57,8 +57,10 @@ export default {
 
 <style scoped>
 .pic {
-  height: 900px;
-  width: auto;
+  max-width: 100%;
+  width: 50rem;
+  height: auto !important;
+  object-fit: cover;
 }
 
 #myImg {

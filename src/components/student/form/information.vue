@@ -83,8 +83,8 @@
         type="tel"
         maxlength="10"
         min="0"
-        pattern="[0-9]{10}"
-        placeholder="0912345678"
+        pattern="[0][0-9]{9}"
+        placeholder="0xxxxxxxxx"
         v-model="phone"
         class="form-control w-25"
         id="phoneNumber"
@@ -98,6 +98,11 @@
 
 <script>
 export default {
+  watch: {
+    phone() {
+      this.phone = this.phone.replace(/[^0-9]/g, "");
+    },
+  },
   props: {
     info: Object,
     Alphone: Number,

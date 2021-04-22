@@ -40,19 +40,19 @@
             </div>
             <template v-if="childDataLoaded">
               <div class="col-6" v-for="(pic, index) in picture" :key="index">
-                <div class="p-3 border bg-light h-100">
+                <div class="p-3 border bg-light">
                   <RequestImg208 :picture="pic" />
                 </div>
               </div>
             </template>
             <div class="col-6 h-100">
               <template v-if="childDataLoaded && formInfo.progress_status == 1">
-                <div class="p-3 border bg-light">
+                <div class="p-3 border bg-light h-100">
                   <Comment208 @onCancel="onCancel" @onSubmit="onSubmit" />
                 </div>
               </template>
               <template v-if="childDataLoaded && formInfo.progress_status != 1">
-                <div class="p-3 border bg-light">
+                <div class="p-3 border bg-light h-100">
                   <Comment208
                     :staff_comment="formInfo.staff_comment"
                     :advisor_comment="formInfo.advisor_comment"
@@ -62,13 +62,22 @@
               </template>
               <div class="row-6 p-3 border bg-light mt-3">
                 <template
-                  v-if="childDataLoaded && formInfo.progress_status == 4 && !formInfo.payment_status"
+                  v-if="
+                    childDataLoaded &&
+                    formInfo.progress_status == 4 &&
+                    !formInfo.payment_status
+                  "
                 >
                   <Payment @onSetDept="onSetDept" />
                 </template>
                 <template v-if="childDataLoaded && formInfo.payment_status">
                   <!-- <สร้างcomponentใหม่ไว้โชว์รูปหลักฐานการโอนเงินและปุ่มยกเลิกกับยืนยันเมื่อนักเรียนส่งหลักฐานการชำระเงินมาแล้ว/> -->
-                  <PaymentView :picture="formInfo.payment_doc" :amount="formInfo.payment_amount" @onApprove="onApprove" @onDisapprove="onDisapprove"/>
+                  <PaymentView
+                    :picture="formInfo.payment_doc"
+                    :amount="formInfo.payment_amount"
+                    @onApprove="onApprove"
+                    @onDisapprove="onDisapprove"
+                  />
                 </template>
               </div>
             </div>
@@ -252,7 +261,8 @@ export default {
             console.log(error);
           });
       });
-    },onApprove(){
+    },
+    onApprove() {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
         const studentid = this.formInfo.student_id;
@@ -269,7 +279,8 @@ export default {
             console.log(error);
           });
       });
-    },onDisapprove(){
+    },
+    onDisapprove() {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
         const studentid = this.formInfo.student_id;
@@ -286,7 +297,7 @@ export default {
             console.log(error);
           });
       });
-    }
+    },
   },
   created() {
     this.id = this.$route.params.id;

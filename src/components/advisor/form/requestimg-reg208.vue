@@ -60,6 +60,7 @@ export default {
   max-width: 100%;
   width: 50rem;
   height: auto !important;
+  object-fit: cover;
 }
 
 #myImg {
