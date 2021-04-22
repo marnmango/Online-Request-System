@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import NewRequest from '../components/student/newrequest.vue'
 import Reg209Student from '../components/student/reg209-student.vue'
 import Reg208Student from '../components/student/reg208-student.vue'
 import Reg209Staff from '../components/staff/reg209-staff.vue'
 import Reg208Staff from '../components/staff/reg208-staff.vue'
+import Dashboard from '../components/staff/dashboard.vue'
 import ListViewStaff from '../components/staff/listview-staff.vue'
 import Reg209Advisor from '../components/advisor/reg209-advisor.vue'
 import Reg208Advisor from '../components/advisor/reg208-advisor.vue'
@@ -33,6 +35,17 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue')
+    },
+    {
+        path: '/newrequest',
+        name: 'NewRequest',
+        component: NewRequest
+    },
+    {
+        path: '/newrequest',
+        redirect: {
+            name: "NewRequest"
+        }
     },
     {
         path: '/reg209_student',
@@ -81,6 +94,11 @@ const routes = [{
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: Dashboard
     },
     {
         path: '/reg209_advisor/:id',

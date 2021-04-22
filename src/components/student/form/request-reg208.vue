@@ -51,9 +51,8 @@
           >
           <input
             type="number"
-            min="2018"
-            max="2100"
-            maxlength="4"
+            pattern="/^-?\d+\.?\d*$/"
+            onKeyPress="if(this.value.length==4) return false;"
             class="form-control"
             id="fromAcademic"
             placeholder="Year"
@@ -75,9 +74,8 @@
           <label for="toAcademic" class="form-label mb-0">Academic Year</label>
           <input
             type="number"
-            min="2018"
-            max="2100"
-            maxlength="4"
+            pattern="/^-?\d+\.?\d*$/"
+            onKeyPress="if(this.value.length==4) return false;"
             class="form-control"
             id="toAcademic"
             placeholder="Year"
@@ -91,31 +89,33 @@
         <label for="name" class="form-label mb-0 mt-3"
           >Reasons for on leave</label
         >
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="request_radio"
-            id="request_radio_1"
-            v-bind:checked="request_radio_1"
-            v-on:click="disableIllnessRadio"
-          />
-          <label class="form-check-label" for="request_readio_1">
-            Illness with a document and the name of a medical provider
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="request_radio"
-            id="request_radio_2"
-            v-bind:checked="request_radio_2"
-            v-on:click="disableOtherRadio"
-          />
-          <label class="form-check-label" for="request_checkbox_2">
-            Other reason ( indicate )
-          </label>
+        <div class="row mx-4 my-2">
+          <div class="form-check col col-lg-6 col-md-6">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_1"
+              v-bind:checked="request_radio_1"
+              v-on:click="disableIllnessRadio"
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Illness with a document and the name of a medical provider
+            </label>
+          </div>
+          <div class="form-check col col-lg-6 col-md-6">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_2"
+              v-bind:checked="request_radio_2"
+              v-on:click="disableOtherRadio"
+            />
+            <label class="form-check-label" for="request_checkbox_2">
+              Other reason ( indicate )
+            </label>
+          </div>
         </div>
       </div>
       <div class="form-check">
@@ -123,7 +123,7 @@
           <textarea
             class="form-control"
             id="Other"
-            rows="3"
+            rows="5"
             v-model="re_text"
             required
           ></textarea>

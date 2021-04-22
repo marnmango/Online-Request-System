@@ -25,9 +25,17 @@
             class="navbar fixed-bottom navbar-light bg-light active-cont align-self-center justify-content-center"
           >
             <div style="margin-right: 180px">
-              <ul class="pagination">
-                <li class="page-item" v-for="(item,index) in numChangeTable" :key="index">
-                  <a class="page-link" v-on:click="() => onclickpage(item.start,item.stop)">{{item.i}}</a>
+              <ul class="pagination pagination-sm">
+                <li
+                  class="page-item"
+                  v-for="(item, index) in numChangeTable"
+                  :key="index"
+                >
+                  <a
+                    class="page-link"
+                    v-on:click="() => onclickpage(item.start, item.stop)"
+                    >{{ item.i }}</a
+                  >
                 </li>
               </ul>
             </div>
@@ -36,7 +44,7 @@
           <table class="table table-hover">
             <thead class="text-center">
               <tr>
-                <th scope="col">#</th>
+                <th scope="col"></th>
                 <th scope="col" class="w-25">Date</th>
                 <th scope="col">Request Form</th>
                 <th scope="col">ID</th>
@@ -47,28 +55,21 @@
 
             <tbody class="text-center w-0">
               <tr v-for="form in formInfoFilter" :key="form.form_id">
-                <td class="text-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexCheckDefault"
-                    scope="row"
-                  />
-                </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td class="text-center"></td>
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.create_date }}
                 </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.form_aka }}
                 </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.student_id }}
                 </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.student_name }}
                 </td>
                 <td
-                  v-on:click="() => getFormData(form.form_id,form.form_cat)"
+                  v-on:click="() => getFormData(form.form_id, form.form_cat)"
                   v-bind:style="{
                     'background-color': colorStatus[form.status],
                   }"
@@ -83,83 +84,90 @@
         </div>
 
         <!-- fillter -->
-        <div class="col-2">
+        <div class="col-2 filter">
           <div class="container side-navbar active-nav bg-light p-3 w-25">
             <h4>Filter</h4>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="filter"
-                id="formName"
-                v-on:click="onChangeName"
-              />
-              <label class="form-check-label" for="flexRadioDefault1">
-                Form Name
-              </label>
+            <div class="w-50">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="filter"
+                  id="formName"
+                  v-on:click="onChangeName"
+                />
+                <label class="form-check-label" for="formName">
+                  Form Name
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="filter"
+                  id="ID"
+                  v-on:click="onChangeId"
+                />
+                <label class="form-check-label" for="ID"> ID </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="filter"
+                  id="status"
+                  v-on:click="sortStatus"
+                />
+                <label class="form-check-label" for="status"> Status </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="filter"
+                  id="descending_date"
+                  v-on:click="sortDateDescend"
+                />
+                <label class="form-check-label" for="descending_date">
+                  Descending created date
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="filter"
+                  id="ascending_date"
+                  v-on:click="sortDateAscend"
+                />
+                <label class="form-check-label" for="ascending_date">
+                  Ascending created date
+                </label>
+              </div>
             </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="filter"
-                id="ID"
-                v-on:click="onChangeId"
-              />
-              <label class="form-check-label" for="flexRadioDefault2">
-                ID
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="filter"
-                id="status"
-                v-on:click="sortStatus"
-              />
-              <label class="form-check-label" for="flexRadioDefault2">
-                Status
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="filter"
-                id="descending_date"
-                v-on:click="sortDateDescend"
-              />
-              <label class="form-check-label" for="flexRadioDefault2">
-                Descending created date
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="filter"
-                id="ascending_date"
-                v-on:click="sortDateAscend"
-              />
-              <label class="form-check-label" for="flexRadioDefault2">
-                Ascending created date
-              </label>
-            </div>
+
             <!-- ที่ใส่วันที่filter -->
-            <div style="width: 210px">
+            <div class="w-50">
               <div class="form-check mt-4 mb-2">
                 <p class="m-0">Start Date</p>
-                <input type="date" v-model="startDate" class="form-control" />
+                <input
+                  type="date"
+                  v-model="startDate"
+                  class="form-control form-control-edit"
+                />
               </div>
               <div class="form-check mb-2">
                 <p class="m-0">End Date</p>
-                <input type="date" v-model="endDate" class="form-control" />
+                <input
+                  type="date"
+                  v-model="endDate"
+                  class="form-control form-control-edit"
+                />
                 <!-- ปุ่มรีเฟรชหน้า -->
                 <div class="d-grid gap-2 mt-3">
                   <button
                     type="button"
-                    class="btn btn-outline-success"
+                    class="btn btn-outline-success smallfil"
                     id="refresh"
                     v-on:click="onRefresh"
                   >
@@ -188,7 +196,7 @@ export default {
   },
   data() {
     return {
-      userid:'',
+      userid: "",
       formInfo: [],
       search: "",
       checked: "",
@@ -198,11 +206,11 @@ export default {
         staff: "#b0b6ba",
         advisor: "#ffc107",
         dean: "#28a745",
-        Disapproved: 'red'
+        Disapproved: "red",
       },
-      head:0,
-      last:'',
-      numChangeTable: []
+      head: 0,
+      last: "",
+      numChangeTable: [],
     };
   },
   methods: {
@@ -213,26 +221,26 @@ export default {
         .then((res) => {
           console.log(res.data);
           this.formInfo = res.data;
-          return this.formInfo
+          return this.formInfo;
         })
         .catch((error) => {
           console.log(error);
-        }).then((form)=>{
-          this.allPage(form)
-          if(form.length<10){
-              this.last=form.length
-          }else{
-              this.last=10
+        })
+        .then((form) => {
+          this.allPage(form);
+          if (form.length < 13) {
+            this.last = form.length;
+          } else {
+            this.last = 13;
           }
-          })
+        });
     },
     getFormData(id, form_cat) {
-      let address =""
-      if(form_cat==209){
-         address = "Reg209Staff";
-      }
-      else if(form_cat==208){
-         address = "Reg208Staff"
+      let address = "";
+      if (form_cat == 209) {
+        address = "Reg209Staff";
+      } else if (form_cat == 208) {
+        address = "Reg208Staff";
       }
       this.$router.push({ name: address, params: { id: id } });
     },
@@ -347,29 +355,30 @@ export default {
     },
     onRefresh() {
       location.reload();
-    },allPage(form){
-      let newArrayPage =[]
-      for(let i= 0;i<Math.ceil((form.length/10));i++){
-          if(form.length<=10*(i+1)){
-              newArrayPage.push({i:i+1,start:i*10,stop:form.length})
-          }
-          else{
-            newArrayPage.push({i:i+1,start:i*10,stop:10*(i+1)})
-          }
+    },
+    allPage(form) {
+      let newArrayPage = [];
+      for (let i = 0; i < Math.ceil(form.length / 13); i++) {
+        if (form.length <= 13 * (i + 1)) {
+          newArrayPage.push({ i: i + 1, start: i * 13, stop: form.length });
+        } else {
+          newArrayPage.push({ i: i + 1, start: i * 13, stop: 13 * (i + 1) });
+        }
       }
-      this.numChangeTable = newArrayPage
-    },onclickpage(start,stop){
-      this.head=start
-      this.last=stop
-    }
+      this.numChangeTable = newArrayPage;
+    },
+    onclickpage(start, stop) {
+      this.head = start;
+      this.last = stop;
+    },
   },
   created() {
     this.userid = this.$route.params.userid;
     if (this.$route.query.debug) {
       this.debug = this.$route.query.debug;
     }
-    console.log(this.userid)
-    this.getallform()
+    console.log(this.userid);
+    this.getallform();
   },
   computed: {
     formInfoFilter() {
@@ -379,29 +388,30 @@ export default {
           this.formInfo.filter((form) => {
             return form.status.toLowerCase().indexOf(search) > -1;
           })
-        ).slice(this.head,this.last)
+        ).slice(this.head, this.last);
       } else if (this.checked == "form_name") {
         return this.filteredDate(
           this.formInfo.filter((form) => {
             return form.form_aka.toLowerCase().indexOf(search) > -1;
           })
-        ).slice(this.head,this.last)
+        ).slice(this.head, this.last);
       } else if (this.checked == "id") {
         return this.filteredDate(
           this.formInfo.filter((form) => {
             return form.student_id.toString().indexOf(search) > -1;
           })
-        ).slice(this.head,this.last)
+        ).slice(this.head, this.last);
       } else {
-        return this.filteredDate(this.formInfo).slice(this.head,this.last);
+        return this.filteredDate(this.formInfo).slice(this.head, this.last);
       }
-    }
-  },watch:{
-      search:function() {
-          this.head='0'
-          this.last=10
-      }
-  }
+    },
+  },
+  watch: {
+    search: function () {
+      this.head = "0";
+      this.last = 10;
+    },
+  },
 };
 </script>
 
@@ -448,5 +458,18 @@ li.onprocess {
   line-height: 25px;
   border-radius: 40px;
   margin: 0;
+}
+.form-control-edit {
+  padding: 0;
+}
+@media screen and (max-width: 1400px) {
+  .smallfil {
+    font-size: 12px;
+    width: auto;
+    height: auto;
+  }
+  .form-control-edit {
+    font-size: 12px;
+  }
 }
 </style>

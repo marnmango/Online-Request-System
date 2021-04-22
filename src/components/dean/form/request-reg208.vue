@@ -83,29 +83,31 @@
         <label for="name" class="form-label mb-0 mt-3"
           >Reasons for on leave</label
         >
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="request_readio"
-            id="request_radio_1"
-            v-model="request_radio_1"
-            disabled
-          />
-          <label for="request_radio_1">
-            Illness with a document and the name of a medical provider
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="request_radio"
-            id="request_radio_2"
-            v-model="request_radio_2"
-            disabled
-          />
-          <label for="request_radio_2"> Other reason ( indicate ) </label>
+        <div class="row mx-4 my-2">
+          <div class="form-check col col-lg-6 col-md-6">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_readio"
+              id="request_radio_1"
+              v-model="request_radio_1"
+              disabled
+            />
+            <label for="request_radio_1">
+              Illness with a document and the name of a medical provider
+            </label>
+          </div>
+          <div class="form-check col col-lg-6 col-md-6">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_2"
+              v-model="request_radio_2"
+              disabled
+            />
+            <label for="request_radio_2"> Other reason ( indicate ) </label>
+          </div>
         </div>
       </div>
       <div class="form-check">
@@ -113,7 +115,7 @@
           <textarea
             class="form-control"
             id="Other"
-            rows="3"
+            rows="5"
             v-model="re_text"
             readonly
           ></textarea>
