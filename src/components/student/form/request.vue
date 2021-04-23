@@ -62,11 +62,13 @@
 export default {
   props: {
     formInfo: Object,
+    requestsemes: String,
+    requestadmy: Number
   },
   data() {
     return {
-      re_semester: "first",
-      re_academic_year: 2021,
+      re_semester: "",
+      re_academic_year: "",
       re_text: "",
     };
   },
@@ -105,6 +107,9 @@ export default {
         document.getElementById("exampleFormControlTextarea1").disabled = true;
         // document.getElementById("cancel").remove()
         // document.getElementById("submit").remove()
+      }else{
+        this.re_semester = this.requestsemes
+        this.re_academic_year = this.requestadmy
       }
     },
   },
