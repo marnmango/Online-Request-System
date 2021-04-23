@@ -67,6 +67,10 @@ export default {
 					this.$router.push({ name: "Liststudent", params: { userid: userid } });
 				}else if(res.data.user.user_role=="staff"){
 					this.$router.push({ name: "List", params: { userid: userid } });
+				}else if(res.data.user.user_role=="advisor"){
+					this.$router.push({ name: "Listadvisor", params: { userid: userid } });
+				}else if(res.data.user.user_role=="dean"){
+					this.$router.push({ name: "Listdean", params: { userid: userid } });
 				}
 			}
           })

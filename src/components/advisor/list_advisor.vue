@@ -189,6 +189,7 @@ export default {
   },
   data() {
     return {
+      userid:'',
       formInfo: [],
       search: "",
       checked: "",
@@ -207,7 +208,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = pathapi+"/getformadvisor";
+      const path = pathapi+"/getformadvisor?id="+this.userid;
       axios
         .get(path)
         .then((res) => {
@@ -364,6 +365,8 @@ export default {
     }
   },
   created() {
+    this.userid=JSON.parse(localStorage.getItem('user')).user_id
+    console.log(this.userid);
     this.getallform()
   },
   computed: {
