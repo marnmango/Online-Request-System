@@ -24,8 +24,6 @@
                 <InformationForm
                   :info="studentInfo"
                   :Alphone="formInfo.phone"
-                  :create_sem="create_semester"
-                  :create_aca="create_academic_year"
                 />
               </template>
             </div>
@@ -64,6 +62,7 @@ import RequestForm from "./form-view/request-reg209.vue";
 import CommentAdvisor from "./form-view/comment-advisor.vue";
 import CommentDean from "./form-view/comment-dean.vue";
 import axios from "axios";
+import pathapi from "../../../pathapi.js"
 
 export default {
   components: {
@@ -80,28 +79,24 @@ export default {
       st_phone: "",
       studentInfo: "",
       childDataLoaded: false,
-      create_semester: "",
-      create_academic_year: "",
     };
   },
   methods: {
     getformInfo() {
-      let path = "http://127.0.0.1:5000/get209?id=" + this.id;
+      let path = pathapi+"/get209?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          this.create_semester = this.formInfo.create_semester;
-          this.create_academic_year = this.formInfo.create_academic_year;
           return this.formInfo.student_id;
         })
         .catch((error) => {
           console.log(error);
         })
         .then((id) => {
-          let path = "http://127.0.0.1:5000/?id=" + id;
+          let path = pathapi+"/?id=" + id;
           axios
             .get(path)
             .then((res) => {

@@ -187,6 +187,7 @@
 <script>
 import Navbar from "../student/navStudent.vue";
 import axios from "axios";
+import pathapi from '../../pathapi.js';
 export default {
   props: {
     info: Object,
@@ -214,7 +215,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getallform";
+      const path = pathapi+"/getallform";
       axios
         .get(path)
         .then((res) => {

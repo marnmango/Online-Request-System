@@ -52,7 +52,8 @@ const routes = [{
         name: 'Reg209Student',
         component: Reg209Student,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_student:true
         }
     },
     {
@@ -60,7 +61,8 @@ const routes = [{
         name: 'Reg208Student',
         component: Reg208Student,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_student:true
         }
     },
     {
@@ -84,7 +86,8 @@ const routes = [{
         name: 'Reg209Staff',
         component: Reg209Staff,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_staff:true
         }
     },
     {
@@ -92,7 +95,8 @@ const routes = [{
         name: 'Reg208Staff',
         component: Reg208Staff,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_staff:true
         }
     },
     {
@@ -105,7 +109,8 @@ const routes = [{
         name: 'Reg209Advisor',
         component: Reg209Advisor,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_advisor:true
         }
     },
     {
@@ -113,7 +118,8 @@ const routes = [{
         name: 'Reg208Advisor',
         component: Reg208Advisor,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_advisor:true
         }
     },
     {
@@ -121,7 +127,8 @@ const routes = [{
         name: 'Reg209Dean',
         component: Reg209Dean,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_dean:true
         }
     },
     {
@@ -129,7 +136,8 @@ const routes = [{
         name: 'Reg208Dean',
         component: Reg208Dean,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_dean:true
         }
     },
     {
@@ -148,7 +156,8 @@ const routes = [{
         name: 'List',
         component: List,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_staff:true
         }
     }, {
         path: '/list-student',
@@ -160,7 +169,8 @@ const routes = [{
         name: 'Liststudent',
         component: Liststudent,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_student:true
         }
     }, {
         path: '/list-advisor',
@@ -173,7 +183,8 @@ const routes = [{
         name: 'Listadvisor',
         component: Listadvisor,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_advisor:true
         }
     }, {
         path: '/list-dean',
@@ -186,7 +197,8 @@ const routes = [{
         name: 'Listdean',
         component: Listdean,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_dean:true
         }
     },
     {
@@ -200,7 +212,8 @@ const routes = [{
         name: 'ListViewStaff',
         component: ListViewStaff,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_staff:true
         }
     }
 
@@ -219,7 +232,44 @@ router.beforeEach((to, from, next) => {
                 path: '/login'
             })
         }else{
-            next()
+            let user = JSON.parse(localStorage.getItem('user')).user_role
+            if(to.matched.some(record => record.meta.is_student)) {
+                if(user=="student"){
+                    next()
+                }else{
+                    next({
+                        path: '/login'
+                    })
+                }
+            }else if(to.matched.some(record => record.meta.is_staff)) {
+                if(user=="staff"){
+                    next()
+                }else{
+                    next({
+                        path: '/login'
+                    })
+                }
+            }else if(to.matched.some(record => record.meta.is_advisor)) {
+                if(user=="advisor"){
+                    next()
+                }else{
+                    next({
+                        path: '/login'
+                    })
+                }
+            }else if(to.matched.some(record => record.meta.is_dean)) {
+                if(user=="dean"){
+                    next()
+                }else{
+                    next({
+                        path: '/login'
+                    })
+                }
+            }else{
+                next({
+                    path: '/login'
+                })
+            }
         }
     }else {
         next()

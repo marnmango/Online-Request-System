@@ -40,6 +40,7 @@
 
 <script>
 import axios from "axios";
+import pathapi from "../pathapi.js"
 export default {
 	data(){
 		return{
@@ -52,7 +53,7 @@ export default {
         const userid = this.userid;
         const password = this.password;
         const senddata = Object.assign({},{ userid,password});
-        const path = "http://127.0.0.1:5000/login";
+        const path = pathapi+"/login";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -66,6 +67,10 @@ export default {
 					this.$router.push({ name: "Liststudent", params: { userid: userid } });
 				}else if(res.data.user.user_role=="staff"){
 					this.$router.push({ name: "List", params: { userid: userid } });
+				}else if(res.data.user.user_role=="advisor"){
+					this.$router.push({ name: "Listadvisor", params: { userid: userid } });
+				}else if(res.data.user.user_role=="dean"){
+					this.$router.push({ name: "Listdean", params: { userid: userid } });
 				}
 			}
           })

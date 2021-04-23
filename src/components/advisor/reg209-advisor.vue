@@ -21,7 +21,7 @@
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm">
               <template v-if="childDataLoaded">
-              <InformationForm :info="studentInfo" :Alphone="formInfo.phone" :create_sem="create_semester" :create_aca="create_academic_year"/>
+              <InformationForm :info="studentInfo" :Alphone="formInfo.phone" />
               </template>
             </div>
           </div>
@@ -58,6 +58,7 @@ import InformationForm from "../advisor/form/information.vue";
 import RequestForm from "../advisor/form/request.vue";
 import CommentAdvisor from "../advisor/form/comment-advisor.vue";
 import CommentDean from "../advisor/form/comment-dean.vue";
+import pathapi from "../../pathapi.js"
 import axios from 'axios';
 
 export default {
@@ -75,26 +76,26 @@ export default {
       st_phone:'',
       studentInfo:'',
       childDataLoaded:false,
-      create_semester:'',
-      create_academic_year:''
+      // create_semester:'',
+      // create_academic_year:''
     };
   },
   methods:{
   getformInfo(){
-	let path = 'http://127.0.0.1:5000/get209?id='+this.id ;
+	let path = pathapi+'/get209?id='+this.id ;
 			axios.get(path)
 				.then((res)=>{
 					console.log(res.data)
 					this.formInfo = res.data;
           this.st_phone = this.formInfo.phone
-          this.create_semester=this.formInfo.create_semester
-          this.create_academic_year=this.formInfo.create_academic_year
+          // this.create_semester=this.formInfo.create_semester
+          // this.create_academic_year=this.formInfo.create_academic_year
           return this.formInfo.student_id
 				})
 				.catch((error)=>{
 					console.log(error)
 				}).then((id)=>{
-          let path = 'http://127.0.0.1:5000/?id='+id ;
+          let path = pathapi+'/?id='+id ;
          axios.get(path)
 				.then((res)=>{
 					console.log(res.data)
@@ -137,7 +138,7 @@ export default {
       const advisorComment = value
       const deanid = this.formInfo.dean_id
       const senddata = Object.assign({},{formid,advisorComment,formcat,deanid})
-      const path = 'http://127.0.0.1:5000/advisorsubmit';
+      const path = pathapi+'/advisorsubmit';
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)

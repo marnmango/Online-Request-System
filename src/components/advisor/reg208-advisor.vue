@@ -25,8 +25,6 @@
                   <InformationForm
                     :info="studentInfo"
                     :Alphone="formInfo.phone"
-                    :create_sem="create_semester"
-                    :create_aca="create_academic_year"
                   />
                 </template>
               </div>
@@ -68,6 +66,7 @@ import Comment208 from "./form/comment-reg208.vue";
 import RequestImg208 from "./form/requestimg-reg208.vue";
 
 import axios from "axios";
+import pathapi from '../../pathapi';
 export default {
   components: {
     Navbar,
@@ -84,22 +83,22 @@ export default {
       st_phone: "",
       studentInfo: "",
       childDataLoaded: false,
-      create_semester: "",
-      create_academic_year: "",
+      // create_semester: "",
+      // create_academic_year: "",
       picture: [],
     };
   },
   methods: {
     getformInfo() {
-      let path = "http://127.0.0.1:5000/get208?id=" + this.id;
+      let path = pathapi+"/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          this.create_semester = this.formInfo.create_semester;
-          this.create_academic_year = this.formInfo.create_academic_year;
+          // this.create_semester = this.formInfo.create_semester;
+          // this.create_academic_year = this.formInfo.create_academic_year;
           this.picture = JSON.parse(this.formInfo.reason_doc);
           return this.formInfo.student_id;
         })
@@ -107,7 +106,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = "http://127.0.0.1:5000/?id=" + id;
+          let path = pathapi+"/?id=" + id;
           axios
             .get(path)
             .then((res) => {
@@ -172,7 +171,7 @@ export default {
           {},
           { formid, advisorComment, formcat, deanid }
         );
-        const path = "http://127.0.0.1:5000/advisorsubmit";
+        const path = pathapi+"/advisorsubmit";
         axios
           .post(path, senddata)
           .then((res) => {

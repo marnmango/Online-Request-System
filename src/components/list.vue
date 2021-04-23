@@ -187,6 +187,7 @@
 <script>
 import Navbar from "../components/student/navStudent.vue";
 import axios from "axios";
+import pathapi from "../pathapi.js"
 export default {
   props: {
     info: Object,
@@ -215,7 +216,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getstaffform";
+      const path = pathapi+"/getstaffform";
       axios
         .get(path)
         .then((res) => {
@@ -242,7 +243,7 @@ export default {
       } else if (form_cat == 208) {
         address = "Reg208Staff";
       }
-      this.$router.push({ name: address, params: { id: id } });
+      this.$router.push({ name: address, params: { id: id,staff_id:this.userid } });
     },
     sortDateAscend() {
       // this.formInfo.sort(function (first,last) {
@@ -373,10 +374,11 @@ export default {
     },
   },
   created() {
-    this.userid = this.$route.params.userid;
-    if (this.$route.query.debug) {
-      this.debug = this.$route.query.debug;
-    }
+    // this.userid = this.$route.params.userid;
+    // if (this.$route.query.debug) {
+    //   this.debug = this.$route.query.debug;
+    // }
+    this.userid=JSON.parse(localStorage.getItem('user')).user_id
     console.log(this.userid);
     this.getallform();
   },

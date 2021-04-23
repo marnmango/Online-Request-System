@@ -25,8 +25,6 @@
                   <InformationForm
                     :info="studentInfo"
                     :Alphone="formInfo.phone"
-                    :create_sem="create_semester"
-                    :create_aca="create_academic_year"
                   />
                 </template>
               </div>
@@ -97,6 +95,7 @@ import RequestImg208 from "./form/requestimg-reg208.vue";
 import Payment from "./form/payment.vue";
 import PaymentView from "./form/payment-view.vue";
 import axios from "axios";
+import pathapi from '../../pathapi.js';
 export default {
   components: {
     Navbar,
@@ -111,28 +110,28 @@ export default {
   data() {
     return {
       // staff_id is prop when log in
-      staff_id: 1111,
+      staff_id: "",
       id: "",
       formInfo: "",
       st_phone: "",
       studentInfo: "",
       childDataLoaded: false,
-      create_semester: "",
-      create_academic_year: "",
+      // create_semester: "",
+      // create_academic_year: "",
       picture: [],
     };
   },
   methods: {
     getformInfo() {
-      let path = "http://127.0.0.1:5000/get208?id=" + this.id;
+      let path = pathapi+"/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          this.create_semester = this.formInfo.create_semester;
-          this.create_academic_year = this.formInfo.create_academic_year;
+          // this.create_semester = this.formInfo.create_semester;
+          // this.create_academic_year = this.formInfo.create_academic_year;
           this.picture = JSON.parse(this.formInfo.reason_doc);
           return this.formInfo.student_id;
         })
@@ -140,7 +139,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = "http://127.0.0.1:5000/?id=" + id;
+          let path = pathapi+"/?id=" + id;
           axios
             .get(path)
             .then((res) => {
@@ -206,7 +205,7 @@ export default {
           {},
           { formid, staffid, formcat, advisorid, staffcomment }
         );
-        const path = "http://127.0.0.1:5000/staffsubmit";
+        const path = pathapi+"/staffsubmit";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -219,37 +218,37 @@ export default {
           });
       });
     },
-    onCancel(value) {
-      this.$confirm("Are you sure?").then(() => {
-        const formid = this.formInfo.form_id;
-        const staffid = this.staff_id;
-        const studentid = this.formInfo.student_id;
-        const formcat = this.formInfo.form_cat;
-        const staffcomment = value;
-        const senddata = Object.assign(
-          {},
-          { formid, staffid, studentid, staffcomment, formcat }
-        );
-        const path = "http://127.0.0.1:5000/cancel";
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-            this.$alert("the request had cancel");
-            this.$router.push({ name: "List" });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    },
+    // onCancel(value) {
+    //   this.$confirm("Are you sure?").then(() => {
+    //     const formid = this.formInfo.form_id;
+    //     const staffid = this.staff_id;
+    //     const studentid = this.formInfo.student_id;
+    //     const formcat = this.formInfo.form_cat;
+    //     const staffcomment = value;
+    //     const senddata = Object.assign(
+    //       {},
+    //       { formid, staffid, studentid, staffcomment, formcat }
+    //     );
+    //     const path = "http://127.0.0.1:5000/cancel";
+    //     axios
+    //       .post(path, senddata)
+    //       .then((res) => {
+    //         console.log(res.data);
+    //         this.$alert("the request had cancel");
+    //         this.$router.push({ name: "List" });
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   });
+    // },
     onSetDept(value) {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
         const studentid = this.formInfo.student_id;
         const amount = value;
         const senddata = Object.assign({}, { formid, studentid, amount });
-        const path = "http://127.0.0.1:5000/setdept";
+        const path = pathapi+"/setdept";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -267,7 +266,7 @@ export default {
         const formid = this.formInfo.form_id;
         const studentid = this.formInfo.student_id;
         const senddata = Object.assign({}, { formid, studentid });
-        const path = "http://127.0.0.1:5000/approvepayment";
+        const path = pathapi+"/approvepayment";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -285,7 +284,7 @@ export default {
         const formid = this.formInfo.form_id;
         const studentid = this.formInfo.student_id;
         const senddata = Object.assign({}, { formid, studentid });
-        const path = "http://127.0.0.1:5000/disapprovepayment";
+        const path = pathapi+"/disapprovepayment";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -301,6 +300,7 @@ export default {
   },
   created() {
     this.id = this.$route.params.id;
+    this.staff_id = this.$route.params.staff_id;
     if (this.$route.query.debug) {
       this.debug = this.$route.query.debug;
     }
