@@ -187,6 +187,7 @@
 <script>
 import Navbar from "./navStudent.vue";
 import axios from "axios";
+import pathapi from "../../pathapi.js"
 export default {
   props: {
     info: Object,
@@ -196,8 +197,7 @@ export default {
   },
   data() {
     return {
-      // receive id from log in
-      student_id: 6131305010,
+      userid:'',
       formInfo: [],
       search: "",
       checked: "",
@@ -216,7 +216,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getstudentform?id=" + this.student_id;
+      const path = pathapi+"/getstudentform?id=" + this.userid;
       axios
         .get(path)
         .then((res) => {
@@ -374,10 +374,11 @@ export default {
     },
   },
   created() {
-    this.userid = this.$route.params.userid;
-    if (this.$route.query.debug) {
-      this.debug = this.$route.query.debug;
-    }
+    // this.userid = this.$route.params.userid;
+    // if (this.$route.query.debug) {
+    //   this.debug = this.$route.query.debug;
+    // }
+    this.userid=JSON.parse(localStorage.getItem('user')).user_id
     console.log(this.userid);
     this.getallform();
   },

@@ -179,6 +179,7 @@
 <script>
 import Navbar from "../student/navStudent";
 import axios from "axios";
+import pathapi from "../../pathapi.js"
 export default {
   props: {
     info: Object,
@@ -206,7 +207,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getformadvisor";
+      const path = pathapi+"/getformadvisor";
       axios
         .get(path)
         .then((res) => {

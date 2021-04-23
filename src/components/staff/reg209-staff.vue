@@ -21,7 +21,7 @@
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm">
               <template v-if="childDataLoaded">
-              <InformationForm :info="studentInfo" :Alphone="formInfo.phone" :create_sem="create_semester" :create_aca="create_academic_year"/>
+              <InformationForm :info="studentInfo" :Alphone="formInfo.phone" />
               </template>
             </div>
           </div>
@@ -54,6 +54,7 @@ import InformationForm from "../staff/form/information.vue";
 import RequestForm from "../staff/form/request.vue";
 import CommentForm from "../staff/form/comment.vue";
 import axios from 'axios';
+import pathapi from '../../pathapi.js';
 
 export default {
   components: {
@@ -65,32 +66,32 @@ export default {
   data() {
     return {
       // staff_id is prop when log in
-      staff_id:1111,
+      staff_id:"",
       id: '',
       formInfo:'',
       st_phone:'',
       studentInfo:'',
       childDataLoaded:false,
-      create_semester:'',
-      create_academic_year:''
+      // create_semester:'',
+      // create_academic_year:''
     };
   },
   methods:{
   getformInfo(){
-	let path = 'http://127.0.0.1:5000/get209?id='+this.id ;
+	let path = pathapi+'/get209?id='+this.id ;
 			axios.get(path)
 				.then((res)=>{
 					console.log(res.data)
 					this.formInfo = res.data;
           this.st_phone = this.formInfo.phone
-          this.create_semester=this.formInfo.create_semester
-          this.create_academic_year=this.formInfo.create_academic_year
+          // this.create_semester=this.formInfo.create_semester
+          // this.create_academic_year=this.formInfo.create_academic_year
           return this.formInfo.student_id
 				})
 				.catch((error)=>{
 					console.log(error)
 				}).then((id)=>{
-          let path = 'http://127.0.0.1:5000/?id='+id ;
+          let path = pathapi+'/?id='+id ;
          axios.get(path)
 				.then((res)=>{
 					console.log(res.data)
@@ -134,7 +135,7 @@ export default {
       const advisorid = this.formInfo.advisor_id
       const staffcomment =''
       const senddata = Object.assign({},{formid,staffid,formcat,advisorid,staffcomment})
-      const path = 'http://127.0.0.1:5000/staffsubmit';
+      const path = pathapi+'/staffsubmit';
 			axios.post(path,senddata)
 				.then((res)=>{
 					console.log(res.data)
@@ -145,30 +146,33 @@ export default {
 					console.log(error)
 				})
 })
-		},onCancel(){
-      this.$confirm("Are you sure?").then(() => {
-      const formid=this.formInfo.form_id;
-      const staffid=this.staff_id
-      const studentid = this.formInfo.student_id
-      const senddata = Object.assign({},{formid,staffid,studentid})
-      const path = 'http://127.0.0.1:5000/cancel';
-			axios.post(path,senddata)
-				.then((res)=>{
-					console.log(res.data)
-          this.$alert("the request be canceled")
-          this.$router.push({ name: 'List'})
-				})
-				.catch((error)=>{
-					console.log(error)
-				})
-});
 		}
+//     ,onCancel(){
+//       this.$confirm("Are you sure?").then(() => {
+//       const formid=this.formInfo.form_id;
+//       const staffid=this.staff_id
+//       const studentid = this.formInfo.student_id
+//       const senddata = Object.assign({},{formid,staffid,studentid})
+//       const path = 'http://127.0.0.1:5000/cancel';
+// 			axios.post(path,senddata)
+// 				.then((res)=>{
+// 					console.log(res.data)
+//           this.$alert("the request be canceled")
+//           this.$router.push({ name: 'List'})
+// 				})
+// 				.catch((error)=>{
+// 					console.log(error)
+// 				})
+// });
+// 		}
   },
   created() {
     this.id = this.$route.params.id;
+    this.staff_id = this.$route.params.staff_id;
     if (this.$route.query.debug) {
       this.debug = this.$route.query.debug;
     }
+    console.log(this.staff_id)
     this.getformInfo()
   }
 };

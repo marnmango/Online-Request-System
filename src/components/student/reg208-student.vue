@@ -30,6 +30,7 @@
 import Navbar from "../student/navStudent.vue";
 import InformationForm from "./form/information.vue";
 import RequestForm208 from "./form/request-reg208.vue";
+import pathapi from "../../pathapi.js"
 import axios from "axios";
 export default {
   components: {
@@ -42,8 +43,8 @@ export default {
     return {
       studentInfo: "",
       stphone: "",
-      create_semester: "",
-      create_academic_year: "",
+      // create_semester: "",
+      // create_academic_year: "",
       checkbox_1: "",
       checkbox_2: "",
       from_semester: "",
@@ -58,7 +59,7 @@ export default {
   },
   methods: {
     getstudentInfo() {
-      const path = "http://127.0.0.1:5000/?id=6131305010";
+      const path = pathapi+"/?id=6131305010";
       axios
         .get(path)
         .then((res) => {
@@ -71,7 +72,7 @@ export default {
     },
     sendformInfo() {
       // run function check เงื่อนไข gpax กับ radio2==true
-      const path = "http://127.0.0.1:5000/send208";
+      const path = pathapi+"/send208";
       const formid = { formId: Date.now() };
       const checkbox_1 = this.checkbox_1;
       const checkbox_2 = this.checkbox_2;
@@ -90,16 +91,16 @@ export default {
         student_name,
       } = this.studentInfo;
       const phone = this.stphone;
-      const create_semester = this.create_semester;
-      const create_academic_year = this.create_academic_year;
+      // const create_semester = this.create_semester;
+      // const create_academic_year = this.create_academic_year;
       const senddata = Object.assign({}, formid, {
         phone,
         student_id,
         student_advisor_id,
         student_school,
         student_name,
-        create_semester,
-        create_academic_year,
+        // create_semester,
+        // create_academic_year,
         checkbox_1,
         checkbox_2,
         from_semester,
@@ -126,8 +127,6 @@ export default {
     },
     onChange(value) {
       this.stphone = value.phone;
-      this.create_semester = value.create_sem;
-      this.create_academic_year = value.create_academic_year;
     },
     onSubmit(value) {
       this.checkbox_1 = value.checkbox_1;

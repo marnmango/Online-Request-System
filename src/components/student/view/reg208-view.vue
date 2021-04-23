@@ -25,8 +25,6 @@
                   <InformationForm
                     :info="studentInfo"
                     :Alphone="formInfo.phone"
-                    :create_sem="create_semester"
-                    :create_aca="create_academic_year"
                   />
                 </template>
               </div>
@@ -78,6 +76,7 @@ import Comment208 from "./form-view/comment-reg208.vue";
 import RequestImg208 from "./form-view/requestimg-reg208.vue";
 import Payment from "./form-view/payment.vue";
 import axios from "axios";
+import pathapi from "../../../pathapi.js"
 export default {
   components: {
     Navbar,
@@ -90,29 +89,27 @@ export default {
 
   data() {
     return {
-      // staff_id is prop when log in
-      staff_id: 1111,
       id: "",
       formInfo: "",
       st_phone: "",
       studentInfo: "",
       childDataLoaded: false,
-      create_semester: "",
-      create_academic_year: "",
+      // create_semester: "",
+      // create_academic_year: "",
       picture: [],
     };
   },
   methods: {
     getformInfo() {
-      let path = "http://127.0.0.1:5000/get208?id=" + this.id;
+      let path = pathapi+"/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          this.create_semester = this.formInfo.create_semester;
-          this.create_academic_year = this.formInfo.create_academic_year;
+          // this.create_semester = this.formInfo.create_semester;
+          // this.create_academic_year = this.formInfo.create_academic_year;
           this.picture = JSON.parse(this.formInfo.reason_doc);
           return this.formInfo.student_id;
         })
@@ -120,7 +117,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = "http://127.0.0.1:5000/?id=" + id;
+          let path = pathapi+"/?id=" + id;
           axios
             .get(path)
             .then((res) => {
@@ -182,7 +179,7 @@ export default {
         const staffid = this.formInfo.staff_id
         const payment_doc = value;
         const senddata = Object.assign({},{ formid,payment_doc,staffid });
-        const path = "http://127.0.0.1:5000/paymentsubmit";
+        const path = pathapi+"/paymentsubmit";
         axios
           .post(path, senddata)
           .then((res) => {

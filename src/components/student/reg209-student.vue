@@ -28,7 +28,7 @@
 import NavStudent from "./navStudent.vue";
 import InformationForm from "./form/information.vue";
 import RequestForm from "./form/request.vue";
-
+import pathapi from "../../pathapi.js"
 import axios from "axios";
 export default {
   data() {
@@ -36,13 +36,13 @@ export default {
       studentInfo: "",
       stphone: "",
       stRequest: "",
-      create_semester: "",
-      create_academic_year: "",
+      // create_semester: "",
+      // create_academic_year: "",
     };
   },
   methods: {
     getstudentInfo() {
-      const path = "http://127.0.0.1:5000/?id=6131305010";
+      const path = pathapi+"/?id=6131305010";
       axios
         .get(path)
         .then((res) => {
@@ -54,7 +54,7 @@ export default {
         });
     },
     sendformInfo() {
-      const path = "http://127.0.0.1:5000/send209";
+      const path = pathapi+"/send209";
       const formid = { formId: Date.now() };
       const {
         student_id,
@@ -63,16 +63,16 @@ export default {
         student_name,
       } = this.studentInfo;
       const phone = this.stphone;
-      const create_semester = this.create_semester;
-      const create_academic_year = this.create_academic_year;
+      // const create_semester = this.create_semester;
+      // const create_academic_year = this.create_academic_year;
       const senddata = Object.assign({}, this.stRequest, formid, {
         phone,
         student_id,
         student_advisor_id,
         student_school,
         student_name,
-        create_semester,
-        create_academic_year,
+        // create_semester,
+        // create_academic_year,
       });
       this.$confirm("Are you sure?").then(() => {
         axios
@@ -88,8 +88,6 @@ export default {
     },
     onChange(value) {
       this.stphone = value.phone;
-      this.create_semester = value.create_sem;
-      this.create_academic_year = value.create_academic_year;
     },
     onRequest(value) {
       this.stRequest = value;

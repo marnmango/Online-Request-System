@@ -225,6 +225,7 @@
 
 <script>
 import Navbar from "../student/navStudent";
+import pathapi from "../../pathapi.js"
 import axios from "axios";
 export default {
   props: {
@@ -256,7 +257,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = "http://127.0.0.1:5000/getformdean";
+      const path = pathapi+"/getformdean";
       axios
         .get(path)
         .then((res) => {
@@ -434,7 +435,7 @@ export default {
         const formstuid = this.selectrdformstuid;
         const senddata = Object.assign({}, { formid, formcat, formstuid });
         console.log(senddata);
-        const path = "http://127.0.0.1:5000/deansubmit";
+        const path = pathapi+"/deansubmit";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -453,7 +454,6 @@ export default {
         this.selectrdformcat.push(this.formInfoFilter[ecform].form_aka);
         this.selectrdformstuid.push(this.formInfoFilter[ecform].student_id);
       }
-      this.confirmRequest();
     },
   },
   created() {

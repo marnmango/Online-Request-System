@@ -2,26 +2,6 @@
   <div style="text-align: left">
     <h4>Personal Information</h4>
     <div class="mb-1">
-      <label for="semeter" class="form-label mb-0">Semeter</label>
-      <input
-        type="text"
-        class="form-control w-25"
-        id="semeter"
-        v-model="currentsemester"
-        disabled
-      />
-    </div>
-    <div class="mb-1">
-      <label for="semeter" class="form-label mb-0">Academic Year</label>
-      <input
-        type="text"
-        class="form-control w-25"
-        id="semeter"
-        v-model="currentacademicyear"
-        disabled
-      />
-    </div>
-    <div class="mb-1">
       <label for="deanof" class="form-label mb-0"
         >To the dean of school of</label
       >
@@ -106,14 +86,10 @@ export default {
   props: {
     info: Object,
     Alphone: Number,
-    create_sem: String,
-    create_aca: String,
   },
   data() {
     return {
       studentInfo: "",
-      currentsemester: "",
-      currentacademicyear: "",
       phone: "",
     };
   },
@@ -122,47 +98,41 @@ export default {
       console.log(this.Alphone);
       if (this.Alphone) {
         this.phone = this.Alphone;
-        this.currentsemester = this.create_sem;
-        this.currentacademicyear = this.create_aca;
         document.getElementById("phoneNumber").disabled = true;
       }
     },
-    getSemester() {
-      let currentday = new Date();
-      let firstsemester = new Date("24 Aug 2020");
-      let secondsemester = new Date("25 Jan 2021");
-      let summersemester = new Date("21 Jun 2021");
+    // getSemester() {
+    //   let currentday = new Date();
+    //   let firstsemester = new Date("24 Aug 2020");
+    //   let secondsemester = new Date("25 Jan 2021");
+    //   let summersemester = new Date("21 Jun 2021");
 
-      if (currentday >= firstsemester && currentday < secondsemester) {
-        this.currentsemester = "First";
-      } else if (currentday >= secondsemester && currentday < summersemester) {
-        this.currentsemester = "Second";
-      } else {
-        this.currentsemester = "Summer";
-      }
-    },
-    getAcademicyear() {
-      let currentday = new Date();
-      let firstsemester = new Date("24 Aug 2020");
-      let endsemester = new Date("22 Aug 2021");
-      if (currentday >= firstsemester && currentday < endsemester) {
-        this.currentacademicyear = firstsemester.getFullYear();
-      }
-    },
+    //   if (currentday >= firstsemester && currentday < secondsemester) {
+    //     this.currentsemester = "First";
+    //   } else if (currentday >= secondsemester && currentday < summersemester) {
+    //     this.currentsemester = "Second";
+    //   } else {
+    //     this.currentsemester = "Summer";
+    //   }
+    // },
+    // getAcademicyear() {
+    //   let currentday = new Date();
+    //   let firstsemester = new Date("24 Aug 2020");
+    //   let endsemester = new Date("22 Aug 2021");
+    //   if (currentday >= firstsemester && currentday < endsemester) {
+    //     this.currentacademicyear = firstsemester.getFullYear();
+    //   }
+    // },
     sendphone() {
       const phone = this.phone;
-      const create_sem = this.currentsemester;
-      const create_academic_year = this.currentacademicyear;
       if (phone < 0) {
         this.$alert("please enter phone number in this format (0123456789)");
       } else {
-        this.$emit("onChange", { phone, create_sem, create_academic_year });
+        this.$emit("onChange", {phone});
       }
     },
   },
   mounted() {
-    this.getSemester();
-    this.getAcademicyear();
     this.getPhone();
   },
 };
