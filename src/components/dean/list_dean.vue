@@ -44,7 +44,16 @@
           <table class="table table-hover">
             <thead class="text-center">
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="flexCheckDefault"
+                    scope="row"
+                    v-model="selectAll"
+                    @click="allselect"
+                  />
+                </th>
                 <th scope="col" class="w-25">Date</th>
                 <th scope="col">Request Form</th>
                 <th scope="col">ID</th>
@@ -103,18 +112,76 @@
 
         <!-- fillter -->
         <div class="col-2 filter">
-          <div class="container side-navbar active-nav bg-light p-3 w-25">
+          <div class="container side-right-navbar active-nav bg-light p-3 w-25">
             <div class="w-50">
               <h4 class="mb-2">Comfirm Request</h4>
+
               <div class="m-2 justify-content-md-center">
                 <button
                   type="button"
-                  id="submit"
-                  class="btn btn-outline-secondary"
-                  v-on:click="confirmRequest"
+                  class="btn btn-success w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#Modal"
                 >
-                  Confirm selected request
+                  Comfirm
                 </button>
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="Modal"
+                  tabindex="-1"
+                  aria-labelledby="popup"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="popup">Comment</h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body"><CommentDean /></div>
+                      <!-- radio approve -->
+                      <div class="modal-footer">
+                        <div class="form-check justify-content-md-start">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="radioAprrove"
+                            id="approve"
+                          />
+                          <label class="form-check-label" for="approve">
+                            Approve
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="radioAprrove"
+                            id="disapprove"
+                            checked
+                          />
+                          <label class="form-check-label" for="disapprove">
+                            Disapprove
+                          </label>
+                        </div>
+                        <button
+                          type="button"
+                          id="submit"
+                          class="btn btn-outline-success"
+                          v-on:click="confirmRequest"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="m-2 justify-content-md-center">
                 <button
@@ -225,7 +292,8 @@
 
 <script>
 import Navbar from "../student/navStudent";
-import pathapi from "../../pathapi.js"
+import pathapi from "../../pathapi.js";
+import CommentDean from "./form/comment-dean.vue";
 import axios from "axios";
 export default {
   props: {
@@ -233,10 +301,11 @@ export default {
   },
   components: {
     Navbar,
+    CommentDean,
   },
   data() {
     return {
-      userid:'',
+      userid: "",
       formInfo: [],
       search: "",
       checked: "",
@@ -254,11 +323,21 @@ export default {
       selectedformid: [],
       selectrdformcat: [],
       selectrdformstuid: [],
+      selectAll: false,
     };
   },
   methods: {
+    // selectall
+    allselect() {
+      this.selectedformid = [];
+      if (!this.selectAll) {
+        for (let i in this.formInfo) {
+          this.selectedformid.push(this.formInfo[i].form_id);
+        }
+      }
+    },
     getallform() {
-      const path = pathapi+"/getformdean?id="+this.userid ;
+      const path = pathapi + "/getformdean?id=" + this.userid;
       axios
         .get(path)
         .then((res) => {
@@ -436,7 +515,7 @@ export default {
         const formstuid = this.selectrdformstuid;
         const senddata = Object.assign({}, { formid, formcat, formstuid });
         console.log(senddata);
-        const path = pathapi+"/deansubmit";
+        const path = pathapi + "/deansubmit";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -458,7 +537,7 @@ export default {
     },
   },
   created() {
-    this.userid=JSON.parse(localStorage.getItem('user')).user_id
+    this.userid = JSON.parse(localStorage.getItem("user")).user_id;
     console.log(this.userid);
     this.getallform();
   },
@@ -501,10 +580,10 @@ export default {
 .active-cont {
   margin-left: 180px;
 }
-.side-navbar {
+.side-right-navbar {
   width: 100%;
   height: 100%;
-  position: fixed;
+  position: absolute;
 }
 .active-nav {
   margin: 0;
@@ -544,6 +623,7 @@ li.onprocess {
 .form-control-edit {
   padding: 0;
 }
+
 @media screen and (max-width: 1400px) {
   .smallfil {
     font-size: 12px;
