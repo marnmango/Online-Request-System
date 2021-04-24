@@ -36,26 +36,20 @@
         </div>
         <div class="col">
           <p class="mb-0">Semeter</p>
-          <select class="form-select" id="semeterRe" v-model="reTestS">
-            <option selected>Select...</option>
-            <option v-for="text in semeter" :key="text">
-              {{ text.se }}
+          <select class="form-select" id="semeterRe" v-model="selectsemes" @change="onChange">
+            <option v-for="(text,index) in semeter" :key="index">
+              {{ text }}
             </option>
           </select>
         </div>
         <div class="col">
           <p class="mb-0">Academic Year</p>
-          <select class="form-select" id="academicYear" v-model="reTestA">
-            <option selected>Select...</option>
+          <select class="form-select" id="academicYear" v-model="selectyear" @change="onChange" >
+            <option v-for="(year,index) in yeargen" :key="index">
+              {{ year }}
+            </option>
           </select>
         </div>
-        <p class="mb-0">Reason</p>
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="6"
-          v-model="re_text"
-        ></textarea>
       </div>
     </div>
     <div class="mt-3" style="text-align: right">
@@ -86,17 +80,17 @@ export default {
     formInfo: Object,
     requestsemes: String,
     requestadmy: Number,
+    toadmy:Number,
+    tosemes: String
   },
   data() {
     return {
       re_semester: "",
       re_academic_year: "",
-      re_text: "",
-      // test
-      semeter: [{ se: "First" }, { se: "Second" }],
-      year: "2021",
-      reTestS: "",
-      reTestA: "",
+      semeter: ["first" ,"second"],
+      yeargen:[],
+      selectsemes: "",
+      selectyear: "",
     };
   },
   methods: {
@@ -110,17 +104,19 @@ export default {
       }
     },
     sendRequest: function () {
-      if (this.re_text.trim() == "") {
+      if (this.selectsemes == "" || isNaN(this.selectyear)) {
         this.$alert("please enter the request");
       } else {
         this.disableSubmit(1);
         let re_semester = this.re_semester;
         let re_academic_year = this.re_academic_year;
-        let re_text = this.re_text;
+        let selectsemes = this.selectsemes;
+        let selectyear= this.selectyear;
         let strequest = {
           re_semester,
           re_academic_year,
-          re_text,
+          selectsemes,
+          selectyear
         };
         this.$emit("onRequest", strequest);
       }
@@ -140,23 +136,34 @@ export default {
       }
     },
     genYear() {
-      var minyear = new Date().getFullYear(),
-        maxyear = minyear + 9,
-        select = document.getElementById("academicYear");
-
-      for (var i = minyear; i <= maxyear; i++) {
-        var years = document.createElement("option");
-        years.value = i;
-        years.innerHTML = i;
-        select.appendChild(years);
+      var minyear = this.re_academic_year,
+        maxyear = minyear + 1
+      for(var i = minyear; i <= maxyear; i++) {
+        this.yeargen.push(i)
       }
-    },
+    },onChange(){
+      this.selectyear=parseInt(this.selectyear)
+      console.log(this.selectsemes,this.selectyear)
+      if(this.selectyear==this.toadmy){
+          if(this.tosemes=="first"){
+            if(this.selectsemes=="first"){
+               console.log("good")
+            }else if(this.selectsemes=="second"){
+              alert("exceed to time")
+              this.selectsemes=""
+            }
+          }else{
+               console.log("good")
+            }
+      }else{
+        console.log("good")
+      }
+    }
   },
   mounted() {
     this.getRequesttext();
     this.genYear();
-  },
-  created() {},
+  }
 };
 </script>
 
