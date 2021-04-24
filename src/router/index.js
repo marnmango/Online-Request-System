@@ -70,7 +70,8 @@ const routes = [{
         name: 'ViewReg209',
         component: ViewReg209,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_student:true
         }
     },
     {
@@ -78,7 +79,8 @@ const routes = [{
         name: 'ViewReg208',
         component: ViewReg208,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            is_student:true
         }
     },
     {
@@ -266,9 +268,7 @@ router.beforeEach((to, from, next) => {
                     })
                 }
             }else{
-                next({
-                    path: '/login'
-                })
+                next()
             }
         }
     }else {
