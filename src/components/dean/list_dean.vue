@@ -144,41 +144,8 @@
                           aria-label="Close"
                         ></button>
                       </div>
-                      <div class="modal-body"><CommentDean /></div>
+                      <div class="modal-body"><CommentDean @onCancel="onCancel" @onSubmit="confirmRequest"/></div>
                       <!-- radio approve -->
-                      <div class="modal-footer">
-                        <div class="form-check justify-content-md-start">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="radioAprrove"
-                            id="approve"
-                          />
-                          <label class="form-check-label" for="approve">
-                            Approve
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="radioAprrove"
-                            id="disapprove"
-                            checked
-                          />
-                          <label class="form-check-label" for="disapprove">
-                            Disapprove
-                          </label>
-                        </div>
-                        <button
-                          type="button"
-                          id="submit"
-                          class="btn btn-outline-success"
-                          v-on:click="confirmRequest"
-                        >
-                          Submit
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -508,12 +475,13 @@ export default {
         console.log(this.selectedformid, this.selectrdformcat);
       }
     },
-    confirmRequest() {
+    confirmRequest(value) {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.selectedformid;
         const formcat = this.selectrdformcat;
         const formstuid = this.selectrdformstuid;
-        const senddata = Object.assign({}, { formid, formcat, formstuid });
+        const deancomment = value 
+        const senddata = Object.assign({}, { formid, formcat, formstuid,deancomment });
         console.log(senddata);
         const path = pathapi + "/deansubmit";
         axios
@@ -534,7 +502,27 @@ export default {
         this.selectrdformcat.push(this.formInfoFilter[ecform].form_aka);
         this.selectrdformstuid.push(this.formInfoFilter[ecform].student_id);
       }
-    },
+    },onCancel(value){
+      this.$confirm("Are you sure?").then(() => {
+        const formid = this.selectedformid;
+        const formcat = this.selectrdformcat;
+        const formstuid = this.selectrdformstuid;
+        const deancomment = value 
+        const senddata = Object.assign({}, { formid, formcat, formstuid,deancomment });
+        console.log(senddata);
+        const path = pathapi + "/deandisapprove";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("All request disapproved");
+            location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }
   },
   created() {
     this.userid = JSON.parse(localStorage.getItem("user")).user_id;

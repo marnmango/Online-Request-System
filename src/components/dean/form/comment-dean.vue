@@ -10,24 +10,42 @@
 				>
 				</textarea>
 			</div>
-			<div class="mt-3" style="text-align:right">
-			<button
-				type="button"
-				class="btn btn-danger mx-2"
-				id="cancel"
-				v-on:click="onCancel"
-			>
-				Cancel
-			</button>
-			<button
-				type="button"
-				class="btn btn-success"
-				id="submit"
-				v-on:click="onSubmit"
-			>
-				Submit
-			</button>
-		</div>
+			<div class="modal-footer">
+                        <div class="form-check justify-content-md-start">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="radioAprrove"
+                            id="approve"
+							v-bind:checked="approve"
+							v-on:click="checkapprove"
+                          />
+                          <label class="form-check-label" for="approve">
+                            Approve
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="radioAprrove"
+                            id="disapprove"
+							v-bind:checked="disapprove"
+							v-on:click="checkdisapprove"
+                          />
+                          <label class="form-check-label" for="disapprove">
+                            Disapprove
+                          </label>
+                        </div>
+                        <button
+                          type="button"
+                          id="submit"
+                          class="btn btn-outline-success"
+                          v-on:click="deanchoice"
+                        >
+                          Submit
+                        </button>
+                      </div>
 		</div>
 	</div>
 </template>
@@ -37,6 +55,8 @@ export default {
 	data() {
 		return {
 			deanComment: "",
+			approve:false,
+			disapprove:false
 		};
 	},
 	methods: {
@@ -47,7 +67,6 @@ export default {
 				this.deanComment.trim() != ""
 			) {
 				document.getElementById("submit").disabled = true;
-				document.getElementById("cancel").disabled = true;
 				this.$emit("onCancel",this.deanComment)
 			} else {
 				alert("error");
@@ -59,12 +78,24 @@ export default {
 				this.deanComment.trim() != ""
 			) {
 				document.getElementById("submit").disabled = true;
-				document.getElementById("cancel").disabled = true;
 				this.$emit("onSubmit",this.deanComment)
 			} else {
 				alert("error");
 			}
-		}
+		},deanchoice(){
+			if(this.approve==true){
+				this.onSubmit()
+			}else if(this.disapprove==true){
+				this.onCancel()
+			}else{
+				alert("please select one")
+			}
+		},checkapprove: function () {
+      (this.approve = true), (this.disapprove = false);
+    },
+    checkdisapprove: function () {
+      (this.disapprove = true), (this.approve = false);
+    },
 	},
 };
 </script>

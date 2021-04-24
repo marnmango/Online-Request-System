@@ -76,8 +76,6 @@ export default {
       st_phone:'',
       studentInfo:'',
       childDataLoaded:false,
-      // create_semester:'',
-      // create_academic_year:''
     };
   },
   methods:{
@@ -88,8 +86,6 @@ export default {
 					console.log(res.data)
 					this.formInfo = res.data;
           this.st_phone = this.formInfo.phone
-          // this.create_semester=this.formInfo.create_semester
-          // this.create_academic_year=this.formInfo.create_academic_year
           return this.formInfo.student_id
 				})
 				.catch((error)=>{
