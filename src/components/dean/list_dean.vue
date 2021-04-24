@@ -44,7 +44,16 @@
           <table class="table table-hover">
             <thead class="text-center">
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="flexCheckDefault"
+                    scope="row"
+                    v-model="selectAll"
+                    @click="allselect"
+                  />
+                </th>
                 <th scope="col" class="w-25">Date</th>
                 <th scope="col">Request Form</th>
                 <th scope="col">ID</th>
@@ -314,9 +323,19 @@ export default {
       selectedformid: [],
       selectrdformcat: [],
       selectrdformstuid: [],
+      selectAll: false,
     };
   },
   methods: {
+    // selectall
+    allselect() {
+      this.selectedformid = [];
+      if (!this.selectAll) {
+        for (let i in this.formInfo) {
+          this.selectedformid.push(this.formInfo[i].form_id);
+        }
+      }
+    },
     getallform() {
       const path = pathapi + "/getformdean?id=" + this.userid;
       axios
