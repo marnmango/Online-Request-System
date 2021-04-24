@@ -28,13 +28,35 @@
     </div>
     <div>
       <p class="mb-1 mt-3">Reason for re-entering</p>
-      <p class="mb-0" style="text-indent: 5%">To take a leave</p>
-      <textarea
-        class="form-control"
-        id="exampleFormControlTextarea1"
-        rows="6"
-        v-model="re_text"
-      ></textarea>
+      <div class="row m-2 p-3 border">
+        <div class="col-3 align-self-center align-items-center">
+          <p class="mb-0" style="text-indent: 5%; font-size: 16px">
+            To take a leave
+          </p>
+        </div>
+        <div class="col">
+          <p class="mb-0">Semeter</p>
+          <select class="form-select" id="semeterRe" v-model="reTestS">
+            <option selected>Select...</option>
+            <option v-for="text in semeter" :key="text">
+              {{ text.se }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <p class="mb-0">Academic Year</p>
+          <select class="form-select" id="academicYear" v-model="reTestA">
+            <option selected>Select...</option>
+          </select>
+        </div>
+        <p class="mb-0">Reason</p>
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="6"
+          v-model="re_text"
+        ></textarea>
+      </div>
     </div>
     <div class="mt-3" style="text-align: right">
       <button
@@ -63,13 +85,18 @@ export default {
   props: {
     formInfo: Object,
     requestsemes: String,
-    requestadmy: Number
+    requestadmy: Number,
   },
   data() {
     return {
       re_semester: "",
       re_academic_year: "",
       re_text: "",
+      // test
+      semeter: [{ se: "First" }, { se: "Second" }],
+      year: "2021",
+      reTestS: "",
+      reTestA: "",
     };
   },
   methods: {
@@ -107,15 +134,29 @@ export default {
         document.getElementById("exampleFormControlTextarea1").disabled = true;
         // document.getElementById("cancel").remove()
         // document.getElementById("submit").remove()
-      }else{
-        this.re_semester = this.requestsemes
-        this.re_academic_year = this.requestadmy
+      } else {
+        this.re_semester = this.requestsemes;
+        this.re_academic_year = this.requestadmy;
+      }
+    },
+    genYear() {
+      var minyear = new Date().getFullYear(),
+        maxyear = minyear + 9,
+        select = document.getElementById("academicYear");
+
+      for (var i = minyear; i <= maxyear; i++) {
+        var years = document.createElement("option");
+        years.value = i;
+        years.innerHTML = i;
+        select.appendChild(years);
       }
     },
   },
   mounted() {
     this.getRequesttext();
+    this.genYear();
   },
+  created() {},
 };
 </script>
 
