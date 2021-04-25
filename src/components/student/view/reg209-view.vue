@@ -11,9 +11,9 @@
         <div class="container">
           <ul class="progressbar">
             <li id="1">Student</li>
-            <li id="2">Staff</li>
-            <li id="3">Advisor</li>
-            <li id="4">Dean</li>
+            <li id="2">Advisor</li>
+            <li id="3">Dean</li>
+            <li id="4">Staff</li>
           </ul>
         </div>
         <!-- เดี๋ยวมาเพิ่ม -->
@@ -45,7 +45,14 @@
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm mb-3 h-100">
               <template v-if="childDataLoaded">
-                <CommentDean :deanComments="formInfo.dean_comment"/>
+                <CommentDean :deanComments="formInfo.dean_comment" />
+              </template>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-3 border bg-light shadow-sm mb-3 h-100">
+              <template v-if="childDataLoaded">
+                <CommentStaff :deanComments="formInfo.dean_comment" />
               </template>
             </div>
           </div>
@@ -61,8 +68,9 @@ import InformationForm from "./form-view/information.vue";
 import RequestForm from "./form-view/request-reg209.vue";
 import CommentAdvisor from "./form-view/comment-advisor.vue";
 import CommentDean from "./form-view/comment-dean.vue";
+import CommentStaff from "./form-view/comment-staff.vue";
 import axios from "axios";
-import pathapi from "../../../pathapi.js"
+import pathapi from "../../../pathapi.js";
 
 export default {
   components: {
@@ -71,6 +79,7 @@ export default {
     RequestForm,
     CommentAdvisor,
     CommentDean,
+    CommentStaff,
   },
   data() {
     return {
@@ -83,7 +92,7 @@ export default {
   },
   methods: {
     getformInfo() {
-      let path = pathapi+"/get209?id=" + this.id;
+      let path = pathapi + "/get209?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
@@ -96,7 +105,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = pathapi+"/?id=" + id;
+          let path = pathapi + "/?id=" + id;
           axios
             .get(path)
             .then((res) => {

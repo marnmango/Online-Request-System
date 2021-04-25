@@ -9,37 +9,51 @@
         </div>
         <!-- เดี๋ยวมาเพิ่ม -->
         <div class="container">
-          <ul class="progressbar ">
+          <ul class="progressbar">
             <li id="1">Student</li>
-            <li id="2">Staff</li>
-            <li id="3">Advisor</li>
-            <li id="4">Dean</li>
+            <li id="2">Advisor</li>
+            <li id="3">Dean</li>
+            <li id="4">Staff</li>
           </ul>
         </div>
         <!-- เดี๋ยวมาเพิ่ม -->
         <div class="row gy-3 mx-5">
           <div class="col-6">
-            <div class="p-3 border bg-light shadow-sm">
+            <div class="p-3 border bg-light shadow-sm h-100">
               <template v-if="childDataLoaded">
-              <InformationForm :info="studentInfo" :Alphone="formInfo.phone" />
+                <InformationForm
+                  :info="studentInfo"
+                  :Alphone="formInfo.phone"
+                />
               </template>
             </div>
           </div>
           <div class="col-6">
             <div class="p-3 border bg-light h-100 shadow-sm">
-              <template v-if="childDataLoaded && formInfo.progress_status==1">
-              <RequestForm :formInfo="formInfo" @onCancel="onCancel" @onSubmit="onSubmit"/>
+              <template v-if="childDataLoaded && formInfo.progress_status == 1">
+                <RequestForm
+                  :formInfo="formInfo"
+                  @onCancel="onCancel"
+                  @onSubmit="onSubmit"
+                />
               </template>
-              <template v-if="childDataLoaded && formInfo.progress_status!=1">
-              <RequestForm :formInfo="formInfo"/>
+              <template v-if="childDataLoaded && formInfo.progress_status != 1">
+                <RequestForm :formInfo="formInfo" />
               </template>
             </div>
           </div>
           <div class="col">
             <div class="p-3 border bg-light shadow-sm mb-3">
-              <template v-if="childDataLoaded">
-              <CommentForm :formInfo="formInfo"/>
-              </template>
+              <div class="row g-2">
+                <div class="col-8 m-0">
+                  <template v-if="childDataLoaded">
+                    <CommentForm :formInfo="formInfo" />
+                  </template>
+                </div>
+                <div class="col-4 align-self-center">
+                  <CommentStaff />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -53,8 +67,9 @@ import NavStudent from "../student/navStudent.vue";
 import InformationForm from "../staff/form/information.vue";
 import RequestForm from "../staff/form/request.vue";
 import CommentForm from "../staff/form/comment.vue";
-import axios from 'axios';
-import pathapi from '../../pathapi.js';
+import CommentStaff from "../staff/form/comment-reg209.vue";
+import axios from "axios";
+import pathapi from "../../pathapi.js";
 
 export default {
   components: {
@@ -62,109 +77,120 @@ export default {
     InformationForm,
     RequestForm,
     CommentForm,
+    CommentStaff,
   },
   data() {
     return {
       // staff_id is prop when log in
-      staff_id:"",
-      id: '',
-      formInfo:'',
-      st_phone:'',
-      studentInfo:'',
-      childDataLoaded:false,
+      staff_id: "",
+      id: "",
+      formInfo: "",
+      st_phone: "",
+      studentInfo: "",
+      childDataLoaded: false,
       // create_semester:'',
       // create_academic_year:''
     };
   },
-  methods:{
-  getformInfo(){
-	let path = pathapi+'/get209?id='+this.id ;
-			axios.get(path)
-				.then((res)=>{
-					console.log(res.data)
-					this.formInfo = res.data;
-          this.st_phone = this.formInfo.phone
+  methods: {
+    getformInfo() {
+      let path = pathapi + "/get209?id=" + this.id;
+      axios
+        .get(path)
+        .then((res) => {
+          console.log(res.data);
+          this.formInfo = res.data;
+          this.st_phone = this.formInfo.phone;
           // this.create_semester=this.formInfo.create_semester
           // this.create_academic_year=this.formInfo.create_academic_year
-          return this.formInfo.student_id
-				})
-				.catch((error)=>{
-					console.log(error)
-				}).then((id)=>{
-          let path = pathapi+'/?id='+id ;
-         axios.get(path)
-				.then((res)=>{
-					console.log(res.data)
-					this.studentInfo = res.data;
-				})
-				.catch((error)=>{
-					console.log(error)
-				})
-        }).then(()=>{
-            this.childDataLoaded=true
-        }).then(()=>{
-            this.checkRole()
+          return this.formInfo.student_id;
         })
-		},
+        .catch((error) => {
+          console.log(error);
+        })
+        .then((id) => {
+          let path = pathapi + "/?id=" + id;
+          axios
+            .get(path)
+            .then((res) => {
+              console.log(res.data);
+              this.studentInfo = res.data;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .then(() => {
+          this.childDataLoaded = true;
+        })
+        .then(() => {
+          this.checkRole();
+        });
+    },
     checkRole: function () {
-      if (this.formInfo.progress_status==4) {
-        document.getElementById("1").classList.add('active');
-        document.getElementById("2").classList.add('active');
-        document.getElementById("3").classList.add('active');
-        document.getElementById("4").classList.add('active'); //4
-      } else if (this.formInfo.progress_status==3) {
-        document.getElementById("1").classList.add('active');
-        document.getElementById("2").classList.add('active');
-        document.getElementById("3").classList.add('active');
-        document.getElementById("4").classList.add('wait');//3
-      } else if (this.formInfo.progress_status==2) {
-        document.getElementById("1").classList.add('active');
-        document.getElementById("2").classList.add('active');
-        document.getElementById("3").classList.add('wait');//2
-      } else if (this.formInfo.progress_status==1) {
-        document.getElementById("1").classList.add('active');
-        document.getElementById("2").classList.add('wait'); //1
+      if (this.formInfo.progress_status == 4) {
+        document.getElementById("1").classList.add("active");
+        document.getElementById("2").classList.add("active");
+        document.getElementById("3").classList.add("active");
+        document.getElementById("4").classList.add("active"); //4
+      } else if (this.formInfo.progress_status == 3) {
+        document.getElementById("1").classList.add("active");
+        document.getElementById("2").classList.add("active");
+        document.getElementById("3").classList.add("active");
+        document.getElementById("4").classList.add("wait"); //3
+      } else if (this.formInfo.progress_status == 2) {
+        document.getElementById("1").classList.add("active");
+        document.getElementById("2").classList.add("active");
+        document.getElementById("3").classList.add("wait"); //2
+      } else if (this.formInfo.progress_status == 1) {
+        document.getElementById("1").classList.add("active");
+        document.getElementById("2").classList.add("wait"); //1
       } else {
         return "error";
       }
-    },onSubmit(){
-			this.$confirm("Are you sure?").then(() => {
-      const formid=this.formInfo.form_id;
-      const staffid=this.staff_id
-      const formcat=this.formInfo.form_cat;
-      const advisorid = this.formInfo.advisor_id
-      const staffcomment =''
-      const senddata = Object.assign({},{formid,staffid,formcat,advisorid,staffcomment})
-      const path = pathapi+'/staffsubmit';
-			axios.post(path,senddata)
-				.then((res)=>{
-					console.log(res.data)
-          this.$alert("the request had confirm")
-          this.$router.push({ name: 'List'})
-				})
-				.catch((error)=>{
-					console.log(error)
-				})
-})
-		}
-//     ,onCancel(){
-//       this.$confirm("Are you sure?").then(() => {
-//       const formid=this.formInfo.form_id;
-//       const staffid=this.staff_id
-//       const studentid = this.formInfo.student_id
-//       const senddata = Object.assign({},{formid,staffid,studentid})
-//       const path = 'http://127.0.0.1:5000/cancel';
-// 			axios.post(path,senddata)
-// 				.then((res)=>{
-// 					console.log(res.data)
-//           this.$alert("the request be canceled")
-//           this.$router.push({ name: 'List'})
-// 				})
-// 				.catch((error)=>{
-// 					console.log(error)
-// 				})
-// });
-// 		}
+    },
+    onSubmit() {
+      this.$confirm("Are you sure?").then(() => {
+        const formid = this.formInfo.form_id;
+        const staffid = this.staff_id;
+        const formcat = this.formInfo.form_cat;
+        const advisorid = this.formInfo.advisor_id;
+        const staffcomment = "";
+        const senddata = Object.assign(
+          {},
+          { formid, staffid, formcat, advisorid, staffcomment }
+        );
+        const path = pathapi + "/staffsubmit";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("the request had confirm");
+            this.$router.push({ name: "List" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
+    //     ,onCancel(){
+    //       this.$confirm("Are you sure?").then(() => {
+    //       const formid=this.formInfo.form_id;
+    //       const staffid=this.staff_id
+    //       const studentid = this.formInfo.student_id
+    //       const senddata = Object.assign({},{formid,staffid,studentid})
+    //       const path = 'http://127.0.0.1:5000/cancel';
+    // 			axios.post(path,senddata)
+    // 				.then((res)=>{
+    // 					console.log(res.data)
+    //           this.$alert("the request be canceled")
+    //           this.$router.push({ name: 'List'})
+    // 				})
+    // 				.catch((error)=>{
+    // 					console.log(error)
+    // 				})
+    // });
+    // 		}
   },
   created() {
     this.id = this.$route.params.id;
@@ -172,9 +198,9 @@ export default {
     if (this.$route.query.debug) {
       this.debug = this.$route.query.debug;
     }
-    console.log(this.staff_id)
-    this.getformInfo()
-  }
+    console.log(this.staff_id);
+    this.getformInfo();
+  },
 };
 </script>
 
@@ -199,19 +225,19 @@ export default {
   width: 30px;
   height: 30px;
   line-height: 30px;
-  border: 1px solid #EAECEF;
+  border: 1px solid #eaecef;
   border-radius: 100%;
   display: block;
   text-align: center;
   margin: 0 auto 10px auto;
-  background-color: #EAECEF;
+  background-color: #eaecef;
 }
 .progressbar li:after {
   content: "";
   position: absolute;
   width: 100%;
   height: 3px;
-  background-color: #EAECEF;
+  background-color: #eaecef;
   top: 15px;
   left: -50%;
   z-index: -1;
@@ -221,15 +247,14 @@ export default {
 }
 
 .progressbar li.active:before {
-  border-color: #28A745;
-  background-color: #28A745;
+  border-color: #28a745;
+  background-color: #28a745;
 }
 .progressbar li.active + li:after {
-  background-color: #28A745;
+  background-color: #28a745;
 }
 li.wait:before {
-border-color: #FFC107;
-  background-color: #FFC107;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
-
 </style>
