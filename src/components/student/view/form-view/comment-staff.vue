@@ -5,11 +5,8 @@
         <label for="exampleFormControlTextarea1" class="form-label"
           >Staff's comment</label
         >
-        <textarea class="form-control" v-model="staffComment" rows="3">
+        <textarea class="form-control" v-model="staffComment" rows="3" disabled>
         </textarea>
-        <div class="d-md-flex justify-content-md-end mt-3">
-          <button class="btn btn-success" id="submit" v-on:click="onSubmit">Submit</button>
-        </div>
       </div>
     </div>
   </div>
