@@ -52,7 +52,7 @@
           <div class="col-6">
             <div class="p-3 border bg-light shadow-sm mb-3 h-100">
               <template v-if="childDataLoaded">
-                <CommentStaff :deanComments="formInfo.dean_comment" />
+                <CommentStaff :staffcomment="formInfo.staff_comment" />
               </template>
             </div>
           </div>

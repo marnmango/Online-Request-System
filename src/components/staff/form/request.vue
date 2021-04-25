@@ -28,31 +28,29 @@
     </div>
     <div>
       <p class="mb-1 mt-3">Reason for re-entering</p>
-      <p class="mb-0" style="text-indent: 5%">To take a leave</p>
-      <textarea
-        class="form-control"
-        id="exampleFormControlTextarea1"
-        rows="6"
-        v-model="re_text"
-      ></textarea>
-    </div>
-    <div class="mt-3" style="text-align: right">
-      <button
-        type="button"
-        class="btn btn-danger mx-2"
-        id="cancel"
-        v-on:click="onCancel"
-      >
-        Cancel
-      </button>
-      <button
-        type="button"
-        class="btn btn-success"
-        id="submit"
-        v-on:click="onSubmit"
-      >
-        Submit
-      </button>
+      <div class="row m-2 p-3 border">
+        <div class="col-3 align-self-center align-items-center">
+          <p class="mb-0" style="text-indent: 5%; font-size: 16px">
+            To take a leave
+          </p>
+        </div>
+        <div class="col">
+          <p class="mb-0">Semeter</p>
+          <select class="form-select" id="semeterRe" v-model="selectsemes" disabled>
+            <option v-for="(text,index) in semeter" :key="index">
+              {{ text }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <p class="mb-0">Academic Year</p>
+          <select class="form-select" id="academicYear" v-model="selectyear" disabled>
+             <option v-for="(year,index) in yeargen" :key="index">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -60,45 +58,43 @@
 <script>
 export default {
   props: {
-    formInfo: Object,
+    formInfo: Object
   },
   data() {
     return {
-      re_semester: "first",
-      re_academic_year: 2021,
-      re_text: "",
+      re_semester: "",
+      re_academic_year: "",
+      selectsemes: "",
+      selectyear: "",
+      semeter: ["first" ,"second"],
+      yeargen:[],
     };
   },
   methods: {
-    disableSubmit: function () {
-      document.getElementById("submit").disabled = true;
-      document.getElementById("cancel").disabled = true;
-    },
-    onCancel: function () {
-      this.$emit("onCancel");
-      this.disableSubmit();
-    },
-    onSubmit: function () {
-      this.$emit("onSubmit");
-      this.disableSubmit();
-    },
     getRequesttext() {
       console.log(this.formInfo);
       if (this.formInfo) {
         this.re_semester = this.formInfo.request_semester;
         this.re_academic_year = this.formInfo.request_academic_year;
-        this.re_text = this.formInfo.request_text;
-        document.getElementById("exampleFormControlTextarea1").disabled = true;
-        if(this.formInfo.progress_status!=1){
-        document.getElementById("cancel").remove()
-        document.getElementById("submit").remove()
-        }
+        this.selectsemes=this.formInfo.select_semester
+        this.selectyear=this.formInfo.select_academicyear
+      } else {
+        this.re_semester = this.requestsemes;
+        this.re_academic_year = this.requestadmy;
       }
     },
+    genYear() {
+      var minyear = this.re_academic_year,
+        maxyear = minyear + 1
+      for(var i = minyear; i <= maxyear; i++) {
+        this.yeargen.push(i)
+      }
+    }
   },
   mounted() {
     this.getRequesttext();
-  },
+    this.genYear()
+  }
 };
 </script>
 

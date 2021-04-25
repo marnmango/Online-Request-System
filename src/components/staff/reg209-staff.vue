@@ -51,7 +51,9 @@
                   </template>
                 </div>
                 <div class="col-4 align-self-center">
-                  <CommentStaff />
+                  <template v-if="childDataLoaded">
+                  <CommentStaff :staffcomment="formInfo.staff_comment" @onSubmit="onSubmit" />
+                  </template>
                 </div>
               </div>
             </div>
@@ -88,8 +90,6 @@ export default {
       st_phone: "",
       studentInfo: "",
       childDataLoaded: false,
-      // create_semester:'',
-      // create_academic_year:''
     };
   },
   methods: {
@@ -101,8 +101,6 @@ export default {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          // this.create_semester=this.formInfo.create_semester
-          // this.create_academic_year=this.formInfo.create_academic_year
           return this.formInfo.student_id;
         })
         .catch((error) => {
@@ -149,16 +147,17 @@ export default {
         return "error";
       }
     },
-    onSubmit() {
+    onSubmit(value) {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
         const staffid = this.staff_id;
         const formcat = this.formInfo.form_cat;
         const advisorid = this.formInfo.advisor_id;
-        const staffcomment = "";
+        const studentid = this.formInfo.student_id
+        const staffcomment = value;
         const senddata = Object.assign(
           {},
-          { formid, staffid, formcat, advisorid, staffcomment }
+          { formid, staffid, formcat, advisorid, staffcomment,studentid }
         );
         const path = pathapi + "/staffsubmit";
         axios

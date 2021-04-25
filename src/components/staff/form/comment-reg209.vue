@@ -5,10 +5,10 @@
         <label for="exampleFormControlTextarea1" class="form-label"
           >Staff's comment</label
         >
-        <textarea class="form-control" v-model="staffcomment" rows="3">
+        <textarea class="form-control" v-model="staffComment" rows="3">
         </textarea>
         <div class="d-md-flex justify-content-md-end mt-3">
-          <button class="btn btn-success">Submit</button>
+          <button class="btn btn-success" id="submit" v-on:click="onSubmit">Submit</button>
         </div>
       </div>
     </div>
@@ -18,20 +18,24 @@
 <script>
 export default {
   props: {
-    formInfo: Object,
+    staffcomment: String,
   },
   data() {
     return {
-      staffcomment: "",
+      staffComment: "",
     };
+  },
+  methods:{
+      onSubmit(){
+        this.$emit("onSubmit",this.staffComment)
+      }
   },
   mounted() {
     if (
-      this.formInfo.dean_comment != null ||
-      this.formInfo.advisor_comment != null
+      this.staffcomment!=null
     ) {
-      this.deancomment = this.formInfo.dean_comment;
-      this.advisorcomment = this.formInfo.advisor_comment;
+      this.staffComment=this.staffcomment
+      document.getElementById("submit").remove()
     }
   },
 };

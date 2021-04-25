@@ -1,10 +1,15 @@
 <template>
   <div style="text-align: left">
-    <h4>Staff's comment</h4>
     <div class="row mb-1 g-2">
       <div class="col p-3 border bg-white mx-3 shadow-sm">
-        <textarea class="form-control" v-model="deanComment" rows="3" readonly>
+        <label for="exampleFormControlTextarea1" class="form-label"
+          >Staff's comment</label
+        >
+        <textarea class="form-control" v-model="staffComment" rows="3">
         </textarea>
+        <div class="d-md-flex justify-content-md-end mt-3">
+          <button class="btn btn-success" id="submit" v-on:click="onSubmit">Submit</button>
+        </div>
       </div>
     </div>
   </div>
@@ -13,20 +18,15 @@
 <script>
 export default {
   props: {
-    deanComments: String,
+    staffcomment: String,
   },
   data() {
     return {
-      deanComment: "",
+      staffComment: "",
     };
   },
-  methods: {
-    getdeancomment() {
-      this.deanComment = this.deanComments;
-    },
-  },
   mounted() {
-    this.getdeancomment();
+      this.staffComment=this.staffcomment
   },
 };
 </script>
