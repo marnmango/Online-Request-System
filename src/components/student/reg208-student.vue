@@ -10,7 +10,7 @@
           </div>
           <div class="row gy-3 mx-5">
             <div class="col-6">
-              <div class="p-3 border bg-light h-100">
+              <div class="p-3 border bg-light">
                 <InformationForm :info="studentInfo" @onChange="onChange" />
               </div>
             </div>
@@ -30,7 +30,7 @@
 import Navbar from "../student/navStudent.vue";
 import InformationForm from "./form/information.vue";
 import RequestForm208 from "./form/request-reg208.vue";
-import pathapi from "../../pathapi.js"
+import pathapi from "../../pathapi.js";
 import axios from "axios";
 export default {
   components: {
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     getstudentInfo() {
-      const path = pathapi+"/?id=6131305010";
+      const path = pathapi + "/?id=6131305010";
       axios
         .get(path)
         .then((res) => {
@@ -72,7 +72,7 @@ export default {
     },
     sendformInfo() {
       // run function check เงื่อนไข gpax กับ radio2==true
-      const path = pathapi+"/send208";
+      const path = pathapi + "/send208";
       const formid = { formId: Date.now() };
       const checkbox_1 = this.checkbox_1;
       const checkbox_2 = this.checkbox_2;

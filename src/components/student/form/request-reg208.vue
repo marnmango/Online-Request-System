@@ -1,87 +1,69 @@
 <template>
   <div style="text-align: left">
     <h4>Request</h4>
-    <div class="row mb-1 g-3 w-75">
-      <p class="mb-0">Semeter</p>
-      <div class="row ms-2 mt-0">
-        <div class="col-3 form-check">
-          <input
-            v-bind:checked="request_checkbox_1"
-            class="form-check-input"
-            type="checkbox"
-            name="request_checkbox"
-            id="request_checkbox_1"
-            v-on:click="oncheckbox1"
-          />
-          <label class="form-check-label" for="request_checkbox_1">
-            Semeter 1
-          </label>
-        </div>
-        <div class="col-3 form-check">
-          <input
-            v-bind:checked="request_checkbox_2"
-            class="form-check-input"
-            type="checkbox"
-            name="request_checkbox"
-            id="request_checkbox_2"
-            v-on:click="oncheckbox2"
-          />
-          <label class="form-check-label" for="request_checkbox_2">
-            Semeter 2
-          </label>
-        </div>
-      </div>
-    </div>
+
     <!-- select semeter -->
     <form>
       <div class="row mb-1 g-3">
         <div class="col-3">
           <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
-          <input
-            id="fromSemeter"
-            class="form-control"
-            placeholder="Semeter"
-            v-model="request_from_semeter"
-            required
-          />
+          <select
+            class="form-select"
+            id="semeterRe"
+            v-model="selectsemes_from"
+            @change="onChange"
+          >
+            <option v-for="(text, index) in request_from_semeter" :key="index">
+              {{ text }}
+            </option>
+          </select>
         </div>
         <div class="col-3">
           <label for="fromAcademic" class="form-label mb-0"
             >Academic Year</label
           >
-          <input
-            type="number"
-            pattern="/^-?\d+\.?\d*$/"
-            onKeyPress="if(this.value.length==4) return false;"
-            class="form-control"
-            id="fromAcademic"
-            placeholder="Year"
-            v-model="request_from_academicyear"
-            required
-          />
+          <select
+            class="form-select"
+            id="academicYear"
+            v-model="selectyear_from"
+            @change="onChange"
+          >
+            <option
+              v-for="(year, index) in request_from_academicyear"
+              :key="index"
+            >
+              {{ year }}
+            </option>
+          </select>
         </div>
         <div class="col-3">
           <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
-          <input
-            class="form-control"
-            id="fromSemeter"
-            placeholder="Semeter"
-            v-model="request_to_semeter"
-            required
-          />
+          <select
+            class="form-select"
+            id="semeterRe"
+            v-model="selectsemes_to"
+            @change="onChange"
+          >
+            <option v-for="(text, index) in request_to_semeter" :key="index">
+              {{ text }}
+            </option>
+          </select>
         </div>
         <div class="col-3">
           <label for="toAcademic" class="form-label mb-0">Academic Year</label>
-          <input
-            type="number"
-            pattern="/^-?\d+\.?\d*$/"
-            onKeyPress="if(this.value.length==4) return false;"
-            class="form-control"
-            id="toAcademic"
-            placeholder="Year"
-            v-model="request_to_academicyear"
-            required
-          />
+          <select
+            class="form-select"
+            id="academicYear"
+            v-model="selectyear_to"
+            @change="onChange"
+          >
+            <option
+              v-for="(year, index) in request_to_academicyear"
+              :key="index"
+            >
+              {{ year }}
+            </option>
+          </select>
         </div>
       </div>
       <!-- radio check -->
@@ -132,7 +114,7 @@
     </form>
     <!-- choose file -->
     <div class="row mt-3">
-      <div class="col-6 input-group w-50 h-100">
+      <div class="col-6 w-50 input-group h-100">
         <input
           type="file"
           class="form-control"
@@ -153,6 +135,7 @@
         >
           Cancel
         </button>
+
         <button
           type="submit"
           class="btn btn-success"
@@ -163,14 +146,17 @@
         </button>
       </div>
       <div
-        class="row text-start"
+        class="row text-start border bg-white mt-2 ms-1 w-75 p-0 pb-3"
         style="text-align: right"
         v-for="(file, key) in files"
         v-bind:key="key"
       >
-        <p class="m-0 mt-3">
+        <p class="mt-2 mb-1 fw-bold">Your file selected</p>
+        <p class="m-0">
           {{ file.name
-          }}<span class="m-0 ms-3" v-on:click="removeFile(key)"> Remove </span>
+          }}<span class="fw-bold mx-2 mt-0" v-on:click="removeFile(key)"
+            >Remove</span
+          >
         </p>
       </div>
     </div>
@@ -201,16 +187,24 @@ export default {
   data() {
     return {
       re_text: "",
-      request_from_semeter: "",
-      request_to_semeter: "",
-      request_from_academicyear: "",
-      request_to_academicyear: "",
+      request_from_semeter: ["first", "second"],
+      request_to_semeter: ["first", "second"],
+      request_from_academicyear: [],
+      request_to_academicyear: [],
       request_checkbox_1: false,
       request_checkbox_2: false,
       request_radio_1: false,
       request_radio_2: false,
       files: [],
       re_doc: [],
+      re_semester: "",
+      re_academic_year: "",
+
+      yeargen: [],
+      selectsemes_from: "",
+      selectsemes_to: "",
+      selectyear_from: "",
+      selectyear_to: "",
     };
   },
   methods: {
