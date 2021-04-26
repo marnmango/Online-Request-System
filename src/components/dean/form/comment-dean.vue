@@ -1,9 +1,19 @@
 <template>
   <div style="text-align: left">
-    <h4>Dean's comment</h4>
     <div class="row mb-1 g-2">
       <div class="col p-3 border bg-white mx-3 shadow-sm">
-        <textarea class="form-control" v-model="deanComment" rows="3">
+        <label
+          for="deancomment"
+          class="form-label m-0 text-start"
+          style="text-indent: 12px"
+          >Dean's comment</label
+        >
+        <textarea
+          class="form-control"
+          id="deancomment"
+          v-model="deanComment"
+          rows="5"
+        >
         </textarea>
       </div>
       <div class="modal-footer">

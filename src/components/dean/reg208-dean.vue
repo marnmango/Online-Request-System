@@ -51,6 +51,7 @@
                   @onSubmit="onSubmit"
                   @onCancel="onCancel"
                 />
+                <Comment208Dean />
               </div>
             </div>
           </div>
@@ -65,8 +66,9 @@ import Navbar from "../student/navStudent.vue";
 import InformationForm from "./form/information.vue";
 import RequestForm208 from "./form/request-reg208.vue";
 import Comment208 from "./form/comment-reg208.vue";
+import Comment208Dean from "./form/comment-dean.vue";
 import RequestImg208 from "./form/requestimg-reg208.vue";
-import pathapi from "../../pathapi.js"
+import pathapi from "../../pathapi.js";
 
 import axios from "axios";
 export default {
@@ -76,6 +78,7 @@ export default {
     RequestForm208,
     Comment208,
     RequestImg208,
+    Comment208Dean,
   },
 
   data() {
@@ -92,7 +95,7 @@ export default {
   },
   methods: {
     getformInfo() {
-      let path = pathapi+"/get208?id=" + this.id;
+      let path = pathapi + "/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
@@ -108,7 +111,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = pathapi+"/?id=" + id;
+          let path = pathapi + "/?id=" + id;
           axios
             .get(path)
             .then((res) => {
@@ -173,7 +176,7 @@ export default {
           {},
           { formid, stuid, formcat, deancomment }
         );
-        const path = pathapi+"/deanonesubmit";
+        const path = pathapi + "/deanonesubmit";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -196,7 +199,7 @@ export default {
           {},
           { formid, studentid, formcat, deancomment }
         );
-        const path = pathapi+"/canceldean";
+        const path = pathapi + "/canceldean";
         axios
           .post(path, senddata)
           .then((res) => {
