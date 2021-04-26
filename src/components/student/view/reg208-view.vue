@@ -32,7 +32,7 @@
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                  <RequestForm208 :formInfo="formInfo" />
+                  <RequestForm208 :formInfo="formInfo" @onFix="onFix" />
                 </template>
               </div>
             </div>
@@ -94,9 +94,16 @@ export default {
       st_phone: "",
       studentInfo: "",
       childDataLoaded: false,
-      // create_semester: "",
-      // create_academic_year: "",
       picture: [],
+      from_semester: "",
+      from_academic: "",
+      to_semester: "",
+      to_academic: "",
+      radio_1: "",
+      radio_2: "",
+      re_text: "",
+      re_doc: "",
+      restict:true
     };
   },
   methods: {
@@ -108,8 +115,6 @@ export default {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          // this.create_semester = this.formInfo.create_semester;
-          // this.create_academic_year = this.formInfo.create_academic_year;
           this.picture = JSON.parse(this.formInfo.reason_doc);
           return this.formInfo.student_id;
         })
@@ -191,7 +196,58 @@ export default {
             console.log(error);
           });
       });
-    },
+    },onFix(value){
+      this.from_semester = value.from_semester;
+      this.from_academic = value.from_academic;
+      this.to_semester = value.to_semester;
+      this.to_academic = value.to_academic;
+      this.radio_1 = value.radio_1;
+      this.radio_2 = value.radio_2;
+      this.re_text = value.re_text;
+      this.re_doc = value.re_doc;
+      this.restict = value.restict
+      this.sendformInfo();
+    },sendformInfo() {
+      // run function check เงื่อนไข gpax กับ radio2==true
+      const path = pathapi + "/send208alter";
+      const formid = this.formInfo.form_id;
+      const from_semester = this.from_semester;
+      const from_academic = this.from_academic;
+      const to_semester = this.to_semester;
+      const to_academic = this.to_academic;
+      const radio_1 = this.radio_1;
+      const radio_2 = this.radio_2;
+      const re_text = this.re_text;
+      const re_doc = this.re_doc;
+      const staffid = this.formInfo.staff_id
+      const senddata = Object.assign({}, formid, {
+        from_semester,
+        from_academic,
+        to_semester,
+        to_academic,
+        radio_1,
+        radio_2,
+        re_text,
+        re_doc,
+        staffid
+      });
+      console.log(senddata);
+      if(this.restict){
+        this.$confirm("Are you sure?").then(() => {
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("the request had sent");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      }else{
+        this.$alert("Undergraduate condition is fail");
+      }
+    }
   },
   created() {
     this.id = this.$route.params.id;
