@@ -88,7 +88,8 @@ export default {
         student_school,
         student_name,
       });
-      this.$confirm("Are you sure?").then(() => {
+       if(phone!=""){
+          this.$confirm("Are you sure?").then(() => {
         axios
           .post(path, senddata)
           .then((res) => {
@@ -99,6 +100,10 @@ export default {
             console.log(error);
           });
       });
+       }else{
+         this.$alert("form is not incorrect");
+       }
+      
     },
     onChange(value) {
       this.stphone = value.phone;

@@ -43,10 +43,6 @@ export default {
     return {
       studentInfo: "",
       stphone: "",
-      // create_semester: "",
-      // create_academic_year: "",
-      checkbox_1: "",
-      checkbox_2: "",
       from_semester: "",
       from_academic: "",
       to_semester: "",
@@ -55,6 +51,7 @@ export default {
       radio_2: "",
       re_text: "",
       re_doc: "",
+      restict:true
     };
   },
   methods: {
@@ -74,8 +71,6 @@ export default {
       // run function check เงื่อนไข gpax กับ radio2==true
       const path = pathapi + "/send208";
       const formid = { formId: Date.now() };
-      const checkbox_1 = this.checkbox_1;
-      const checkbox_2 = this.checkbox_2;
       const from_semester = this.from_semester;
       const from_academic = this.from_academic;
       const to_semester = this.to_semester;
@@ -91,18 +86,12 @@ export default {
         student_name,
       } = this.studentInfo;
       const phone = this.stphone;
-      // const create_semester = this.create_semester;
-      // const create_academic_year = this.create_academic_year;
       const senddata = Object.assign({}, formid, {
         phone,
         student_id,
         student_advisor_id,
         student_school,
         student_name,
-        // create_semester,
-        // create_academic_year,
-        checkbox_1,
-        checkbox_2,
         from_semester,
         from_academic,
         to_semester,
@@ -113,7 +102,8 @@ export default {
         re_doc,
       });
       console.log(senddata);
-      this.$confirm("Are you sure?").then(() => {
+      if(this.restict && phone!=""){
+        this.$confirm("Are you sure?").then(() => {
         axios
           .post(path, senddata)
           .then((res) => {
@@ -124,13 +114,14 @@ export default {
             console.log(error);
           });
       });
+      }else{
+        this.$alert("Undergraduate condition is fail");
+      }
     },
     onChange(value) {
       this.stphone = value.phone;
     },
     onSubmit(value) {
-      this.checkbox_1 = value.checkbox_1;
-      this.checkbox_2 = value.checkbox_2;
       this.from_semester = value.from_semester;
       this.from_academic = value.from_academic;
       this.to_semester = value.to_semester;
@@ -139,6 +130,7 @@ export default {
       this.radio_2 = value.radio_2;
       this.re_text = value.re_text;
       this.re_doc = value.re_doc;
+      this.restict = value.restict
       this.sendformInfo();
     },
   },
