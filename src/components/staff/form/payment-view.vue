@@ -30,17 +30,18 @@
       <div class="d-grid gap-2 d-md-block w-100">
         <button
           type="button"
-          class="btn btn-outline-danger mx-1 w-25"
+          class="btn btn-outline-warning mx-1"
+          style="width: 250px"
           v-on:click="onDisapprove"
         >
-          Disapprove
+          Request for new image
         </button>
         <button
           type="button"
           class="btn btn-success mx-1 w-25"
           v-on:click="onApprove"
         >
-          Approve
+          Submit
         </button>
       </div>
     </div>
@@ -110,6 +111,7 @@ export default {
   max-width: 400px;
   height: auto;
   text-align: center;
+  display: flex;
 }
 
 #myImg {
