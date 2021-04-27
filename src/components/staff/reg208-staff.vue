@@ -68,7 +68,7 @@
                 >
                   <Payment :formInfo="formInfo" @onSetDept="onSetDept" />
                 </template>
-                <template v-if="childDataLoaded && formInfo.payment_status">
+                <template v-if="childDataLoaded && formInfo.payment_status && formInfo.progress_status != 5">
                   <PaymentView
                     :picture="formInfo.payment_doc"
                     :amount="formInfo.payment_amount"
