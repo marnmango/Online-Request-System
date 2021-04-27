@@ -8,6 +8,7 @@
           <input type="number" min="0" class="form-control" v-model="payment_amount" readonly />
           <span class="input-group-text">BATH</span>
         </div>
+      <div v-if="formInfo.payment_doc==null && formInfo.progress_status==4">
         <div class="input-group mt-3">
           <input
           type="file"
@@ -30,6 +31,8 @@
           </button>
         </div>
       </div>
+      <p id="text"></p>
+    </div>
       <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
         <label style="font-size: 18px">Example</label>
         <img
@@ -46,7 +49,7 @@
 <script>
 export default {
   props:{
-    amount:Number
+    formInfo:Object
   },
   data(){
     return{
@@ -78,8 +81,13 @@ export default {
     }
   },
   mounted(){
-    if(this.amount!=undefined){
-      this.payment_amount=this.amount
+    if(this.formInfo.payment_amount!=undefined){
+      this.payment_amount=this.formInfo.payment_amount
+    }
+    if(this.formInfo.progress_status==4 && this.formInfo.payment_doc!=null){
+      document.getElementById("text").innerHTML = "the payment is on process"
+    }else if(this.formInfo.progress_status==5){
+      document.getElementById("text").innerHTML = "the payment is completed"
     }
   }
 };

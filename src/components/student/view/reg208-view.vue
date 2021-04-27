@@ -55,9 +55,9 @@
               </template>
               <div class="row-6 p-3 border bg-light mt-3">
                 <template
-                  v-if="childDataLoaded && formInfo.progress_status == 4"
+                  v-if="childDataLoaded && (formInfo.progress_status == 4||formInfo.progress_status == 5)"
                 >
-                  <Payment :amount="formInfo.payment_amount" @onSubmit="onSubmit"/>
+                  <Payment :formInfo="formInfo" @onSubmit="onSubmit"/>
                 </template>
               </div>
             </div>

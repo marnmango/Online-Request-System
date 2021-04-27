@@ -62,11 +62,11 @@
                 <template
                   v-if="
                     childDataLoaded &&
-                    formInfo.progress_status == 4 &&
+                    (formInfo.progress_status == 4||formInfo.progress_status == 5) &&
                     !formInfo.payment_status
                   "
                 >
-                  <Payment @onSetDept="onSetDept" />
+                  <Payment :formInfo="formInfo" @onSetDept="onSetDept" />
                 </template>
                 <template v-if="childDataLoaded && formInfo.payment_status">
                   <PaymentView
