@@ -69,7 +69,6 @@
                   <Payment @onSetDept="onSetDept" />
                 </template>
                 <template v-if="childDataLoaded && formInfo.payment_status">
-                  <!-- <สร้างcomponentใหม่ไว้โชว์รูปหลักฐานการโอนเงินและปุ่มยกเลิกกับยืนยันเมื่อนักเรียนส่งหลักฐานการชำระเงินมาแล้ว/> -->
                   <PaymentView
                     :picture="formInfo.payment_doc"
                     :amount="formInfo.payment_amount"
@@ -116,8 +115,6 @@ export default {
       st_phone: "",
       studentInfo: "",
       childDataLoaded: false,
-      // create_semester: "",
-      // create_academic_year: "",
       picture: [],
     };
   },
@@ -130,8 +127,6 @@ export default {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          // this.create_semester = this.formInfo.create_semester;
-          // this.create_academic_year = this.formInfo.create_academic_year;
           this.picture = JSON.parse(this.formInfo.reason_doc);
           return this.formInfo.student_id;
         })
@@ -201,9 +196,10 @@ export default {
         const formcat = this.formInfo.form_cat;
         const advisorid = this.formInfo.advisor_id;
         const staffcomment = value;
+        const studentid = this.formInfo.student_id
         const senddata = Object.assign(
           {},
-          { formid, staffid, formcat, advisorid, staffcomment }
+          { formid, staffid, formcat, advisorid, staffcomment,studentid }
         );
         const path = pathapi+"/staffsubmit";
         axios
@@ -218,30 +214,31 @@ export default {
           });
       });
     },
-    // onCancel(value) {
-    //   this.$confirm("Are you sure?").then(() => {
-    //     const formid = this.formInfo.form_id;
-    //     const staffid = this.staff_id;
-    //     const studentid = this.formInfo.student_id;
-    //     const formcat = this.formInfo.form_cat;
-    //     const staffcomment = value;
-    //     const senddata = Object.assign(
-    //       {},
-    //       { formid, staffid, studentid, staffcomment, formcat }
-    //     );
-    //     const path = "http://127.0.0.1:5000/cancel";
-    //     axios
-    //       .post(path, senddata)
-    //       .then((res) => {
-    //         console.log(res.data);
-    //         this.$alert("the request had cancel");
-    //         this.$router.push({ name: "List" });
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       });
-    //   });
-    // },
+    onCancel(value) {
+      this.$confirm("Are you sure?").then(() => {
+        const formid = this.formInfo.form_id;
+        const staffid = this.staff_id;
+        const studentid = this.formInfo.student_id;
+        const formcat = this.formInfo.form_cat;
+        const staffcomment = value;
+        const senddata = Object.assign(
+          {},
+          { formid, staffid, studentid, staffcomment, formcat }
+        );
+        console.log(senddata)
+        const path = "http://127.0.0.1:5000/cancel";
+        axios
+          .post(path, senddata)
+          .then((res) => {
+            console.log(res.data);
+            this.$alert("the request had cancel");
+            this.$router.push({ name: "List" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    },
     onSetDept(value) {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
@@ -304,6 +301,7 @@ export default {
     if (this.$route.query.debug) {
       this.debug = this.$route.query.debug;
     }
+    console.log(this.staff_id)
     this.getformInfo();
   },
 };

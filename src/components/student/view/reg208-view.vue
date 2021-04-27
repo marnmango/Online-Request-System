@@ -220,7 +220,8 @@ export default {
       const re_text = this.re_text;
       const re_doc = this.re_doc;
       const staffid = this.formInfo.staff_id
-      const senddata = Object.assign({}, formid, {
+      const senddata = Object.assign({}, {
+        formid,
         from_semester,
         from_academic,
         to_semester,
