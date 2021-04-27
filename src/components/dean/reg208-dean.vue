@@ -48,10 +48,10 @@
                 <Comment208
                   :staffcomment="formInfo.staff_comment"
                   :advisorcomment="formInfo.advisor_comment"
-                  @onSubmit="onSubmit"
-                  @onCancel="onCancel"
                 />
-                <Comment208Dean />
+                <Comment208Dean 
+                @onSubmit="onSubmit"
+                @onCancel="onCancel"/>
               </div>
             </div>
           </div>
