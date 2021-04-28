@@ -61,8 +61,8 @@ export default {
 			if(!res.data.auth){
 				this.$alert("error");
 			}else{
-				localStorage.setItem('user',JSON.stringify(res.data.user))
-                localStorage.setItem('jwt',res.data.token)
+				sessionStorage.setItem('user',JSON.stringify(res.data.user))
+                sessionStorage.setItem('jwt',res.data.token)
 				if(res.data.user.user_role=="student"){
 					this.$router.push({ name: "Liststudent", params: { userid: userid } });
 				}else if(res.data.user.user_role=="staff"){
@@ -78,9 +78,6 @@ export default {
             console.log(error);
           });
 		}
-	},created(){
-		localStorage.removeItem("jwt");
-		localStorage.removeItem("user");
 	}
 };
 </script>

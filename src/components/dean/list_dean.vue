@@ -525,7 +525,7 @@ export default {
     }
   },
   created() {
-    this.userid = JSON.parse(localStorage.getItem("user")).user_id;
+    this.userid = JSON.parse(sessionStorage.getItem("user")).user_id;
     console.log(this.userid);
     this.getallform();
   },
