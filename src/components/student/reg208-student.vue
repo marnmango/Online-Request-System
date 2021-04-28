@@ -51,12 +51,13 @@ export default {
       radio_2: "",
       re_text: "",
       re_doc: "",
+      studentid:'',
       restict:true
     };
   },
   methods: {
     getstudentInfo() {
-      const path = pathapi + "/?id=6131305010";
+      const path = pathapi+"/?id="+this.studentid;
       axios
         .get(path)
         .then((res) => {
@@ -135,6 +136,7 @@ export default {
     },
   },
   created() {
+    this.studentid=JSON.parse(sessionStorage.getItem('user')).user_id
     this.getstudentInfo();
   },
 };

@@ -115,7 +115,7 @@ export default {
     },
   },
   created() {
-    this.studentid=JSON.parse(localStorage.getItem('user')).user_id
+    this.studentid=JSON.parse(sessionStorage.getItem('user')).user_id
     this.getstudentInfo();
   },
   components: {

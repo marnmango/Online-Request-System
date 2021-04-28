@@ -229,16 +229,17 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
-        if (localStorage.getItem('jwt') == null) {
+        if (sessionStorage.getItem('jwt') == null) {
             next({
                 path: '/login'
             })
         }else{
-            let user = JSON.parse(localStorage.getItem('user')).user_role
+            let user = JSON.parse(sessionStorage.getItem('user')).user_role
             if(to.matched.some(record => record.meta.is_student)) {
                 if(user=="student"){
                     next()
                 }else{
+                    sessionStorage.clear()
                     next({
                         path: '/login'
                     })
@@ -247,6 +248,7 @@ router.beforeEach((to, from, next) => {
                 if(user=="staff"){
                     next()
                 }else{
+                    sessionStorage.clear()
                     next({
                         path: '/login'
                     })
@@ -255,6 +257,7 @@ router.beforeEach((to, from, next) => {
                 if(user=="advisor"){
                     next()
                 }else{
+                    sessionStorage.clear()
                     next({
                         path: '/login'
                     })
@@ -263,6 +266,7 @@ router.beforeEach((to, from, next) => {
                 if(user=="dean"){
                     next()
                 }else{
+                    sessionStorage.clear()
                     next({
                         path: '/login'
                     })
