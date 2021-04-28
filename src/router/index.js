@@ -237,6 +237,7 @@ router.beforeEach((to, from, next) => {
             let user = JSON.parse(sessionStorage.getItem('user')).user_role
             if(to.matched.some(record => record.meta.is_student)) {
                 if(user=="student"){
+                    sessionStorage.setItem('allow',true)
                     next()
                 }else{
                     sessionStorage.clear()
@@ -246,6 +247,7 @@ router.beforeEach((to, from, next) => {
                 }
             }else if(to.matched.some(record => record.meta.is_staff)) {
                 if(user=="staff"){
+                    sessionStorage.setItem('allow',true)
                     next()
                 }else{
                     sessionStorage.clear()
@@ -255,6 +257,7 @@ router.beforeEach((to, from, next) => {
                 }
             }else if(to.matched.some(record => record.meta.is_advisor)) {
                 if(user=="advisor"){
+                    sessionStorage.setItem('allow',true)
                     next()
                 }else{
                     sessionStorage.clear()
@@ -264,6 +267,7 @@ router.beforeEach((to, from, next) => {
                 }
             }else if(to.matched.some(record => record.meta.is_dean)) {
                 if(user=="dean"){
+                    sessionStorage.setItem('allow',true)
                     next()
                 }else{
                     sessionStorage.clear()
@@ -276,7 +280,31 @@ router.beforeEach((to, from, next) => {
             }
         }
     }else {
-        next()
+        if(!JSON.parse(sessionStorage.getItem('allow'))){
+            console.log(JSON.parse(sessionStorage.getItem('allow')))
+            next()
+        }else{
+            let user = JSON.parse(sessionStorage.getItem('user')).user_role
+          if(user=="student"){
+            next({
+                path: '/list-student'
+            })
+          }else if(user=="staff"){
+            next({
+                path: '/list'
+            })
+          }else if(user=="advisor"){
+            next({
+                path: '/list-advisor'
+            })
+          }else if(user=="dean"){
+            next({
+                path: '/list-dean'
+            })
+          }else{
+              console.log('')
+          }
+        }
     }
 })
 
