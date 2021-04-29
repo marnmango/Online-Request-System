@@ -62,13 +62,20 @@
                 <template
                   v-if="
                     childDataLoaded &&
-                    (formInfo.progress_status == 4||formInfo.progress_status == 5) &&
+                    (formInfo.progress_status == 4 ||
+                      formInfo.progress_status == 5) &&
                     !formInfo.payment_status
                   "
                 >
                   <Payment :formInfo="formInfo" @onSetDept="onSetDept" />
                 </template>
-                <template v-if="childDataLoaded && formInfo.payment_status && formInfo.progress_status != 5">
+                <template
+                  v-if="
+                    childDataLoaded &&
+                    formInfo.payment_status &&
+                    formInfo.progress_status != 5
+                  "
+                >
                   <PaymentView
                     :picture="formInfo.payment_doc"
                     :amount="formInfo.payment_amount"
@@ -94,7 +101,7 @@ import RequestImg208 from "./form/requestimg-reg208.vue";
 import Payment from "./form/payment.vue";
 import PaymentView from "./form/payment-view.vue";
 import axios from "axios";
-import pathapi from '../../pathapi.js';
+import pathapi from "../../pathapi.js";
 export default {
   components: {
     Navbar,
@@ -120,7 +127,7 @@ export default {
   },
   methods: {
     getformInfo() {
-      let path = pathapi+"/get208?id=" + this.id;
+      let path = pathapi + "/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
@@ -134,7 +141,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = pathapi+"/?id=" + id;
+          let path = pathapi + "/?id=" + id;
           axios
             .get(path)
             .then((res) => {
@@ -185,6 +192,8 @@ export default {
       } else if (this.formInfo.progress_status == 1) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("wait"); //1
+      } else if (this.formInfo.progress_status == 0) {
+        document.getElementById("1").classList.add("wait"); //0
       } else {
         return "error";
       }
@@ -196,12 +205,12 @@ export default {
         const formcat = this.formInfo.form_cat;
         const advisorid = this.formInfo.advisor_id;
         const staffcomment = value;
-        const studentid = this.formInfo.student_id
+        const studentid = this.formInfo.student_id;
         const senddata = Object.assign(
           {},
-          { formid, staffid, formcat, advisorid, staffcomment,studentid }
+          { formid, staffid, formcat, advisorid, staffcomment, studentid }
         );
-        const path = pathapi+"/staffsubmit";
+        const path = pathapi + "/staffsubmit";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -225,7 +234,7 @@ export default {
           {},
           { formid, staffid, studentid, staffcomment, formcat }
         );
-        console.log(senddata)
+        console.log(senddata);
         const path = "http://127.0.0.1:5000/cancel";
         axios
           .post(path, senddata)
@@ -245,7 +254,7 @@ export default {
         const studentid = this.formInfo.student_id;
         const amount = value;
         const senddata = Object.assign({}, { formid, studentid, amount });
-        const path = pathapi+"/setdept";
+        const path = pathapi + "/setdept";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -263,7 +272,7 @@ export default {
         const formid = this.formInfo.form_id;
         const studentid = this.formInfo.student_id;
         const senddata = Object.assign({}, { formid, studentid });
-        const path = pathapi+"/approvepayment";
+        const path = pathapi + "/approvepayment";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -281,7 +290,7 @@ export default {
         const formid = this.formInfo.form_id;
         const studentid = this.formInfo.student_id;
         const senddata = Object.assign({}, { formid, studentid });
-        const path = pathapi+"/disapprovepayment";
+        const path = pathapi + "/disapprovepayment";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -301,7 +310,7 @@ export default {
     if (this.$route.query.debug) {
       this.debug = this.$route.query.debug;
     }
-    console.log(this.staff_id)
+    console.log(this.staff_id);
     this.getformInfo();
   },
 };

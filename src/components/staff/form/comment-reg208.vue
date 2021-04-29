@@ -14,12 +14,25 @@
       <div class="text-center mt-3">
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" id="can" class="btn btn-outline-danger" v-on:click="onCancel">
-              Disapprove
+            <button
+              type="button"
+              id="can"
+              class="btn btn-outline-warning"
+              style="width: 250px"
+              v-on:click="onCancel"
+            >
+              Request for new image
             </button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-success" id="sub" v-on:click="onSubmit">Approve</button>
+            <button
+              type="button"
+              class="btn btn-success"
+              id="sub"
+              v-on:click="onSubmit"
+            >
+              Approve
+            </button>
           </div>
         </div>
       </div>
@@ -54,34 +67,37 @@
 
 <script>
 export default {
-  props:{
-    staff_comment:String,
-    dean_comment:String,
-    advisor_comment:String
+  props: {
+    staff_comment: String,
+    dean_comment: String,
+    advisor_comment: String,
   },
   data() {
     return {
-      staffcomment:"",
+      staffcomment: "",
       advisorcomment: "",
-      deancomment:""    };
+      deancomment: "",
+    };
   },
-  methods:{
-    onSubmit:function(){
-			this.$emit("onSubmit",this.staffcomment)
-		},onCancel:function(){
-			this.$emit("onCancel",this.staffcomment)
-		}
-  },mounted(){
-    if(this.staff_comment!=undefined){
-      this.staffcomment=this.staff_comment
-      this.deancomment=this.dean_comment
-      this.advisorcomment=this.advisor_comment
-      console.log(this.staff_comment,this.dean_comment,this.advisor_comment)
-      document.getElementById("sub").remove()
-      document.getElementById("can").remove()
-      document.getElementById("exampleFormControlTextarea1").disabled = true
+  methods: {
+    onSubmit: function () {
+      this.$emit("onSubmit", this.staffcomment);
+    },
+    onCancel: function () {
+      this.$emit("onCancel", this.staffcomment);
+    },
+  },
+  mounted() {
+    if (this.staff_comment != undefined) {
+      this.staffcomment = this.staff_comment;
+      this.deancomment = this.dean_comment;
+      this.advisorcomment = this.advisor_comment;
+      console.log(this.staff_comment, this.dean_comment, this.advisor_comment);
+      document.getElementById("sub").remove();
+      document.getElementById("can").remove();
+      document.getElementById("exampleFormControlTextarea1").disabled = true;
     }
-  }
+  },
 };
 </script>
 

@@ -71,10 +71,14 @@
                 <td
                   v-on:click="() => getFormData(form.form_id, form.form_cat)"
                   v-bind:style="{
-                    'background-color': colorStatus[form.status],
+                    backgroundColor: colorStatus[form.status],
+                    content: textStatus[form.status],
                   }"
                 >
-                  <li id="stat" class="w-100 h-25">
+                  <li
+                    id="stat"
+                    class="w-100 h-25 align-self-center align-items-center"
+                  >
                     {{ form.status }}
                   </li>
                 </td>
@@ -187,7 +191,7 @@
 <script>
 import Navbar from "../student/navStudent.vue";
 import axios from "axios";
-import pathapi from '../../pathapi.js';
+import pathapi from "../../pathapi.js";
 export default {
   props: {
     info: Object,
@@ -206,7 +210,19 @@ export default {
         staff: "#b0b6ba",
         advisor: "#ffc107",
         dean: "#28a745",
-        Disapproved: "red",
+        Disapproved: "#dc3545",
+        payment: "#ffc107",
+        completed: "#28a745",
+        complete: "#28a745",
+      },
+      textStatus: {
+        staff: "New Request",
+        advisor: "On Process",
+        dean: "On Process",
+        Disapproved: "Disapproved",
+        payment: "On Process",
+        completed: "Completed",
+        complete: "Completed",
       },
       head: 0,
       last: "",
@@ -215,7 +231,7 @@ export default {
   },
   methods: {
     getallform() {
-      const path = pathapi+"/getallform";
+      const path = pathapi + "/getallform";
       axios
         .get(path)
         .then((res) => {
@@ -290,22 +306,7 @@ export default {
         }
       });
     },
-    statusProgress() {
-      console.log(this.formInfo.status);
-      if (this.formInfoFilter.status == "staff") {
-        document.getElementById("stat").innerHTML = "New Request";
-        console.log("staff");
-      } else if (this.formInfoFilter.status == "advisor") {
-        document.getElementById("stat").classList.add("onprocess");
-        document.getElementById("stat").innerHTML = "On Process";
-      } else if (this.formInfoFilter.status == "dean") {
-        document.getElementById("stat").classList.add("approve");
-        document.getElementById("stat").innerHTML = "Aprrove";
-      } else {
-        document.getElementById("stat").classList.add("disapprove");
-        document.getElementById("stat").innerHTML = "Disaprrove";
-      }
-    },
+
     onChangeId() {
       this.checked = "id";
       this.formInfo.sort(function (first, last) {
@@ -371,9 +372,23 @@ export default {
       this.head = start;
       this.last = stop;
     },
+    statusProgress() {
+      if (this.formInfo.status == "staff") {
+        return this.formInfo.status.replace("New request");
+      } else if (this.formInfo.status == "advisor") {
+        return this.formInfo.status.replace("On Process");
+      } else if (this.formInfo.status == "dean") {
+        return this.formInfo.status.replace("Approved");
+      } else {
+        return this.formInfo.status.replace("Disapprove");
+      }
+    },
   },
   created() {
     this.getallform();
+  },
+  mounted() {
+    this.statusProgress();
   },
   computed: {
     formInfoFilter() {
@@ -422,37 +437,8 @@ export default {
 .active-nav {
   margin: 0;
 }
-.fillter-link:active,
-.fillter-link:focus {
-  background-color: #b6906490;
-}
 li {
   list-style-type: none;
-}
-.round li {
-  background-color: #b0b6ba;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.approve {
-  background-color: #28a745;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.disapprove {
-  color: #fff;
-  background-color: #dc3545;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.onprocess {
-  background-color: #ffc107;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
 }
 .form-control-edit {
   padding: 0;
