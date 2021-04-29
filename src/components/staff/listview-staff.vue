@@ -208,12 +208,13 @@ export default {
       colorStatus: {
         staff: "#b0b6ba",
         advisor: "#ffc107",
-        dean: "#28a745",
+        dean: "#ffc107",
         Disapproved: "#dc3545",
         payment: "#ffc107",
         completed: "#28a745",
         complete: "#28a745",
       },
+
       head: 0,
       last: "",
       numChangeTable: [],
