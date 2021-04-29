@@ -98,10 +98,13 @@
                 <td
                   v-on:click="() => getFormData(form.form_id, form.form_cat)"
                   v-bind:style="{
-                    'background-color': colorStatus[form.status],
+                    backgroundColor: colorStatus[form.status],
                   }"
                 >
-                  <li id="stat" class="w-100 h-25">
+                  <li
+                    id="stat"
+                    class="w-100 h-25 align-self-center align-items-center"
+                  >
                     {{ form.status }}
                   </li>
                 </td>
@@ -144,7 +147,12 @@
                           aria-label="Close"
                         ></button>
                       </div>
-                      <div class="modal-body"><CommentDean @onCancel="onCancel" @onSubmit="confirmRequest"/></div>
+                      <div class="modal-body">
+                        <CommentDean
+                          @onCancel="onCancel"
+                          @onSubmit="confirmRequest"
+                        />
+                      </div>
                       <!-- radio approve -->
                     </div>
                   </div>
@@ -282,7 +290,10 @@ export default {
         staff: "#b0b6ba",
         advisor: "#ffc107",
         dean: "#28a745",
-        Disapproved: "red",
+        Disapproved: "#dc3545",
+        payment: "#ffc107",
+        completed: "#28a745",
+        complete: "#28a745",
       },
       head: 0,
       last: "",
@@ -379,22 +390,6 @@ export default {
         }
       });
     },
-    statusProgress() {
-      console.log(this.formInfo.status);
-      if (this.formInfoFilter.status == "staff") {
-        document.getElementById("stat").innerHTML = "New Request";
-        console.log("staff");
-      } else if (this.formInfoFilter.status == "advisor") {
-        document.getElementById("stat").classList.add("onprocess");
-        document.getElementById("stat").innerHTML = "On Process";
-      } else if (this.formInfoFilter.status == "dean") {
-        document.getElementById("stat").classList.add("approve");
-        document.getElementById("stat").innerHTML = "Aprrove";
-      } else {
-        document.getElementById("stat").classList.add("disapprove");
-        document.getElementById("stat").innerHTML = "Disaprrove";
-      }
-    },
     onChangeId() {
       this.checked = "id";
       this.formInfo.sort(function (first, last) {
@@ -480,8 +475,11 @@ export default {
         const formid = this.selectedformid;
         const formcat = this.selectrdformcat;
         const formstuid = this.selectrdformstuid;
-        const deancomment = value 
-        const senddata = Object.assign({}, { formid, formcat, formstuid,deancomment });
+        const deancomment = value;
+        const senddata = Object.assign(
+          {},
+          { formid, formcat, formstuid, deancomment }
+        );
         console.log(senddata);
         const path = pathapi + "/deansubmit";
         axios
@@ -502,13 +500,17 @@ export default {
         this.selectrdformcat.push(this.formInfoFilter[ecform].form_aka);
         this.selectrdformstuid.push(this.formInfoFilter[ecform].student_id);
       }
-    },onCancel(value){
+    },
+    onCancel(value) {
       this.$confirm("Are you sure?").then(() => {
         const formid = this.selectedformid;
         const formcat = this.selectrdformcat;
         const formstuid = this.selectrdformstuid;
-        const deancomment = value 
-        const senddata = Object.assign({}, { formid, formcat, formstuid,deancomment });
+        const deancomment = value;
+        const senddata = Object.assign(
+          {},
+          { formid, formcat, formstuid, deancomment }
+        );
         console.log(senddata);
         const path = pathapi + "/deandisapprove";
         axios
@@ -522,7 +524,7 @@ export default {
             console.log(error);
           });
       });
-    }
+    },
   },
   created() {
     this.userid = JSON.parse(sessionStorage.getItem("user")).user_id;
@@ -582,31 +584,6 @@ export default {
 }
 li {
   list-style-type: none;
-}
-.round li {
-  background-color: #b0b6ba;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.approve {
-  background-color: #28a745;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.disapprove {
-  color: #fff;
-  background-color: #dc3545;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.onprocess {
-  background-color: #ffc107;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
 }
 .form-control-edit {
   padding: 0;

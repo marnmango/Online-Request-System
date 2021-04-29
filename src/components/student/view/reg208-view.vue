@@ -55,9 +55,13 @@
               </template>
               <div class="row-6 p-3 border bg-light mt-3">
                 <template
-                  v-if="childDataLoaded && (formInfo.progress_status == 4||formInfo.progress_status == 5)"
+                  v-if="
+                    childDataLoaded &&
+                    (formInfo.progress_status == 4 ||
+                      formInfo.progress_status == 5)
+                  "
                 >
-                  <Payment :formInfo="formInfo" @onSubmit="onSubmit"/>
+                  <Payment :formInfo="formInfo" @onSubmit="onSubmit" />
                 </template>
               </div>
             </div>
@@ -76,7 +80,7 @@ import Comment208 from "./form-view/comment-reg208.vue";
 import RequestImg208 from "./form-view/requestimg-reg208.vue";
 import Payment from "./form-view/payment.vue";
 import axios from "axios";
-import pathapi from "../../../pathapi.js"
+import pathapi from "../../../pathapi.js";
 export default {
   components: {
     Navbar,
@@ -103,12 +107,12 @@ export default {
       radio_2: "",
       re_text: "",
       re_doc: "",
-      restict:true
+      restict: true,
     };
   },
   methods: {
     getformInfo() {
-      let path = pathapi+"/get208?id=" + this.id;
+      let path = pathapi + "/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
@@ -122,7 +126,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = pathapi+"/?id=" + id;
+          let path = pathapi + "/?id=" + id;
           axios
             .get(path)
             .then((res) => {
@@ -173,18 +177,20 @@ export default {
       } else if (this.formInfo.progress_status == 1) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("wait"); //1
+      } else if (this.formInfo.progress_status == 0) {
+        document.getElementById("1").classList.add("wait"); //0
       } else {
         return "error";
       }
     },
     onSubmit(value) {
-      console.log(value)
+      console.log(value);
       this.$confirm("Are you sure?").then(() => {
         const formid = this.formInfo.form_id;
-        const staffid = this.formInfo.staff_id
+        const staffid = this.formInfo.staff_id;
         const payment_doc = value;
-        const senddata = Object.assign({},{ formid,payment_doc,staffid });
-        const path = pathapi+"/paymentsubmit";
+        const senddata = Object.assign({}, { formid, payment_doc, staffid });
+        const path = pathapi + "/paymentsubmit";
         axios
           .post(path, senddata)
           .then((res) => {
@@ -196,7 +202,8 @@ export default {
             console.log(error);
           });
       });
-    },onFix(value){
+    },
+    onFix(value) {
       this.from_semester = value.from_semester;
       this.from_academic = value.from_academic;
       this.to_semester = value.to_semester;
@@ -205,9 +212,10 @@ export default {
       this.radio_2 = value.radio_2;
       this.re_text = value.re_text;
       this.re_doc = value.re_doc;
-      this.restict = value.restict
+      this.restict = value.restict;
       this.sendformInfo();
-    },sendformInfo() {
+    },
+    sendformInfo() {
       // run function check เงื่อนไข gpax กับ radio2==true
       const path = pathapi + "/send208alter";
       const formid = this.formInfo.form_id;
@@ -219,36 +227,39 @@ export default {
       const radio_2 = this.radio_2;
       const re_text = this.re_text;
       const re_doc = this.re_doc;
-      const staffid = this.formInfo.staff_id
-      const senddata = Object.assign({}, {
-        formid,
-        from_semester,
-        from_academic,
-        to_semester,
-        to_academic,
-        radio_1,
-        radio_2,
-        re_text,
-        re_doc,
-        staffid
-      });
+      const staffid = this.formInfo.staff_id;
+      const senddata = Object.assign(
+        {},
+        {
+          formid,
+          from_semester,
+          from_academic,
+          to_semester,
+          to_academic,
+          radio_1,
+          radio_2,
+          re_text,
+          re_doc,
+          staffid,
+        }
+      );
       console.log(senddata);
-      if(this.restict){
+      if (this.restict) {
         this.$confirm("Are you sure?").then(() => {
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-            this.$alert("the request had sent");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-      }else{
+          axios
+            .post(path, senddata)
+            .then((res) => {
+              console.log(res.data);
+              this.$alert("the request had sent");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      } else {
         this.$alert("Undergraduate condition is fail");
       }
-    }
+    },
   },
   created() {
     this.id = this.$route.params.id;

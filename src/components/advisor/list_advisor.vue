@@ -26,8 +26,16 @@
           >
             <div style="margin-right: 180px">
               <ul class="pagination">
-                <li class="page-item" v-for="(item,index) in numChangeTable" :key="index">
-                  <a class="page-link" v-on:click="() => onclickpage(item.start,item.stop)">{{item.i}}</a>
+                <li
+                  class="page-item"
+                  v-for="(item, index) in numChangeTable"
+                  :key="index"
+                >
+                  <a
+                    class="page-link"
+                    v-on:click="() => onclickpage(item.start, item.stop)"
+                    >{{ item.i }}</a
+                  >
                 </li>
               </ul>
             </div>
@@ -55,25 +63,28 @@
                     scope="row"
                   />
                 </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.create_date }}
                 </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.form_aka }}
                 </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.student_id }}
                 </td>
-                <td v-on:click="() => getFormData(form.form_id,form.form_cat)">
+                <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.student_name }}
                 </td>
                 <td
-                  v-on:click="() => getFormData(form.form_id,form.form_cat)"
+                  v-on:click="() => getFormData(form.form_id, form.form_cat)"
                   v-bind:style="{
-                    'background-color': colorStatus[form.status],
+                    backgroundColor: colorStatus[form.status],
                   }"
                 >
-                  <li id="stat" class="w-100 h-25">
+                  <li
+                    id="stat"
+                    class="w-100 h-25 align-self-center align-items-center"
+                  >
                     {{ form.status }}
                   </li>
                 </td>
@@ -179,7 +190,7 @@
 <script>
 import Navbar from "../student/navStudent";
 import axios from "axios";
-import pathapi from "../../pathapi.js"
+import pathapi from "../../pathapi.js";
 export default {
   props: {
     info: Object,
@@ -189,7 +200,7 @@ export default {
   },
   data() {
     return {
-      userid:'',
+      userid: "",
       formInfo: [],
       search: "",
       checked: "",
@@ -199,41 +210,44 @@ export default {
         staff: "#b0b6ba",
         advisor: "#ffc107",
         dean: "#28a745",
-        Disapproved: 'red'
+        Disapproved: "#dc3545",
+        payment: "#ffc107",
+        completed: "#28a745",
+        complete: "#28a745",
       },
-      head:0,
-      last:'',
-      numChangeTable: []
+      head: 0,
+      last: "",
+      numChangeTable: [],
     };
   },
   methods: {
     getallform() {
-      const path = pathapi+"/getformadvisor?id="+this.userid;
+      const path = pathapi + "/getformadvisor?id=" + this.userid;
       axios
         .get(path)
         .then((res) => {
           console.log(res.data);
           this.formInfo = res.data;
-          return this.formInfo
+          return this.formInfo;
         })
         .catch((error) => {
           console.log(error);
-        }).then((form)=>{
-          this.allPage(form)
-          if(form.length<10){
-              this.last=form.length
-          }else{
-              this.last=10
+        })
+        .then((form) => {
+          this.allPage(form);
+          if (form.length < 10) {
+            this.last = form.length;
+          } else {
+            this.last = 10;
           }
-          })
+        });
     },
     getFormData(id, form_cat) {
-      let address =""
-      if(form_cat==209){
-         address = "Reg209Advisor";
-      }
-      else if(form_cat==208){
-         address = "Reg208Advisor"
+      let address = "";
+      if (form_cat == 209) {
+        address = "Reg209Advisor";
+      } else if (form_cat == 208) {
+        address = "Reg208Advisor";
       }
       this.$router.push({ name: address, params: { id: id } });
     },
@@ -282,22 +296,6 @@ export default {
           return 0;
         }
       });
-    },
-    statusProgress() {
-      console.log(this.formInfo.status);
-      if (this.formInfoFilter.status == "staff") {
-        document.getElementById("stat").innerHTML = "New Request";
-        console.log("staff");
-      } else if (this.formInfoFilter.status == "advisor") {
-        document.getElementById("stat").classList.add("onprocess");
-        document.getElementById("stat").innerHTML = "On Process";
-      } else if (this.formInfoFilter.status == "dean") {
-        document.getElementById("stat").classList.add("approve");
-        document.getElementById("stat").innerHTML = "Aprrove";
-      } else {
-        document.getElementById("stat").classList.add("disapprove");
-        document.getElementById("stat").innerHTML = "Disaprrove";
-      }
     },
     onChangeId() {
       this.checked = "id";
@@ -348,26 +346,27 @@ export default {
     },
     onRefresh() {
       location.reload();
-    },allPage(form){
-      let newArrayPage =[]
-      for(let i= 0;i<Math.ceil((form.length/10));i++){
-          if(form.length<=10*(i+1)){
-              newArrayPage.push({i:i+1,start:i*10,stop:form.length})
-          }
-          else{
-            newArrayPage.push({i:i+1,start:i*10,stop:10*(i+1)})
-          }
+    },
+    allPage(form) {
+      let newArrayPage = [];
+      for (let i = 0; i < Math.ceil(form.length / 10); i++) {
+        if (form.length <= 10 * (i + 1)) {
+          newArrayPage.push({ i: i + 1, start: i * 10, stop: form.length });
+        } else {
+          newArrayPage.push({ i: i + 1, start: i * 10, stop: 10 * (i + 1) });
+        }
       }
-      this.numChangeTable = newArrayPage
-    },onclickpage(start,stop){
-      this.head=start
-      this.last=stop
-    }
+      this.numChangeTable = newArrayPage;
+    },
+    onclickpage(start, stop) {
+      this.head = start;
+      this.last = stop;
+    },
   },
   created() {
-    this.userid=JSON.parse(sessionStorage.getItem('user')).user_id
+    this.userid = JSON.parse(sessionStorage.getItem("user")).user_id;
     console.log(this.userid);
-    this.getallform()
+    this.getallform();
   },
   computed: {
     formInfoFilter() {
@@ -377,29 +376,30 @@ export default {
           this.formInfo.filter((form) => {
             return form.status.toLowerCase().indexOf(search) > -1;
           })
-        ).slice(this.head,this.last)
+        ).slice(this.head, this.last);
       } else if (this.checked == "form_name") {
         return this.filteredDate(
           this.formInfo.filter((form) => {
             return form.form_aka.toLowerCase().indexOf(search) > -1;
           })
-        ).slice(this.head,this.last)
+        ).slice(this.head, this.last);
       } else if (this.checked == "id") {
         return this.filteredDate(
           this.formInfo.filter((form) => {
             return form.student_id.toString().indexOf(search) > -1;
           })
-        ).slice(this.head,this.last)
+        ).slice(this.head, this.last);
       } else {
-        return this.filteredDate(this.formInfo).slice(this.head,this.last);
+        return this.filteredDate(this.formInfo).slice(this.head, this.last);
       }
-    }
-  },watch:{
-      search:function() {
-          this.head='0'
-          this.last=10
-      }
-  }
+    },
+  },
+  watch: {
+    search: function () {
+      this.head = "0";
+      this.last = 10;
+    },
+  },
 };
 </script>
 
@@ -421,30 +421,5 @@ export default {
 }
 li {
   list-style-type: none;
-}
-.round li {
-  background-color: #b0b6ba;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.approve {
-  background-color: #28a745;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.disapprove {
-  color: #fff;
-  background-color: #dc3545;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
-}
-li.onprocess {
-  background-color: #ffc107;
-  line-height: 25px;
-  border-radius: 40px;
-  margin: 0;
 }
 </style>
