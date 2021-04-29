@@ -72,7 +72,6 @@
                   v-on:click="() => getFormData(form.form_id, form.form_cat)"
                   v-bind:style="{
                     backgroundColor: colorStatus[form.status],
-                    content: textStatus[form.status],
                   }"
                 >
                   <li
@@ -214,15 +213,6 @@ export default {
         payment: "#ffc107",
         completed: "#28a745",
         complete: "#28a745",
-      },
-      textStatus: {
-        staff: "New Request",
-        advisor: "On Process",
-        dean: "On Process",
-        Disapproved: "Disapproved",
-        payment: "On Process",
-        completed: "Completed",
-        complete: "Completed",
       },
       head: 0,
       last: "",
@@ -372,23 +362,9 @@ export default {
       this.head = start;
       this.last = stop;
     },
-    statusProgress() {
-      if (this.formInfo.status == "staff") {
-        return this.formInfo.status.replace("New request");
-      } else if (this.formInfo.status == "advisor") {
-        return this.formInfo.status.replace("On Process");
-      } else if (this.formInfo.status == "dean") {
-        return this.formInfo.status.replace("Approved");
-      } else {
-        return this.formInfo.status.replace("Disapprove");
-      }
-    },
   },
   created() {
     this.getallform();
-  },
-  mounted() {
-    this.statusProgress();
   },
   computed: {
     formInfoFilter() {
