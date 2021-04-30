@@ -158,16 +158,6 @@
                   </div>
                 </div>
               </div>
-              <div class="m-2 justify-content-md-center">
-                <button
-                  type="button"
-                  id="submit"
-                  class="btn btn-outline-success w-100"
-                  v-on:click="confirmAllRequest"
-                >
-                  Confirm all request
-                </button>
-              </div>
               <h4 class="mt-3">Filter</h4>
               <div class="form-check">
                 <input
@@ -308,10 +298,17 @@ export default {
     // selectall
     allselect() {
       this.selectedformid = [];
+      this.selectrdformcat = [];
+      this.selectrdformstuid = [];
       if (!this.selectAll) {
-        for (let i in this.formInfo) {
-          this.selectedformid.push(this.formInfo[i].form_id);
-        }
+        this.confirmAllRequest()
+        console.log(this.selectedformid)
+        console.log(this.selectrdformcat)
+        console.log(this.selectrdformstuid)
+      }else{
+        console.log(this.selectedformid)
+        console.log(this.selectrdformcat)
+        console.log(this.selectrdformstuid)
       }
     },
     getallform() {
