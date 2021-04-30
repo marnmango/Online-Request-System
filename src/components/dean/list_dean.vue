@@ -277,9 +277,9 @@ export default {
       startDate: "",
       endDate: "",
       colorStatus: {
-        staff: "#b0b6ba",
+        staff: "#ffc107",
         advisor: "#ffc107",
-        dean: "#28a745",
+        dean: "#b0b6ba",
         Disapproved: "#dc3545",
         payment: "#ffc107",
         completed: "#28a745",
