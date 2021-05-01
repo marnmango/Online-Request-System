@@ -30,6 +30,13 @@
             class="form-control form-control-edit"
           />
         </div>
+        <div class="col">
+          <input
+            type="date"
+            v-model="startsummer"
+            class="form-control form-control-edit"
+          />
+        </div>
       </div>
       <div class="d-md-flex justify-content-md-end m-3 mt-0">
         <button type="button" class="btn btn-success" v-on:click="onSubmit">Submit</button>
@@ -47,13 +54,14 @@ export default {
       startfirst:'',
       startsecond:'',
       endfirst:'',
-      endsecond:''
+      endsecond:'',
+      startsummer:''
     }
   },
   methods:{
     onSubmit(){
       const path = pathapi + "/setDate"
-      const senddata = {startfirst:this.startfirst,startsecond:this.startsecond,endfirst:this.endfirst,endsecond:this.endsecond}
+      const senddata = {startfirst:this.startfirst,startsecond:this.startsecond,endfirst:this.endfirst,endsecond:this.endsecond,startsummer:this.startsummer}
       axios
           .post(path, senddata)
           .then((res) => {

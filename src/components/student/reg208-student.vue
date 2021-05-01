@@ -57,13 +57,13 @@ export default {
   },
   methods: {
     getstudentInfo() {
-      const path = pathapi + "/?id=" + this.studentid;
+      const path = axios.get(pathapi+"/?id="+this.studentid);
+      const path2 = axios.get(pathapi+"/getDate");
       axios
-        .get(path)
-        .then((res) => {
-          console.log(res.data);
-          this.studentInfo = res.data;
-        })
+        .all([path,path2])
+        .then(axios.spread((...res) => {
+          this.studentInfo = res[0].data;
+        }))
         .catch((error) => {
           console.log(error);
         });
