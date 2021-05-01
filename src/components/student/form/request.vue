@@ -116,7 +116,9 @@ export default {
           re_semester,
           re_academic_year,
           selectsemes,
-          selectyear
+          selectyear,
+          to_semester:this.tosemes,
+          to_academicyear:this.toadmy
         };
         this.$emit("onRequest", strequest);
       }
