@@ -12,28 +12,24 @@
         rows="5"
       ></textarea>
       <div class="text-center mt-3">
-        <div class="row">
-          <div class="d-grid gap-2 col-4 mx-auto">
-            <button
-              type="button"
-              id="can"
-              class="btn btn-outline-warning"
-              style="width: 250px"
-              v-on:click="onCancel"
-            >
-              Request for new image
-            </button>
-          </div>
-          <div class="d-grid gap-2 col-4 mx-auto">
-            <button
-              type="button"
-              class="btn btn-success"
-              id="sub"
-              v-on:click="onSubmit"
-            >
-              Approve
-            </button>
-          </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button
+            type="button"
+            id="can"
+            class="btn btn-outline-secondary"
+            style="width: 250px; width: 300px"
+            v-on:click="onCancel"
+          >
+            Request more new documents
+          </button>
+          <button
+            type="button"
+            class="btn btn-success"
+            id="sub"
+            v-on:click="onSubmit"
+          >
+            Approve
+          </button>
         </div>
       </div>
     </div>

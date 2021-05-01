@@ -5,35 +5,46 @@
       <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
         <label>Total</label>
         <div class="input-group">
-          <input type="number" min="0" class="form-control" v-model="payment_amount" readonly />
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            v-model="payment_amount"
+            id="amount"
+            readonly
+          />
           <span class="input-group-text">BATH</span>
         </div>
-      <div v-if="formInfo.payment_doc==null && formInfo.progress_status==4">
-        <div class="input-group mt-3">
-          <input
-          type="file"
-          class="form-control"
-          id="files"
-          aria-label="Upload"
-          ref="files"
-          v-on:change="handleFilesUpload"
-          required
-        />
+        <div
+          v-if="formInfo.payment_doc == null && formInfo.progress_status == 4"
+        >
+          <div class="input-group mt-3">
+            <input
+              type="file"
+              class="form-control"
+              id="files"
+              aria-label="Upload"
+              ref="files"
+              v-on:change="handleFilesUpload"
+              required
+            />
+          </div>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
+            <button
+              class="btn btn-outline-success w-25"
+              type="button"
+              id="submitFile"
+              v-on:click="onSubmit"
+            >
+              Submit
+            </button>
+          </div>
         </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
-          <button
-            class="btn btn-outline-success w-25"
-            type="button"
-            id="submitFile"
-            v-on:click="onSubmit"
-          >
-            Submit
-          </button>
+        <div class="row align-self-center m-0 justify-content-center">
+          <p class="mt-0 mb-0 badge fs-5" id="text"></p>
         </div>
       </div>
-      <p id="text"></p>
-    </div>
-      <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
+      <div id="example" class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
         <label style="font-size: 18px">Example</label>
         <img
           src="@/assets/ex-receipt.jpeg"
@@ -48,48 +59,67 @@
 
 <script>
 export default {
-  props:{
-    formInfo:Object
+  props: {
+    formInfo: Object,
   },
-  data(){
-    return{
-      payment_amount:'',
-      files:''
-    }
+  data() {
+    return {
+      payment_amount: "",
+      files: "",
+    };
   },
-  methods:{
+  methods: {
     handleFilesUpload() {
       let uploadedFiles = this.$refs.files.files;
       let match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
-        var imagefile = uploadedFiles[0].type;
-        console.log(imagefile)
-        if (!(imagefile == match[0] ||imagefile == match[1] ||imagefile == match[2] ||imagefile == match[3])){
-          alert("Please select a valid image file (JPEG/JPG/PNG/GIF).");
-        } else {
-          this.files=uploadedFiles[0];
-        }
+      var imagefile = uploadedFiles[0].type;
+      console.log(imagefile);
+      if (
+        !(
+          imagefile == match[0] ||
+          imagefile == match[1] ||
+          imagefile == match[2] ||
+          imagefile == match[3]
+        )
+      ) {
+        alert("Please select a valid image file (JPEG/JPG/PNG/GIF).");
+      } else {
+        this.files = uploadedFiles[0];
+      }
       console.log(this.files);
-    },onSubmit(){
+    },
+    onSubmit() {
       var reader = new FileReader();
       reader.readAsDataURL(this.files);
       reader.onload = () => {
-        this.$emit("onSubmit",reader.result)
+        this.$emit("onSubmit", reader.result);
       };
       reader.onerror = function (error) {
         console.log("Error: ", error);
       };
+    },
+  },
+  mounted() {
+    if (this.formInfo.payment_amount != undefined) {
+      this.payment_amount = this.formInfo.payment_amount;
+    }
+    if (
+      this.formInfo.progress_status == 4 &&
+      this.formInfo.payment_doc != null
+    ) {
+      document.getElementById("text").innerHTML = "The payment is on process";
+      document.getElementById("text").style.backgroundColor = "#ffc107";
+      document.getElementById("example").remove();
+    } else if (this.formInfo.progress_status == 5) {
+      document.getElementById("text").innerHTML = "The payment is completed";
+      document.getElementById("text").style.backgroundColor = "#28a745";
+      document.getElementById("example").remove();
+      if (this.formInfo.payment_amount == 0) {
+        document.getElementById("text").innerHTML =
+          "No Fee. The payment is completed";
+      }
     }
   },
-  mounted(){
-    if(this.formInfo.payment_amount!=undefined){
-      this.payment_amount=this.formInfo.payment_amount
-    }
-    if(this.formInfo.progress_status==4 && this.formInfo.payment_doc!=null){
-      document.getElementById("text").innerHTML = "the payment is on process"
-    }else if(this.formInfo.progress_status==5){
-      document.getElementById("text").innerHTML = "the payment is completed"
-    }
-  }
 };
 </script>
 

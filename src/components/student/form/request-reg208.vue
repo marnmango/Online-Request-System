@@ -4,69 +4,87 @@
 
     <!-- select semeter -->
     <form>
-      <div class="row mb-1 g-3">
-        <div class="col-3">
-          <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
-          <select
-            class="form-select"
-            id="semeterRe"
-            v-model="selectsemes_from"
-            @change="onChange"
-          >
-            <option v-for="(text, index) in request_from_semeter" :key="index">
-              {{ text }}
-            </option>
-          </select>
-        </div>
-        <div class="col-3">
-          <label for="fromAcademic" class="form-label mb-0"
-            >Academic Year</label
-          >
-          <select
-            class="form-select"
-            id="academicYear"
-            v-model="selectyear_from"
-            @change="onYear"
-          >
-            <option
-              v-for="(year, index) in request_from_academicyear"
-              :key="index"
+      <div>
+        <p class="mb-4">Request to leave</p>
+        <div class="row mb-1 g-3 border p-3 mx-3">
+          <div class="col-3 mt-0">
+            <label for="fromSemeter" class="form-label mb-0"
+              >From Semeter</label
             >
-              {{ year }}
-            </option>
-          </select>
-        </div>
-        <div class="col-3">
-          <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
-          <select
-            class="form-select"
-            id="semeterRe"
-            v-model="selectsemes_to"
-            @change="onChange"
-          >
-            <option v-for="(text, index) in request_to_semeter" :key="index">
-              {{ text }}
-            </option>
-          </select>
-        </div>
-        <div class="col-3">
-          <label for="toAcademic" class="form-label mb-0">Academic Year</label>
-          <select
-            class="form-select"
-            id="academicYear"
-            v-model="selectyear_to"
-            @change="onChange"
-          >
-            <option
-              v-for="(year, index) in request_to_academicyear"
-              :key="index"
+            <select
+              class="form-select"
+              id="semeterRe"
+              v-model="selectsemes_from"
+              @change="onChange"
             >
-              {{ year }}
-            </option>
-          </select>
+              <option
+                v-for="(text, index) in request_from_semeter"
+                :key="index"
+              >
+                {{ text }}
+              </option>
+            </select>
+          </div>
+          <div class="col-3 mt-0">
+            <label for="fromAcademic" class="form-label mb-0"
+              >Academic Year</label
+            >
+            <select
+              class="form-select"
+              id="academicYear"
+              v-model="selectyear_from"
+              @change="onYear"
+            >
+              <option
+                v-for="(year, index) in request_from_academicyear"
+                :key="index"
+              >
+                {{ year }}
+              </option>
+            </select>
+          </div>
+          <div class="col-3 mt-0">
+            <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
+            <select
+              class="form-select"
+              id="semeterRe"
+              v-model="selectsemes_to"
+              @change="onChange"
+            >
+              <option v-for="(text, index) in request_to_semeter" :key="index">
+                {{ text }}
+              </option>
+            </select>
+          </div>
+          <div class="col-3 mt-0">
+            <label for="toAcademic" class="form-label mb-0"
+              >Academic Year</label
+            >
+            <select
+              class="form-select"
+              id="academicYear"
+              v-model="selectyear_to"
+              @change="onChange"
+            >
+              <option
+                v-for="(year, index) in request_to_academicyear"
+                :key="index"
+              >
+                {{ year }}
+              </option>
+            </select>
+          </div>
+
+          <div
+            class="border bg-white pt-3 ps-4 mt-3 mx-2 pb-0 text-start text-sm-start text-md-start"
+            style="width: 600px"
+          >
+            <p class="p-0" style="font-size: 15px" id="p1">
+              You request to leave:
+            </p>
+          </div>
         </div>
       </div>
-      <p id="p1"></p>
       <!-- radio check -->
       <div>
         <label for="name" class="form-label mb-0 mt-3"
@@ -102,7 +120,7 @@
         </div>
       </div>
       <div class="form-check">
-        <div class="mb-3">
+        <div class="mb-3 me-3">
           <textarea
             class="form-control"
             id="Other"
@@ -200,7 +218,7 @@ export default {
       selectsemes_to: "",
       selectyear_from: "",
       selectyear_to: "",
-      restict:true
+      restict: true,
     };
   },
   methods: {
@@ -213,33 +231,38 @@ export default {
     },
     onSubmit: async function () {
       //  this.submitFiles()
-      if (this.selectsemes_from == "" || isNaN(this.selectyear_from) || this.selectsemes_to == "" || isNaN(this.selectyear_to) ) {
+      if (
+        this.selectsemes_from == "" ||
+        isNaN(this.selectyear_from) ||
+        this.selectsemes_to == "" ||
+        isNaN(this.selectyear_to)
+      ) {
         this.$alert("please enter the request");
       } else {
-      let from_semester = this.selectsemes_from;
-      let from_academic = this.selectyear_from;
-      let to_semester = this.selectsemes_to;
-      let to_academic = this.selectyear_to;
-      let radio_1 = this.request_radio_1;
-      let radio_2 = this.request_radio_2;
-      let re_doc = this.re_doc;
-      for (let x in this.files) {
-        this.getBase64(this.files[x]);
-      }
-      console.log(re_doc);
-      let re_text = this.re_text;
-      this.$emit("onSubmit", {
-        from_semester,
-        from_academic,
-        to_semester,
-        to_academic,
-        radio_1,
-        radio_2,
-        re_doc,
-        re_text,
-        restict : this.restict
-      });
-      this.disableSubmit();
+        let from_semester = this.selectsemes_from;
+        let from_academic = this.selectyear_from;
+        let to_semester = this.selectsemes_to;
+        let to_academic = this.selectyear_to;
+        let radio_1 = this.request_radio_1;
+        let radio_2 = this.request_radio_2;
+        let re_doc = this.re_doc;
+        for (let x in this.files) {
+          this.getBase64(this.files[x]);
+        }
+        console.log(re_doc);
+        let re_text = this.re_text;
+        this.$emit("onSubmit", {
+          from_semester,
+          from_academic,
+          to_semester,
+          to_academic,
+          radio_1,
+          radio_2,
+          re_doc,
+          re_text,
+          restict: this.restict,
+        });
+        this.disableSubmit();
       }
     },
     disableOtherRadio: function () {
@@ -292,54 +315,84 @@ export default {
       reader.onerror = function (error) {
         console.log("Error: ", error);
       };
-    },genYear() {
+    },
+    genYear() {
       var minyear = new Date().getFullYear();
-      var maxyear = minyear + 3
-      for(var i = minyear; i <= maxyear; i++) {
-        this.request_from_academicyear.push(i)
+      var maxyear = minyear + 3;
+      for (var i = minyear; i <= maxyear; i++) {
+        this.request_from_academicyear.push(i);
       }
-    },onYear(){
-      this.selectyear_from=parseInt(this.selectyear_from)
-      let minyear = this.selectyear_from
-      let maxyear = minyear + 1
-      let arrayYear =[]
-      for(var i = minyear; i <= maxyear; i++) {
-        arrayYear.push(i)
+    },
+    onYear() {
+      this.selectyear_from = parseInt(this.selectyear_from);
+      let minyear = this.selectyear_from;
+      let maxyear = minyear + 1;
+      let arrayYear = [];
+      for (var i = minyear; i <= maxyear; i++) {
+        arrayYear.push(i);
       }
-      this.request_to_academicyear=arrayYear
-      this.selectyear_to=NaN
-    },onChange(){
-      this.selectyear_from=parseInt(this.selectyear_from)
-      this.selectyear_to=parseInt(this.selectyear_to)
-      if(this.selectsemes_from != "" && !isNaN(this.selectyear_from) && this.selectsemes_to != "" && !isNaN(this.selectyear_to)){
-        if(this.selectyear_from==this.selectyear_to){
-          if(this.selectsemes_from=='first'&&this.selectsemes_to=='second'){
-            document.getElementById("p1").innerHTML = "1 Term";
-            this.restict=true
-          }else{
-          document.getElementById("p1").innerHTML = "Lower to undergraduate";
-            this.restict=false
+      this.request_to_academicyear = arrayYear;
+      this.selectyear_to = NaN;
+    },
+    onChange() {
+      this.selectyear_from = parseInt(this.selectyear_from);
+      this.selectyear_to = parseInt(this.selectyear_to);
+      if (
+        this.selectsemes_from != "" &&
+        !isNaN(this.selectyear_from) &&
+        this.selectsemes_to != "" &&
+        !isNaN(this.selectyear_to)
+      ) {
+        if (this.selectyear_from == this.selectyear_to) {
+          if (
+            this.selectsemes_from == "first" &&
+            this.selectsemes_to == "second"
+          ) {
+            // document.getElementById("p1").innerHTML = "1 Term";
+            document.getElementById("p1").classList.add("p1Semeter");
+            this.restict = true;
+          } else {
+            // document.getElementById("p1").innerHTML = "Lower to undergraduate";
+            document.getElementById("p1").classList.add("pLower");
+            this.restict = false;
           }
-        }else{
-          if(this.selectsemes_from=='first'&&this.selectsemes_to=='first'){
-            document.getElementById("p1").innerHTML = "2 Term";
-            this.restict=true
-          }else if(this.selectsemes_from=='first'&&this.selectsemes_to=='second'){
-            document.getElementById("p1").innerHTML = "Exceed to undergraduate";
-            this.restict=false
-          }else if(this.selectsemes_from=='second'&&this.selectsemes_to=='first'){
-            document.getElementById("p1").innerHTML = "1 Term";
-            this.restict=true
-          }else if(this.selectsemes_from=='second'&&this.selectsemes_to=='second'){
-            document.getElementById("p1").innerHTML = "2 Term";
-            this.restict=true
+        } else {
+          if (
+            this.selectsemes_from == "first" &&
+            this.selectsemes_to == "first"
+          ) {
+            // document.getElementById("p1").innerHTML = "2 Term";
+            document.getElementById("p1").classList.add("p2Semeter");
+            this.restict = true;
+          } else if (
+            this.selectsemes_from == "first" &&
+            this.selectsemes_to == "second"
+          ) {
+            // document.getElementById("p1").innerHTML = "Exceed to undergraduate";
+            document.getElementById("p1").classList.add("pExceed");
+            this.restict = false;
+          } else if (
+            this.selectsemes_from == "second" &&
+            this.selectsemes_to == "first"
+          ) {
+            // document.getElementById("p1").innerHTML = "1 Term";
+            document.getElementById("p1").classList.add("p1Semeter");
+            this.restict = true;
+          } else if (
+            this.selectsemes_from == "second" &&
+            this.selectsemes_to == "second"
+          ) {
+            // document.getElementById("p1").innerHTML = "2 Term";
+            document.getElementById("p1").classList.add("p2Semeter");
+            this.restict = true;
           }
         }
       }
-    }
-  },mounted() {
+    },
+  },
+  mounted() {
     this.genYear();
-  }
+  },
 };
 </script>
 
@@ -374,5 +427,21 @@ span:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.p1Semeter::after {
+  content: " 1 Semeter";
+  font-weight: bold;
+}
+.p2Semeter::after {
+  content: " 2 Semeter";
+  font-weight: bold;
+}
+.pExceed::after {
+  content: " Exceed to undergraduate";
+  font-weight: bold;
+}
+.pLower::after {
+  content: " Lower to undergraduate";
+  font-weight: bold;
 }
 </style>

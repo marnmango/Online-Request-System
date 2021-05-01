@@ -145,20 +145,13 @@ export default {
         });
     },
     checkRole: function () {
-      if (this.formInfo.progress_status == 6) {
+      if (this.formInfo.progress_status == 5) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("active");
         document.getElementById("3").classList.add("active");
         document.getElementById("4").classList.add("active");
         document.getElementById("5").classList.add("active");
-        document.getElementById("6").classList.add("active"); //6
-      } else if (this.formInfo.progress_status == 5) {
-        document.getElementById("1").classList.add("active");
-        document.getElementById("2").classList.add("active");
-        document.getElementById("3").classList.add("active");
-        document.getElementById("4").classList.add("active");
-        document.getElementById("5").classList.add("active");
-        document.getElementById("6").classList.add("wait"); //5
+        document.getElementById("6").classList.add("active"); //5
       } else if (this.formInfo.progress_status == 4) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("active");

@@ -1,57 +1,93 @@
 <template>
   <div style="text-align: left">
     <h4>Request</h4>
-    <div class="row mb-1 g-3 w-75">
-      <div class="col-4">
-        <label for="name" class="form-label mb-0">Semeter</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          v-model="re_semester"
-          disabled
-        />
-      </div>
-      <div class="col-4 mx-0">
-        <label for="studentID" class="form-label mb-0">Academic year</label>
-        <input
-          type="number"
-          min="2018"
-          max="2100"
-          maxlength="4"
-          class="form-control"
-          id="studentID"
-          v-model="re_academic_year"
-          disabled
-        />
-      </div>
-    </div>
+    <!-- select year -->
     <div>
-      <p class="mb-1 mt-3">Reason for re-entering</p>
-      <div class="row m-2 p-3 border">
-        <div class="col-3 align-self-center align-items-center">
-          <p class="mb-0" style="text-indent: 5%; font-size: 16px">
-            To take a leave
-          </p>
-        </div>
-        <div class="col">
-          <p class="mb-0">Semeter</p>
-          <select class="form-select" id="semeterRe" v-model="selectsemes" @change="onChange">
-            <option v-for="(text,index) in semeter" :key="index">
+      <p class="mb-1 mt-3">Request to Re-entering</p>
+      <div class="row m-2 p-3 border pt-2">
+        <div class="col-4">
+          <label for="name" class="form-label mb-0">Semeter</label>
+          <select
+            class="form-select"
+            id="semeterRe"
+            v-model="selectsemes"
+            @change="onChange"
+          >
+            <option v-for="(text, index) in semeter" :key="index">
               {{ text }}
             </option>
           </select>
         </div>
-        <div class="col">
-          <p class="mb-0">Academic Year</p>
-          <select class="form-select" id="academicYear" v-model="selectyear" @change="onChange" >
-            <option v-for="(year,index) in yeargen" :key="index">
+        <div class="col-4 mx-0">
+          <label for="studentID" class="form-label mb-0">Academic year</label>
+          <select
+            class="form-select"
+            id="academicYear"
+            v-model="selectyear"
+            @change="onChange"
+          >
+            <option v-for="(year, index) in yeargen" :key="index">
               {{ year }}
             </option>
           </select>
         </div>
       </div>
     </div>
+
+    <!-- get data from 208 -->
+    <div>
+      <p class="mb-1 mt-3">Semeter to re-entering</p>
+      <div class="row m-2 p-3 border">
+        <div class="col-md-3">
+          <label for="name" class="form-label mb-0">From Semeter</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            v-model="requestsemes"
+            disabled
+          />
+        </div>
+        <div class="col-md-3 mx-0">
+          <label for="studentID" class="form-label mb-0">Academic year</label>
+          <input
+            type="number"
+            min="2018"
+            max="2100"
+            maxlength="4"
+            class="form-control"
+            id="studentID"
+            v-model="requestadmy"
+            disabled
+          />
+        </div>
+        <div class="col-md-3">
+          <label for="name" class="form-label mb-0">To Semeter</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            v-model="tosemes"
+            disabled
+          />
+        </div>
+        <div class="col-md-3 mx-0">
+          <label for="studentID" class="form-label mb-0">Academic year</label>
+          <input
+            type="number"
+            min="2018"
+            max="2100"
+            maxlength="4"
+            class="form-control"
+            id="studentID"
+            v-model="toadmy"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- submit button -->
     <div class="mt-3" style="text-align: right">
       <button
         type="button"
@@ -80,15 +116,15 @@ export default {
     formInfo: Object,
     requestsemes: String,
     requestadmy: Number,
-    toadmy:Number,
-    tosemes: String
+    toadmy: Number,
+    tosemes: String,
   },
   data() {
     return {
       re_semester: "",
       re_academic_year: "",
-      semeter: ["first" ,"second"],
-      yeargen:[],
+      semeter: ["first", "second"],
+      yeargen: [],
       selectsemes: "",
       selectyear: "",
     };
@@ -105,18 +141,18 @@ export default {
     },
     sendRequest: function () {
       if (this.selectsemes == "" || isNaN(this.selectyear)) {
-        this.$alert("please enter the request");
+        this.$alert("Please enter the request");
       } else {
         this.disableSubmit(1);
         let re_semester = this.re_semester;
         let re_academic_year = this.re_academic_year;
         let selectsemes = this.selectsemes;
-        let selectyear= this.selectyear;
+        let selectyear = this.selectyear;
         let strequest = {
           re_semester,
           re_academic_year,
           selectsemes,
-          selectyear
+          selectyear,
         };
         this.$emit("onRequest", strequest);
       }
@@ -137,33 +173,34 @@ export default {
     },
     genYear() {
       var minyear = this.re_academic_year,
-        maxyear = minyear + 1
-      for(var i = minyear; i <= maxyear; i++) {
-        this.yeargen.push(i)
+        maxyear = minyear + 5;
+      for (var i = minyear; i <= maxyear; i++) {
+        this.yeargen.push(i);
       }
-    },onChange(){
-      this.selectyear=parseInt(this.selectyear)
-      console.log(this.selectsemes,this.selectyear)
-      if(this.selectyear==this.toadmy){
-          if(this.tosemes=="first"){
-            if(this.selectsemes=="first"){
-               console.log("good")
-            }else if(this.selectsemes=="second"){
-              alert("exceed to time")
-              this.selectsemes=""
-            }
-          }else{
-               console.log("good")
-            }
-      }else{
-        console.log("good")
+    },
+    onChange() {
+      this.selectyear = parseInt(this.selectyear);
+      console.log(this.selectsemes, this.selectyear);
+      if (this.selectyear == this.toadmy) {
+        if (this.tosemes == "first") {
+          if (this.selectsemes == "first") {
+            console.log("good");
+          } else if (this.selectsemes == "second") {
+            alert("exceed to time");
+            this.selectsemes = "";
+          }
+        } else {
+          console.log("good");
+        }
+      } else {
+        console.log("good");
       }
-    }
+    },
   },
   mounted() {
     this.getRequesttext();
     this.genYear();
-  }
+  },
 };
 </script>
 

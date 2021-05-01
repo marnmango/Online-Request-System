@@ -66,7 +66,7 @@ import Comment208 from "./form/comment-reg208.vue";
 import RequestImg208 from "./form/requestimg-reg208.vue";
 
 import axios from "axios";
-import pathapi from '../../pathapi';
+import pathapi from "../../pathapi";
 export default {
   components: {
     Navbar,
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     getformInfo() {
-      let path = pathapi+"/get208?id=" + this.id;
+      let path = pathapi + "/get208?id=" + this.id;
       axios
         .get(path)
         .then((res) => {
@@ -106,7 +106,7 @@ export default {
           console.log(error);
         })
         .then((id) => {
-          let path = pathapi+"/?id=" + id;
+          let path = pathapi + "/?id=" + id;
           axios
             .get(path)
             .then((res) => {
@@ -125,20 +125,13 @@ export default {
         });
     },
     checkRole: function () {
-      if (this.formInfo.progress_status == 6) {
+      if (this.formInfo.progress_status == 5) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("active");
         document.getElementById("3").classList.add("active");
         document.getElementById("4").classList.add("active");
         document.getElementById("5").classList.add("active");
-        document.getElementById("6").classList.add("active"); //6
-      } else if (this.formInfo.progress_status == 5) {
-        document.getElementById("1").classList.add("active");
-        document.getElementById("2").classList.add("active");
-        document.getElementById("3").classList.add("active");
-        document.getElementById("4").classList.add("active");
-        document.getElementById("5").classList.add("active");
-        document.getElementById("6").classList.add("wait"); //5
+        document.getElementById("6").classList.add("active"); //5
       } else if (this.formInfo.progress_status == 4) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("active");
@@ -171,7 +164,7 @@ export default {
           {},
           { formid, advisorComment, formcat, deanid }
         );
-        const path = pathapi+"/advisorsubmit";
+        const path = pathapi + "/advisorsubmit";
         axios
           .post(path, senddata)
           .then((res) => {
