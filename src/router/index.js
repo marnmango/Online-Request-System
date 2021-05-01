@@ -222,7 +222,11 @@ const routes = [{
     {
         path: '/config',
         name: 'DatePicker',
-        component: DatePicker
+        component: DatePicker,
+        meta: {
+            requiresAuth: true,
+            is_staff: true
+        }
     },
 
 ]
