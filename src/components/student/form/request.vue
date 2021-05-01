@@ -44,7 +44,7 @@
             type="text"
             class="form-control"
             id="name"
-            v-model="requestsemes"
+            v-model="re_semester"
             disabled
           />
         </div>
@@ -57,7 +57,7 @@
             maxlength="4"
             class="form-control"
             id="studentID"
-            v-model="requestadmy"
+            v-model="re_academic_year"
             disabled
           />
         </div>
@@ -175,7 +175,7 @@ export default {
     },
     genYear() {
       var minyear = this.re_academic_year,
-        maxyear = minyear + 5;
+        maxyear = minyear + 1;
       for (var i = minyear; i <= maxyear; i++) {
         this.yeargen.push(i);
       }
