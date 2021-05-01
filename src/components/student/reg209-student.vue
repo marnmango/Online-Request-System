@@ -48,25 +48,22 @@ export default {
   },
   methods: {
     getstudentInfo() {
-      const path = pathapi+"/?id="+this.studentid;
+      const path1 = axios.get(pathapi+"/?id="+this.studentid);
+      const path2 = axios.get(pathapi+"/getDate");
+      const path3 = axios.get(pathapi+"/get208time?id="+this.studentid)
       axios
-        .get(path)
-        .then((res) => {
-          console.log(res.data);
-          this.studentInfo = res.data;
-          axios.get(pathapi+"/get208time?id="+this.studentid).then((res) => {
-            console.log(res.data);
-            this.requestsemes = res.data["request_from_semester"];
-            this.requestadmy = res.data["request_from_academicyear"]
-            this.tosemes = res.data["request_to_semester"];
-            this.toadmy = res.data["request_to_academicyear"]
-            this.childDataLoaded=true
-          })
-          .catch((error) => {
-             this.$alert("you never have permission")
-          console.log(error);
-          });
-        })
+        .all([path1,path2,path3])
+        .then(axios.spread((...res) => {
+          console.log(res[0].data);
+          console.log(res[1].data);
+          console.log(res[2].data);
+          this.studentInfo = res[0].data;
+          this.requestsemes = res[2].data["request_from_semester"];
+          this.requestadmy = res[2].data["request_from_academicyear"]
+          this.tosemes = res[2].data["request_to_semester"];
+          this.toadmy = res[2].data["request_to_academicyear"]
+          this.childDataLoaded=true
+        }))
         .catch((error) => {
           console.log(error);
         });
