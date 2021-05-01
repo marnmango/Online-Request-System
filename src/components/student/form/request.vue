@@ -6,10 +6,10 @@
       <p class="mb-1 mt-3">Request to Re-entering</p>
       <div class="row m-2 p-3 border pt-2">
         <div class="col-4">
-          <label for="name" class="form-label mb-0">Semeter</label>
+          <label for="semeterselect" class="form-label mb-0">Semeter</label>
           <select
             class="form-select"
-            id="semeterRe"
+            id="semeterselect"
             v-model="selectsemes"
             @change="onChange"
           >
@@ -19,10 +19,12 @@
           </select>
         </div>
         <div class="col-4 mx-0">
-          <label for="studentID" class="form-label mb-0">Academic year</label>
+          <label for="academicselect" class="form-label mb-0"
+            >Academic year</label
+          >
           <select
             class="form-select"
-            id="academicYear"
+            id="academicselect"
             v-model="selectyear"
             @change="onChange"
           >
@@ -39,48 +41,48 @@
       <p class="mb-1 mt-3">Semeter to re-entering</p>
       <div class="row m-2 p-3 border">
         <div class="col-md-3">
-          <label for="name" class="form-label mb-0">From Semeter</label>
+          <label for="from" class="form-label mb-0">From Semeter</label>
           <input
             type="text"
             class="form-control"
-            id="name"
+            id="from"
             v-model="re_semester"
             disabled
           />
         </div>
         <div class="col-md-3 mx-0">
-          <label for="studentID" class="form-label mb-0">Academic year</label>
+          <label for="fromaca" class="form-label mb-0">Academic year</label>
           <input
             type="number"
             min="2018"
             max="2100"
             maxlength="4"
             class="form-control"
-            id="studentID"
+            id="fromaca"
             v-model="re_academic_year"
             disabled
           />
         </div>
         <div class="col-md-3">
-          <label for="name" class="form-label mb-0">To Semeter</label>
+          <label for="to" class="form-label mb-0">To Semeter</label>
           <input
             type="text"
             class="form-control"
-            id="name"
-            v-model="tosemes"
+            id="to"
+            v-model="to_semester"
             disabled
           />
         </div>
         <div class="col-md-3 mx-0">
-          <label for="studentID" class="form-label mb-0">Academic year</label>
+          <label for="toaca" class="form-label mb-0">Academic year</label>
           <input
             type="number"
             min="2018"
             max="2100"
             maxlength="4"
             class="form-control"
-            id="studentID"
-            v-model="toadmy"
+            id="toaca"
+            v-model="to_academicyear"
             disabled
           />
         </div>
@@ -127,6 +129,8 @@ export default {
       yeargen: [],
       selectsemes: "",
       selectyear: "",
+      to_semester: this.tosemes,
+      to_academicyear: this.toadmy,
     };
   },
   methods: {
@@ -148,13 +152,17 @@ export default {
         let re_academic_year = this.re_academic_year;
         let selectsemes = this.selectsemes;
         let selectyear = this.selectyear;
+        let to_semester = this.to_semester;
+        let to_academicyear = this.to_academicyear;
         let strequest = {
           re_semester,
           re_academic_year,
           selectsemes,
           selectyear,
-          to_semester:this.tosemes,
-          to_academicyear:this.toadmy
+          // to_semester:this.tosemes,
+          // to_academicyear:this.tosemes,
+          to_semester,
+          to_academicyear,
         };
         this.$emit("onRequest", strequest);
       }
