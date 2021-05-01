@@ -9,12 +9,12 @@
             <h4>Request Form for Leave of Absence : Undergraduate Student</h4>
           </div>
           <div class="row gy-3 mx-5">
-            <div class="col-6">
+            <div class="col">
               <div class="p-3 border bg-light">
                 <InformationForm :info="studentInfo" @onChange="onChange" />
               </div>
             </div>
-            <div class="col-6">
+            <div class="col">
               <div class="p-3 border bg-light h-100">
                 <RequestForm208 @onSubmit="onSubmit" />
               </div>
@@ -51,8 +51,8 @@ export default {
       radio_2: "",
       re_text: "",
       re_doc: "",
-      studentid:'',
-      restict:true
+      studentid: "",
+      restict: true,
     };
   },
   methods: {
@@ -103,19 +103,19 @@ export default {
         re_doc,
       });
       console.log(senddata);
-      if(this.restict && phone!=""){
+      if (this.restict && phone != "") {
         this.$confirm("Are you sure?").then(() => {
-        axios
-          .post(path, senddata)
-          .then((res) => {
-            console.log(res.data);
-            this.$alert("the request had sent");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-      }else{
+          axios
+            .post(path, senddata)
+            .then((res) => {
+              console.log(res.data);
+              this.$alert("the request had sent");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      } else {
         this.$alert("Undergraduate condition is fail");
       }
     },
@@ -131,12 +131,12 @@ export default {
       this.radio_2 = value.radio_2;
       this.re_text = value.re_text;
       this.re_doc = value.re_doc;
-      this.restict = value.restict
+      this.restict = value.restict;
       this.sendformInfo();
     },
   },
   created() {
-    this.studentid=JSON.parse(sessionStorage.getItem('user')).user_id
+    this.studentid = JSON.parse(sessionStorage.getItem("user")).user_id;
     this.getstudentInfo();
   },
 };

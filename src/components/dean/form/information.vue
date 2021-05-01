@@ -2,7 +2,7 @@
   <div style="text-align: left">
     <h4>Personal Information</h4>
     <div class="mb-1">
-      <label for="deanof" class="form-label mb-0"
+      <label for="deanof" class="form-label m-0 mt-2"
         >To the dean of school of</label
       >
       <input
@@ -14,8 +14,18 @@
       />
     </div>
     <div class="row g-2 mb-1">
-      <div class="col-md">
-        <label for="name" class="form-label">Name</label>
+      <div class="col-md-2">
+        <label for="name" class="form-label m-0 mt-2">Prefix</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          v-model="info.prefix"
+          disabled
+        />
+      </div>
+      <div class="col-md-7">
+        <label for="name" class="form-label m-0 mt-2">Name</label>
         <input
           type="text"
           class="form-control"
@@ -24,11 +34,11 @@
           disabled
         />
       </div>
-      <div class="col-md">
-        <label for="studentID" class="form-label">Student ID</label>
+      <div class="col-md-3 col-sm-4">
+        <label for="studentID" class="form-label m-0 mt-2">Student ID</label>
         <input
           type="number"
-          class="form-control w-50"
+          class="form-control"
           id="studentID"
           v-model="info.student_id"
           disabled
@@ -37,7 +47,7 @@
     </div>
     <div class="row g-2 mb-1">
       <div class="col-md">
-        <label for="schoolOf" class="form-label">School of</label>
+        <label for="schoolOf" class="form-label m-0 mt-2">School of</label>
         <input
           type="text"
           class="form-control"
@@ -47,7 +57,7 @@
         />
       </div>
       <div class="col-md">
-        <label for="programOf" class="form-label">Program of</label>
+        <label for="programOf" class="form-label m-0 mt-2">Program of</label>
         <input
           type="text"
           class="form-control"
@@ -57,13 +67,23 @@
         />
       </div>
     </div>
+    <div>
+      <label for="gpax" class="form-label m-0 mt-2">Gpax</label>
+      <input
+        type="text"
+        class="form-control w-25"
+        id="gpax"
+        v-model="info.student_gpax"
+        disabled
+      />
+    </div>
     <div class="mb-1">
-      <label for="phoneNumber" class="form-label mb-0">Phone number</label>
+      <label for="phoneNumber" class="form-label m-0 mt-2">Phone number</label>
       <input
         type="tel"
         maxlength="10"
         min="0"
-        pattern="[0-9]{10}"
+        pattern="[0]{1}[0-9]{9}"
         v-model="phone"
         class="form-control w-25"
         id="phoneNumber"

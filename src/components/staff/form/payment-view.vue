@@ -27,14 +27,14 @@
           <div id="caption"></div>
         </div>
       </div>
-      <div class="d-grid gap-2 d-md-block w-100">
+      <div class="d-grid gap-2 d-md-block">
         <button
           type="button"
-          class="btn btn-outline-warning mx-1"
-          style="width: 250px"
+          class="btn btn-outline-secondary mx-1"
+          style="width: 300px"
           v-on:click="onDisapprove"
         >
-          Request for new image
+          Request new payment image
         </button>
         <button
           type="button"

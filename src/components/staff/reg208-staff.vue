@@ -58,7 +58,7 @@
                   />
                 </div>
               </template>
-              <div class="row-6 p-3 border bg-light mt-3">
+              <div class="row-6 p-3 border bg-light mt-3 mb-3">
                 <template
                   v-if="
                     childDataLoaded &&
@@ -160,20 +160,13 @@ export default {
         });
     },
     checkRole: function () {
-      if (this.formInfo.progress_status == 6) {
+      if (this.formInfo.progress_status == 5) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("active");
         document.getElementById("3").classList.add("active");
         document.getElementById("4").classList.add("active");
         document.getElementById("5").classList.add("active");
-        document.getElementById("6").classList.add("active"); //6
-      } else if (this.formInfo.progress_status == 5) {
-        document.getElementById("1").classList.add("active");
-        document.getElementById("2").classList.add("active");
-        document.getElementById("3").classList.add("active");
-        document.getElementById("4").classList.add("active");
-        document.getElementById("5").classList.add("active");
-        document.getElementById("6").classList.add("wait"); //5
+        document.getElementById("6").classList.add("active"); //5
       } else if (this.formInfo.progress_status == 4) {
         document.getElementById("1").classList.add("active");
         document.getElementById("2").classList.add("active");
