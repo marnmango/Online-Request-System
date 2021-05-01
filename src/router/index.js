@@ -19,6 +19,7 @@ import Listdean from '../components/dean/list_dean.vue'
 import ViewReg209 from '../components/student/view/reg209-view.vue'
 import ViewReg208 from '../components/student/view/reg208-view.vue'
 import login from '../components/login.vue'
+import DatePicker from '../components/config.vue'
 
 Vue.use(VueRouter)
 
@@ -53,7 +54,7 @@ const routes = [{
         component: Reg209Student,
         meta: {
             requiresAuth: true,
-            is_student:true
+            is_student: true
         }
     },
     {
@@ -62,7 +63,7 @@ const routes = [{
         component: Reg208Student,
         meta: {
             requiresAuth: true,
-            is_student:true
+            is_student: true
         }
     },
     {
@@ -71,7 +72,7 @@ const routes = [{
         component: ViewReg209,
         meta: {
             requiresAuth: true,
-            is_student:true
+            is_student: true
         }
     },
     {
@@ -80,7 +81,7 @@ const routes = [{
         component: ViewReg208,
         meta: {
             requiresAuth: true,
-            is_student:true
+            is_student: true
         }
     },
     {
@@ -89,7 +90,7 @@ const routes = [{
         component: Reg209Staff,
         meta: {
             requiresAuth: true,
-            is_staff:true
+            is_staff: true
         }
     },
     {
@@ -98,7 +99,7 @@ const routes = [{
         component: Reg208Staff,
         meta: {
             requiresAuth: true,
-            is_staff:true
+            is_staff: true
         }
     },
     {
@@ -112,7 +113,7 @@ const routes = [{
         component: Reg209Advisor,
         meta: {
             requiresAuth: true,
-            is_advisor:true
+            is_advisor: true
         }
     },
     {
@@ -121,7 +122,7 @@ const routes = [{
         component: Reg208Advisor,
         meta: {
             requiresAuth: true,
-            is_advisor:true
+            is_advisor: true
         }
     },
     {
@@ -130,7 +131,7 @@ const routes = [{
         component: Reg209Dean,
         meta: {
             requiresAuth: true,
-            is_dean:true
+            is_dean: true
         }
     },
     {
@@ -139,7 +140,7 @@ const routes = [{
         component: Reg208Dean,
         meta: {
             requiresAuth: true,
-            is_dean:true
+            is_dean: true
         }
     },
     {
@@ -159,7 +160,7 @@ const routes = [{
         component: List,
         meta: {
             requiresAuth: true,
-            is_staff:true
+            is_staff: true
         }
     }, {
         path: '/list-student',
@@ -172,7 +173,7 @@ const routes = [{
         component: Liststudent,
         meta: {
             requiresAuth: true,
-            is_student:true
+            is_student: true
         }
     }, {
         path: '/list-advisor',
@@ -186,7 +187,7 @@ const routes = [{
         component: Listadvisor,
         meta: {
             requiresAuth: true,
-            is_advisor:true
+            is_advisor: true
         }
     }, {
         path: '/list-dean',
@@ -200,7 +201,7 @@ const routes = [{
         component: Listdean,
         meta: {
             requiresAuth: true,
-            is_dean:true
+            is_dean: true
         }
     },
     {
@@ -215,9 +216,14 @@ const routes = [{
         component: ListViewStaff,
         meta: {
             requiresAuth: true,
-            is_staff:true
+            is_staff: true
         }
-    }
+    },
+    {
+        path: '/config',
+        name: 'DatePicker',
+        component: DatePicker
+    },
 
 ]
 
@@ -228,82 +234,82 @@ const router = new VueRouter({
     routes
 })
 router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
         if (sessionStorage.getItem('jwt') == null) {
             next({
                 path: '/login'
             })
-        }else{
+        } else {
             let user = JSON.parse(sessionStorage.getItem('user')).user_role
-            if(to.matched.some(record => record.meta.is_student)) {
-                if(user=="student"){
-                    sessionStorage.setItem('allow',true)
+            if (to.matched.some(record => record.meta.is_student)) {
+                if (user == "student") {
+                    sessionStorage.setItem('allow', true)
                     next()
-                }else{
+                } else {
                     sessionStorage.clear()
                     next({
                         path: '/login'
                     })
                 }
-            }else if(to.matched.some(record => record.meta.is_staff)) {
-                if(user=="staff"){
-                    sessionStorage.setItem('allow',true)
+            } else if (to.matched.some(record => record.meta.is_staff)) {
+                if (user == "staff") {
+                    sessionStorage.setItem('allow', true)
                     next()
-                }else{
+                } else {
                     sessionStorage.clear()
                     next({
                         path: '/login'
                     })
                 }
-            }else if(to.matched.some(record => record.meta.is_advisor)) {
-                if(user=="advisor"){
-                    sessionStorage.setItem('allow',true)
+            } else if (to.matched.some(record => record.meta.is_advisor)) {
+                if (user == "advisor") {
+                    sessionStorage.setItem('allow', true)
                     next()
-                }else{
+                } else {
                     sessionStorage.clear()
                     next({
                         path: '/login'
                     })
                 }
-            }else if(to.matched.some(record => record.meta.is_dean)) {
-                if(user=="dean"){
-                    sessionStorage.setItem('allow',true)
+            } else if (to.matched.some(record => record.meta.is_dean)) {
+                if (user == "dean") {
+                    sessionStorage.setItem('allow', true)
                     next()
-                }else{
+                } else {
                     sessionStorage.clear()
                     next({
                         path: '/login'
                     })
                 }
-            }else{
+            } else {
                 next()
             }
         }
-    }else {
-        if(!JSON.parse(sessionStorage.getItem('allow'))){
+    } else {
+        if (!JSON.parse(sessionStorage.getItem('allow'))) {
             console.log(JSON.parse(sessionStorage.getItem('allow')))
             next()
-        }else{
+        } else {
             let user = JSON.parse(sessionStorage.getItem('user')).user_role
-          if(user=="student"){
-            next({
-                path: '/list-student'
-            })
-          }else if(user=="staff"){
-            next({
-                path: '/list'
-            })
-          }else if(user=="advisor"){
-            next({
-                path: '/list-advisor'
-            })
-          }else if(user=="dean"){
-            next({
-                path: '/list-dean'
-            })
-          }else{
-              console.log('')
-          }
+            if (user == "student") {
+                next({
+                    path: '/list-student'
+                })
+            } else if (user == "staff") {
+                next({
+                    path: '/list'
+                })
+            } else if (user == "advisor") {
+                next({
+                    path: '/list-advisor'
+                })
+            } else if (user == "dean") {
+                next({
+                    path: '/list-dean'
+                })
+            } else {
+                console.log('')
+            }
         }
     }
 })
