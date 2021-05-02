@@ -169,7 +169,7 @@ export default {
         document.getElementById("request_radio_2").checked = true;
       }
     },genYear() {
-      var minyear = new Date().getFullYear();
+      var minyear = this.selectyear_from
       var maxyear = minyear + 3
       for(var i = minyear; i <= maxyear; i++) {
         this.request_from_academicyear.push(i)

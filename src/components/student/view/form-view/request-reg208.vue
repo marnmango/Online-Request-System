@@ -316,10 +316,10 @@ export default {
         console.log("Error: ", error);
       };
     },genYear() {
-      var minyear = new Date().getFullYear();
-      var maxyear = minyear + 3
-      for(var i = minyear; i <= maxyear; i++) {
-        this.request_from_academicyear.push(i)
+      var minyear = this.selectyear_from;
+      var maxyear = minyear + 4;
+      for (var i = minyear; i <= maxyear; i++) {
+        this.request_from_academicyear.push(i);
       }
     },onYear(){
       this.selectyear_from=parseInt(this.selectyear_from)

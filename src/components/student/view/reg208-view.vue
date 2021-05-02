@@ -58,7 +58,7 @@
                   v-if="
                     childDataLoaded &&
                     (formInfo.progress_status == 4 ||
-                      formInfo.progress_status == 5)
+                      formInfo.progress_status == 5) && formInfo.payment_amount != null
                   "
                 >
                   <Payment :formInfo="formInfo" @onSubmit="onSubmit" />
