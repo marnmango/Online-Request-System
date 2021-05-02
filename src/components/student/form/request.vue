@@ -120,6 +120,7 @@ export default {
     requestadmy: Number,
     toadmy: Number,
     tosemes: String,
+    date: Object
   },
   data() {
     return {
@@ -129,8 +130,10 @@ export default {
       yeargen: [],
       selectsemes: "",
       selectyear: "",
-      to_semester: this.tosemes,
-      to_academicyear: this.toadmy,
+      to_semester: "",
+      to_academicyear: "",
+      current_semester:'',
+      current_academic:''
     };
   },
   methods: {
@@ -159,10 +162,10 @@ export default {
           re_academic_year,
           selectsemes,
           selectyear,
-          // to_semester:this.tosemes,
-          // to_academicyear:this.tosemes,
           to_semester,
           to_academicyear,
+          current_semester:this.current_semester,
+          current_academic:this.current_academic
         };
         this.$emit("onRequest", strequest);
       }
@@ -179,6 +182,36 @@ export default {
       } else {
         this.re_semester = this.requestsemes;
         this.re_academic_year = this.requestadmy;
+        this.to_semester=this.tosemes
+        this.to_academicyear=this.toadmy
+        let currentday = new Date()
+        let firstsemester = new Date(this.date.startfirst);
+        firstsemester.setHours(0,0,0,0)
+        let newYear = new Date(firstsemester.getFullYear()+1,0,1)
+        let secondsemester = new Date(this.date.startsecond);
+        secondsemester.setHours(0,0,0,0)
+        let summersemester = new Date(this.date.startsummer);
+        summersemester.setHours(0,0,0,0)
+        let endfirst = new Date(this.date.endfirst)
+        endfirst.setHours(23,59,59,59)
+        let endsecond = new Date(this.date.endsecond)
+        endsecond.setHours(23,59,59,59)
+        console.log(newYear)
+        if(currentday<firstsemester||currentday>summersemester){
+            this.current_semester = "summer"
+            this.current_academic = currentday.getFullYear()-1
+        }else if(currentday>firstsemester && currentday<secondsemester){
+            this.current_semester = "first"
+            if(currentday<newYear){
+              this.current_academic = currentday.getFullYear()
+            }else{
+              this.current_academic = currentday.getFullYear()-1
+            }
+        }else if(currentday>secondsemester && currentday<endsecond){
+          this.current_semester = "second"
+          this.current_academic = currentday.getFullYear()-1
+        }
+        console.log(this.current_semester,this.current_academic)
       }
     },
     genYear() {
@@ -189,8 +222,35 @@ export default {
       }
     },
     onChange() {
+      let endfirst = new Date(this.date.endfirst)
+        endfirst.setHours(23,59,59,59)
+         let endsecond = new Date(this.date.endsecond)
+        endsecond.setHours(23,59,59,59)
       this.selectyear = parseInt(this.selectyear);
       console.log(this.selectsemes, this.selectyear);
+      console.log((this.current_semester=="second"||this.current_semester=="summer")&&this.selectsemes=="first"&&this.selectyear==this.current_academic)
+      if((this.current_semester=="second"||this.current_semester=="summer")&&this.selectsemes=="first"&&this.selectyear==this.current_academic){
+          alert("the semester was passed")
+          this.selectyear = null
+          this.selectsemes = null
+      }
+      if(this.current_semester=="first" && new Date()>endfirst&&this.selectsemes=="first"&&this.selectyear==this.current_academic){
+          alert("the semester was passed")
+          this.selectyear = null
+          this.selectsemes = null
+          return;
+      }else if(this.current_semester=="second"&& new Date()>endsecond&&this.selectsemes=="second"&&this.selectyear==this.current_academic){
+        alert("the semester was passed")
+          this.selectyear = null
+          this.selectsemes = null
+          return;
+      }else if(this.current_semester=="summer" && this.current_academic==this.selectyear){
+        alert("the semester was passed")
+          this.selectyear = null
+          this.selectsemes = null
+          return;
+      }
+      
       if (this.selectyear == this.toadmy) {
         if (this.tosemes == "first") {
           if (this.selectsemes == "first") {

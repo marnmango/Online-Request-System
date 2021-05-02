@@ -16,7 +16,7 @@
           <div class="col-6">
             <div class="p-3 border bg-light h-100">
               <template v-if="childDataLoaded">
-              <RequestForm @onRequest="onRequest" :requestsemes="requestsemes" :requestadmy="requestadmy" :tosemes="tosemes" :toadmy="toadmy"/>
+              <RequestForm @onRequest="onRequest" :requestsemes="requestsemes" :requestadmy="requestadmy" :tosemes="tosemes" :toadmy="toadmy" :date="date"/>
                </template>
             </div>
           </div>
@@ -43,7 +43,8 @@ export default {
       childDataLoaded: false,
       studentid:'',
       tosemes:'',
-      toadmy:''
+      toadmy:'',
+      date:''
     };
   },
   methods: {
@@ -57,6 +58,7 @@ export default {
           console.log(res[0].data);
           console.log(res[1].data);
           console.log(res[2].data);
+          this.date=res[1].data
           this.studentInfo = res[0].data;
           this.requestsemes = res[2].data["request_from_semester"];
           this.requestadmy = res[2].data["request_from_academicyear"]
