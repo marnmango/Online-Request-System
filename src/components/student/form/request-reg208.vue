@@ -202,6 +202,7 @@
 export default {
   props: {
     formInfo: Object,
+    date:Object
   },
   data() {
     return {
@@ -219,6 +220,8 @@ export default {
       selectyear_from: "",
       selectyear_to: "",
       restict: true,
+      current_semester:'',
+      current_academic:''
     };
   },
   methods: {
@@ -261,6 +264,8 @@ export default {
           re_doc,
           re_text,
           restict: this.restict,
+          current_semester:this.current_semester,
+          current_academic:this.current_academic
         });
         this.disableSubmit();
       }
@@ -317,8 +322,8 @@ export default {
       };
     },
     genYear() {
-      var minyear = new Date().getFullYear();
-      var maxyear = minyear + 3;
+      var minyear = this.current_academic;
+      var maxyear = minyear + 4;
       for (var i = minyear; i <= maxyear; i++) {
         this.request_from_academicyear.push(i);
       }
@@ -335,8 +340,30 @@ export default {
       this.selectyear_to = NaN;
     },
     onChange() {
+      let endfirst = new Date(this.date.endfirst)
+        endfirst.setHours(23,59,59,59)
+         let endsecond = new Date(this.date.endsecond)
+        endsecond.setHours(23,59,59,59)
       this.selectyear_from = parseInt(this.selectyear_from);
       this.selectyear_to = parseInt(this.selectyear_to);
+      if((this.current_semester=="second"||this.current_semester=="summer")&&this.selectsemes_from=="first"&&this.selectyear_from==this.current_academic){
+          alert("the semester was passed")
+          this.selectsemes_from = null
+          return;
+      }
+      else if(this.current_semester=="first" && new Date()>endfirst&&this.selectsemes_from=="first"&&this.selectyear_from==this.current_academic){
+          alert("the semester was passed")
+          this.selectsemes_from = null
+          return;
+      }else if(this.current_semester=="second"&& new Date()>endsecond&&this.selectsemes_from=="second"&&this.selectyear_from==this.current_academic){
+        alert("the semester was passed")
+          this.selectsemes_from = null
+          return;
+      }else if(this.current_semester=="summer" && this.current_academic==this.selectyear_from){
+        alert("the semester was passed")
+          this.selectsemes_from = null
+          return;
+      }
       if (
         this.selectsemes_from != "" &&
         !isNaN(this.selectyear_from) &&
@@ -348,49 +375,84 @@ export default {
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "second"
           ) {
-            // document.getElementById("p1").innerHTML = "1 Term";
-            document.getElementById("p1").classList.add("p1Semeter");
+            document.getElementById("p1").innerHTML = "2 Term";
+            // document.getElementById("p1").classList.add("p2Semeter");
             this.restict = true;
-          } else {
-            // document.getElementById("p1").innerHTML = "Lower to undergraduate";
-            document.getElementById("p1").classList.add("pLower");
+          } else if(this.selectsemes_from == "second" &&
+            this.selectsemes_to == "first"){
+            document.getElementById("p1").innerHTML = "cant leave from future to past";
+            // document.getElementById("p1").classList.add("pLower");
             this.restict = false;
+          }else{
+            document.getElementById("p1").innerHTML = "1 Term";
+            // document.getElementById("p1").classList.add("p1Semeter");
+            this.restict = true;
           }
         } else {
           if (
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "first"
           ) {
-            // document.getElementById("p1").innerHTML = "2 Term";
-            document.getElementById("p1").classList.add("p2Semeter");
-            this.restict = true;
+            document.getElementById("p1").innerHTML = "Exceed to undergraduate";
+            // document.getElementById("p1").classList.add("pExceed");
+            this.restict = false;
           } else if (
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "second"
           ) {
-            // document.getElementById("p1").innerHTML = "Exceed to undergraduate";
-            document.getElementById("p1").classList.add("pExceed");
+            document.getElementById("p1").innerHTML = "Exceed to undergraduate";
+            // document.getElementById("p1").classList.add("pExceed");
             this.restict = false;
           } else if (
             this.selectsemes_from == "second" &&
             this.selectsemes_to == "first"
           ) {
-            // document.getElementById("p1").innerHTML = "1 Term";
-            document.getElementById("p1").classList.add("p1Semeter");
+            document.getElementById("p1").innerHTML = "2 Term";
+            // document.getElementById("p1").classList.add("p2Semeter");
             this.restict = true;
           } else if (
             this.selectsemes_from == "second" &&
             this.selectsemes_to == "second"
           ) {
-            // document.getElementById("p1").innerHTML = "2 Term";
-            document.getElementById("p1").classList.add("p2Semeter");
-            this.restict = true;
+           document.getElementById("p1").innerHTML = "Exceed to undergraduate";
+            // document.getElementById("p1").classList.add("pExceed");
+            this.restict = false;
           }
         }
       }
-    },
+    },getDate(){
+      let currentday = new Date()
+        let firstsemester = new Date(this.date.startfirst);
+        firstsemester.setHours(0,0,0,0)
+        let newYear = new Date(firstsemester.getFullYear()+1,0,1)
+        let secondsemester = new Date(this.date.startsecond);
+        secondsemester.setHours(0,0,0,0)
+        let summersemester = new Date(this.date.startsummer);
+        summersemester.setHours(0,0,0,0)
+        let endfirst = new Date(this.date.endfirst)
+        endfirst.setHours(23,59,59,59)
+        let endsecond = new Date(this.date.endsecond)
+        endsecond.setHours(23,59,59,59)
+        console.log(newYear)
+        if(currentday<firstsemester||currentday>summersemester){
+            this.current_semester = "summer"
+            this.current_academic = currentday.getFullYear()-1
+        }else if(currentday>firstsemester && currentday<secondsemester){
+            this.current_semester = "first"
+            if(currentday<newYear){
+              this.current_academic = currentday.getFullYear()
+            }else{
+              this.current_academic = currentday.getFullYear()-1
+            }
+        }else if(currentday>secondsemester && currentday<endsecond){
+          this.current_semester = "second"
+          this.current_academic = currentday.getFullYear()-1
+        }
+        console.log(this.current_semester,this.current_academic)
+    }
   },
   mounted() {
+    this.getDate();
     this.genYear();
   },
 };

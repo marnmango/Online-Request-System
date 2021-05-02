@@ -233,8 +233,9 @@ export default {
           alert("the semester was passed")
           this.selectyear = null
           this.selectsemes = null
+          return;
       }
-      if(this.current_semester=="first" && new Date()>endfirst&&this.selectsemes=="first"&&this.selectyear==this.current_academic){
+      else if(this.current_semester=="first" && new Date()>endfirst&&this.selectsemes=="first"&&this.selectyear==this.current_academic){
           alert("the semester was passed")
           this.selectyear = null
           this.selectsemes = null
