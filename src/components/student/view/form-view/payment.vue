@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     formInfo: Object,
@@ -84,19 +85,29 @@ export default {
       ) {
         alert("Please select a valid image file (JPEG/JPG/PNG/GIF).");
       } else {
-        this.files = uploadedFiles[0];
+        const myNewFile = new File([uploadedFiles[0]], 'pic'+Date.now()+'.jpg', {type: uploadedFiles[0].type});
+        this.files = myNewFile;
       }
       console.log(this.files);
     },
     onSubmit() {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.files);
-      reader.onload = () => {
-        this.$emit("onSubmit", reader.result);
-      };
-      reader.onerror = function (error) {
-        console.log("Error: ", error);
-      };
+        let data = new FormData();
+          data.append('uploadfile',this.files);
+          data.append('bucket', 'sp61');
+          data.append('prjid','sp_ors');
+          //build payload packet 
+          axios
+          .post('http://selab.mfu.ac.th:9001/upload', data,{
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }})
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+          this.$emit("onSubmit", this.files.name);
     },
   },
   mounted() {

@@ -32,7 +32,7 @@
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                  <RequestForm208 :formInfo="formInfo" @onFix="onFix" />
+                  <RequestForm208 :formInfo="formInfo" @onFix="onFix"/>
                 </template>
               </div>
             </div>
@@ -247,6 +247,7 @@ export default {
             .then((res) => {
               console.log(res.data);
               this.$alert("the request had sent");
+              this.$router.push({ name: "Liststudent" });
             })
             .catch((error) => {
               console.log(error);

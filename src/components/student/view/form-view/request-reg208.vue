@@ -181,6 +181,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     formInfo: Object,
@@ -215,6 +216,7 @@ export default {
         this.selectyear_from = this.formInfo.request_from_academicyear;
         this.selectyear_to = this.formInfo.request_to_academicyear;
         this.re_text = this.formInfo.request_text;
+        this.re_doc =JSON.parse(this.formInfo.reason_doc)
         this.request_radio_1 = this.formInfo.reason_radio1;
         this.request_radio_2 = this.formInfo.reason_radio2;
         this.selectyear_from=parseInt(this.selectyear_from)
@@ -256,8 +258,9 @@ export default {
       let radio_2 = this.request_radio_2;
       let re_doc = this.re_doc;
       for (let x in this.files) {
-        this.getBase64(this.files[x]);
-      }
+          // this.getBase64(this.files[x]);
+          re_doc.push(this.files[x].name)
+        }
       console.log(re_doc);
       let re_text = this.re_text;
       this.$emit("onFix", {
@@ -272,6 +275,25 @@ export default {
         restict : this.restict
       });
       this.disableSubmit();
+      for(let fileindex in this.files){
+          console.log(this.files[fileindex])
+          let data = new FormData();
+          data.append('uploadfile',this.files[fileindex]);
+          data.append('bucket', 'sp61');
+          data.append('prjid','sp_ors');
+          //build payload packet 
+          axios
+          .post('http://selab.mfu.ac.th:9001/upload', data,{
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }})
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+        }
       }
     },
     disableOtherRadio: function () {
@@ -287,6 +309,7 @@ export default {
       for (var i = 0; i < uploadedFiles.length; i++) {
         var ecuploadedFile = uploadedFiles[i];
         var imagefile = ecuploadedFile.type;
+        const myNewFile = new File([ecuploadedFile], 'pic'+Date.now()+'.jpg', {type: ecuploadedFile.type});
         if (
           !(
             imagefile == match[0] ||
@@ -297,7 +320,7 @@ export default {
         ) {
           alert("Please select a valid image file (JPEG/JPG/PNG/GIF).");
         } else {
-          this.files.push(ecuploadedFile);
+          this.files.push(myNewFile);
         }
       }
       console.log(this.files);
@@ -305,17 +328,18 @@ export default {
     removeFile(key) {
       this.files.splice(key, 1);
     },
-    getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.re_doc.push(reader.result);
-      };
-      console.log(this.re_doc);
-      reader.onerror = function (error) {
-        console.log("Error: ", error);
-      };
-    },genYear() {
+    // getBase64(file) {
+    //   var reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.onload = () => {
+    //     this.re_doc.push(reader.result);
+    //   };
+    //   console.log(this.re_doc);
+    //   reader.onerror = function (error) {
+    //     console.log("Error: ", error);
+    //   };
+    // },
+    genYear() {
       var minyear = this.selectyear_from;
       var maxyear = minyear + 4;
       for (var i = minyear; i <= maxyear; i++) {
