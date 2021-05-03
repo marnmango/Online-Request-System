@@ -199,6 +199,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     formInfo: Object,
@@ -248,9 +249,10 @@ export default {
         let to_academic = this.selectyear_to;
         let radio_1 = this.request_radio_1;
         let radio_2 = this.request_radio_2;
-        let re_doc = this.re_doc;
+        let re_doc = []
         for (let x in this.files) {
-          this.getBase64(this.files[x]);
+          // this.getBase64(this.files[x]);
+          re_doc.push(this.files[x].name)
         }
         console.log(re_doc);
         let re_text = this.re_text;
@@ -268,6 +270,25 @@ export default {
           current_academic:this.current_academic
         });
         this.disableSubmit();
+        for(let fileindex in this.files){
+          console.log(this.files[fileindex])
+          let data = new FormData();
+          data.append('uploadfile',this.files[fileindex]);
+          data.append('bucket', 'sp61');
+          data.append('prjid','sp_ors');
+          //build payload packet 
+          axios
+          .post('http://selab.mfu.ac.th:9001/upload', data,{
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }})
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+        }
       }
     },
     disableOtherRadio: function () {
@@ -283,6 +304,7 @@ export default {
       for (var i = 0; i < uploadedFiles.length; i++) {
         var ecuploadedFile = uploadedFiles[i];
         var imagefile = ecuploadedFile.type;
+        const myNewFile = new File([ecuploadedFile], 'pic'+Date.now()+'.jpg', {type: ecuploadedFile.type});
         if (
           !(
             imagefile == match[0] ||
@@ -293,7 +315,7 @@ export default {
         ) {
           alert("Please select a valid image file (JPEG/JPG/PNG/GIF).");
         } else {
-          this.files.push(ecuploadedFile);
+          this.files.push(myNewFile);
         }
       }
       console.log(this.files);
@@ -310,17 +332,17 @@ export default {
     removeFile(key) {
       this.files.splice(key, 1);
     },
-    getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.re_doc.push(reader.result);
-      };
-      console.log(this.re_doc);
-      reader.onerror = function (error) {
-        console.log("Error: ", error);
-      };
-    },
+    // getBase64(file) {
+    //   var reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.onload = () => {
+    //     this.re_doc.push(reader.result);
+    //   };
+    //   console.log(this.re_doc);
+    //   reader.onerror = function (error) {
+    //     console.log("Error: ", error);
+    //   };
+    // },
     genYear() {
       var minyear = this.current_academic;
       var maxyear = minyear + 4;

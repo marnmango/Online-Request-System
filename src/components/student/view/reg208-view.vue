@@ -119,7 +119,10 @@ export default {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          this.picture = JSON.parse(this.formInfo.reason_doc);
+          let picturename = JSON.parse(this.formInfo.reason_doc);
+          for(let indexs in picturename){
+            this.picture.push('http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/'+ picturename[indexs])
+          }
           return this.formInfo.student_id;
         })
         .catch((error) => {
