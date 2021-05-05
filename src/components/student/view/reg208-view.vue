@@ -32,7 +32,7 @@
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                  <RequestForm208 :formInfo="formInfo" @onFix="onFix" />
+                  <RequestForm208 :formInfo="formInfo" @onFix="onFix"/>
                 </template>
               </div>
             </div>
@@ -119,7 +119,10 @@ export default {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
-          this.picture = JSON.parse(this.formInfo.reason_doc);
+          let picturename = JSON.parse(this.formInfo.reason_doc);
+          for(let indexs in picturename){
+            this.picture.push('http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/'+ picturename[indexs])
+          }
           return this.formInfo.student_id;
         })
         .catch((error) => {
@@ -244,6 +247,7 @@ export default {
             .then((res) => {
               console.log(res.data);
               this.$alert("the request had sent");
+              this.$router.push({ name: "Liststudent" });
             })
             .catch((error) => {
               console.log(error);

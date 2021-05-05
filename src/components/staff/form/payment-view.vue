@@ -18,7 +18,7 @@
         <img
           class="myImages img-fluid pic rounded mx-auto d-block my-3 border p-0"
           id="myImg"
-          :src="picture"
+          :src="'http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/'+ picture"
         />
 
         <div id="myModal" class="modal">
