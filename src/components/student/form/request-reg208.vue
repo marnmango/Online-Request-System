@@ -249,10 +249,10 @@ export default {
         let to_academic = this.selectyear_to;
         let radio_1 = this.request_radio_1;
         let radio_2 = this.request_radio_2;
-        let re_doc = []
+        let re_doc = [];
         for (let x in this.files) {
           // this.getBase64(this.files[x]);
-          re_doc.push(this.files[x].name)
+          re_doc.push(this.files[x].name);
         }
         console.log(re_doc);
         let re_text = this.re_text;
@@ -270,24 +270,25 @@ export default {
           current_academic: this.current_academic,
         });
         this.disableSubmit();
-        for(let fileindex in this.files){
-          console.log(this.files[fileindex])
+        for (let fileindex in this.files) {
+          console.log(this.files[fileindex]);
           let data = new FormData();
-          data.append('uploadfile',this.files[fileindex]);
-          data.append('bucket', 'sp61');
-          data.append('prjid','sp_ors');
-          //build payload packet 
+          data.append("uploadfile", this.files[fileindex]);
+          data.append("bucket", "sp61");
+          data.append("prjid", "sp_ors");
+          //build payload packet
           axios
-          .post('http://selab.mfu.ac.th:9001/upload', data,{
-            headers: {
-            'Content-Type': 'multipart/form-data'
-            }})
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((error) => {
+            .post("http://selab.mfu.ac.th:9001/upload", data, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
               console.log(error);
-          });
+            });
         }
       }
     },
@@ -304,7 +305,11 @@ export default {
       for (var i = 0; i < uploadedFiles.length; i++) {
         var ecuploadedFile = uploadedFiles[i];
         var imagefile = ecuploadedFile.type;
-        const myNewFile = new File([ecuploadedFile], 'pic'+Date.now()+'.jpg', {type: ecuploadedFile.type});
+        const myNewFile = new File(
+          [ecuploadedFile],
+          "pic" + Date.now() + ".jpg",
+          { type: ecuploadedFile.type }
+        );
         if (
           !(
             imagefile == match[0] ||
@@ -374,7 +379,7 @@ export default {
         this.selectsemes_from == "first" &&
         this.selectyear_from == this.current_academic
       ) {
-        alert("the semester was passed");
+        alert("The semester was passed");
         this.selectsemes_from = null;
         return;
       } else if (
@@ -383,7 +388,7 @@ export default {
         this.selectsemes_from == "first" &&
         this.selectyear_from == this.current_academic
       ) {
-        alert("the semester was passed");
+        alert("The semester was passed");
         this.selectsemes_from = null;
         return;
       } else if (
@@ -392,14 +397,14 @@ export default {
         this.selectsemes_from == "second" &&
         this.selectyear_from == this.current_academic
       ) {
-        alert("the semester was passed");
+        alert("The semester was passed");
         this.selectsemes_from = null;
         return;
       } else if (
         this.current_semester == "summer" &&
         this.current_academic == this.selectyear_from
       ) {
-        alert("the semester was passed");
+        alert("The semester was passed");
         this.selectsemes_from = null;
         return;
       }
@@ -415,7 +420,7 @@ export default {
             this.selectsemes_to == "second"
           ) {
             document.getElementById("p1").innerHTML =
-              "You request to leave: 2 Term";
+              "You request to leave: 2 Semeters";
 
             this.restict = true;
           } else if (
@@ -428,7 +433,7 @@ export default {
             this.restict = false;
           } else {
             document.getElementById("p1").innerHTML =
-              "You request to leave: 1 Term";
+              "You request to leave: 1 Semeter";
 
             this.restict = true;
           }
@@ -452,7 +457,7 @@ export default {
             this.selectsemes_to == "first"
           ) {
             document.getElementById("p1").innerHTML =
-              "You request to leave: 2 Term";
+              "You request to leave: 2 Semeters";
             this.restict = true;
           } else if (
             this.selectsemes_from == "second" &&
