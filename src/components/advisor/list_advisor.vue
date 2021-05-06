@@ -44,7 +44,6 @@
           <table class="table table-hover">
             <thead class="text-center">
               <tr>
-                <th scope="col">#</th>
                 <th scope="col" class="w-25">Date</th>
                 <th scope="col">Request Form</th>
                 <th scope="col">ID</th>
@@ -55,14 +54,6 @@
 
             <tbody class="text-center w-0">
               <tr v-for="form in formInfoFilter" :key="form.form_id">
-                <td class="text-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexCheckDefault"
-                    scope="row"
-                  />
-                </td>
                 <td v-on:click="() => getFormData(form.form_id, form.form_cat)">
                   {{ form.create_date }}
                 </td>

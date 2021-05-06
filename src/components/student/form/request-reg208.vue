@@ -79,7 +79,7 @@
             class="border bg-white pt-3 ps-4 mt-3 mx-2 pb-0 text-start text-sm-start text-md-start"
             style="width: 600px"
           >
-            <p class="p-0" style="font-size: 15px" id="p1">
+            <p class="p-0" style="font-size: 15px; font-weight: bold" id="p1">
               You request to leave:
             </p>
           </div>
@@ -203,7 +203,7 @@ import axios from "axios";
 export default {
   props: {
     formInfo: Object,
-    date:Object
+    date: Object,
   },
   data() {
     return {
@@ -221,8 +221,8 @@ export default {
       selectyear_from: "",
       selectyear_to: "",
       restict: true,
-      current_semester:'',
-      current_academic:''
+      current_semester: "",
+      current_academic: "",
     };
   },
   methods: {
@@ -249,10 +249,10 @@ export default {
         let to_academic = this.selectyear_to;
         let radio_1 = this.request_radio_1;
         let radio_2 = this.request_radio_2;
-        let re_doc = []
+        let re_doc = [];
         for (let x in this.files) {
           // this.getBase64(this.files[x]);
-          re_doc.push(this.files[x].name)
+          re_doc.push(this.files[x].name);
         }
         console.log(re_doc);
         let re_text = this.re_text;
@@ -266,28 +266,29 @@ export default {
           re_doc,
           re_text,
           restict: this.restict,
-          current_semester:this.current_semester,
-          current_academic:this.current_academic
+          current_semester: this.current_semester,
+          current_academic: this.current_academic,
         });
         this.disableSubmit();
-        for(let fileindex in this.files){
-          console.log(this.files[fileindex])
+        for (let fileindex in this.files) {
+          console.log(this.files[fileindex]);
           let data = new FormData();
-          data.append('uploadfile',this.files[fileindex]);
-          data.append('bucket', 'sp61');
-          data.append('prjid','sp_ors');
-          //build payload packet 
+          data.append("uploadfile", this.files[fileindex]);
+          data.append("bucket", "sp61");
+          data.append("prjid", "sp_ors");
+          //build payload packet
           axios
-          .post('http://selab.mfu.ac.th:9001/upload', data,{
-            headers: {
-            'Content-Type': 'multipart/form-data'
-            }})
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((error) => {
+            .post("http://selab.mfu.ac.th:9001/upload", data, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
               console.log(error);
-          });
+            });
         }
       }
     },
@@ -304,7 +305,11 @@ export default {
       for (var i = 0; i < uploadedFiles.length; i++) {
         var ecuploadedFile = uploadedFiles[i];
         var imagefile = ecuploadedFile.type;
-        const myNewFile = new File([ecuploadedFile], 'pic'+Date.now()+'.jpg', {type: ecuploadedFile.type});
+        const myNewFile = new File(
+          [ecuploadedFile],
+          "pic" + Date.now() + ".jpg",
+          { type: ecuploadedFile.type }
+        );
         if (
           !(
             imagefile == match[0] ||
@@ -362,29 +367,46 @@ export default {
       this.selectyear_to = NaN;
     },
     onChange() {
-      let endfirst = new Date(this.date.endfirst)
-        endfirst.setHours(23,59,59,59)
-         let endsecond = new Date(this.date.endsecond)
-        endsecond.setHours(23,59,59,59)
+      let endfirst = new Date(this.date.endfirst);
+      endfirst.setHours(23, 59, 59, 59);
+      let endsecond = new Date(this.date.endsecond);
+      endsecond.setHours(23, 59, 59, 59);
       this.selectyear_from = parseInt(this.selectyear_from);
       this.selectyear_to = parseInt(this.selectyear_to);
-      if((this.current_semester=="second"||this.current_semester=="summer")&&this.selectsemes_from=="first"&&this.selectyear_from==this.current_academic){
-          alert("the semester was passed")
-          this.selectsemes_from = null
-          return;
-      }
-      else if(this.current_semester=="first" && new Date()>endfirst&&this.selectsemes_from=="first"&&this.selectyear_from==this.current_academic){
-          alert("the semester was passed")
-          this.selectsemes_from = null
-          return;
-      }else if(this.current_semester=="second"&& new Date()>endsecond&&this.selectsemes_from=="second"&&this.selectyear_from==this.current_academic){
-        alert("the semester was passed")
-          this.selectsemes_from = null
-          return;
-      }else if(this.current_semester=="summer" && this.current_academic==this.selectyear_from){
-        alert("the semester was passed")
-          this.selectsemes_from = null
-          return;
+      if (
+        (this.current_semester == "second" ||
+          this.current_semester == "summer") &&
+        this.selectsemes_from == "first" &&
+        this.selectyear_from == this.current_academic
+      ) {
+        alert("The semester was passed");
+        this.selectsemes_from = null;
+        return;
+      } else if (
+        this.current_semester == "first" &&
+        new Date() > endfirst &&
+        this.selectsemes_from == "first" &&
+        this.selectyear_from == this.current_academic
+      ) {
+        alert("The semester was passed");
+        this.selectsemes_from = null;
+        return;
+      } else if (
+        this.current_semester == "second" &&
+        new Date() > endsecond &&
+        this.selectsemes_from == "second" &&
+        this.selectyear_from == this.current_academic
+      ) {
+        alert("The semester was passed");
+        this.selectsemes_from = null;
+        return;
+      } else if (
+        this.current_semester == "summer" &&
+        this.current_academic == this.selectyear_from
+      ) {
+        alert("The semester was passed");
+        this.selectsemes_from = null;
+        return;
       }
       if (
         this.selectsemes_from != "" &&
@@ -397,17 +419,22 @@ export default {
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "second"
           ) {
-            document.getElementById("p1").innerHTML = "2 Term";
-            // document.getElementById("p1").classList.add("p2Semeter");
+            document.getElementById("p1").innerHTML =
+              "You request to leave: 2 Semeters";
+
             this.restict = true;
-          } else if(this.selectsemes_from == "second" &&
-            this.selectsemes_to == "first"){
-            document.getElementById("p1").innerHTML = "cant leave from future to past";
-            // document.getElementById("p1").classList.add("pLower");
+          } else if (
+            this.selectsemes_from == "second" &&
+            this.selectsemes_to == "first"
+          ) {
+            document.getElementById("p1").innerHTML =
+              "You request to leave: Can not leave from future to past";
+
             this.restict = false;
-          }else{
-            document.getElementById("p1").innerHTML = "1 Term";
-            // document.getElementById("p1").classList.add("p1Semeter");
+          } else {
+            document.getElementById("p1").innerHTML =
+              "You request to leave: 1 Semeter";
+
             this.restict = true;
           }
         } else {
@@ -415,63 +442,64 @@ export default {
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "first"
           ) {
-            document.getElementById("p1").innerHTML = "Exceed to undergraduate";
-            // document.getElementById("p1").classList.add("pExceed");
+            document.getElementById("p1").innerHTML =
+              "You request to leave: Exceed to undergraduate";
             this.restict = false;
           } else if (
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "second"
           ) {
-            document.getElementById("p1").innerHTML = "Exceed to undergraduate";
-            // document.getElementById("p1").classList.add("pExceed");
+            document.getElementById("p1").innerHTML =
+              "You request to leave: Exceed to undergraduate";
             this.restict = false;
           } else if (
             this.selectsemes_from == "second" &&
             this.selectsemes_to == "first"
           ) {
-            document.getElementById("p1").innerHTML = "2 Term";
-            // document.getElementById("p1").classList.add("p2Semeter");
+            document.getElementById("p1").innerHTML =
+              "You request to leave: 2 Semeters";
             this.restict = true;
           } else if (
             this.selectsemes_from == "second" &&
             this.selectsemes_to == "second"
           ) {
-           document.getElementById("p1").innerHTML = "Exceed to undergraduate";
-            // document.getElementById("p1").classList.add("pExceed");
+            document.getElementById("p1").innerHTML =
+              "You request to leave: Exceed to undergraduate";
             this.restict = false;
           }
         }
       }
-    },getDate(){
-      let currentday = new Date()
-        let firstsemester = new Date(this.date.startfirst);
-        firstsemester.setHours(0,0,0,0)
-        let newYear = new Date(firstsemester.getFullYear()+1,0,1)
-        let secondsemester = new Date(this.date.startsecond);
-        secondsemester.setHours(0,0,0,0)
-        let summersemester = new Date(this.date.startsummer);
-        summersemester.setHours(0,0,0,0)
-        let endfirst = new Date(this.date.endfirst)
-        endfirst.setHours(23,59,59,59)
-        let endsecond = new Date(this.date.endsecond)
-        endsecond.setHours(23,59,59,59)
-        console.log(newYear)
-        if(currentday<firstsemester||currentday>summersemester){
-            this.current_semester = "summer"
-            this.current_academic = currentday.getFullYear()-1
-        }else if(currentday>firstsemester && currentday<secondsemester){
-            this.current_semester = "first"
-            if(currentday<newYear){
-              this.current_academic = currentday.getFullYear()
-            }else{
-              this.current_academic = currentday.getFullYear()-1
-            }
-        }else if(currentday>secondsemester && currentday<endsecond){
-          this.current_semester = "second"
-          this.current_academic = currentday.getFullYear()-1
+    },
+    getDate() {
+      let currentday = new Date();
+      let firstsemester = new Date(this.date.startfirst);
+      firstsemester.setHours(0, 0, 0, 0);
+      let newYear = new Date(firstsemester.getFullYear() + 1, 0, 1);
+      let secondsemester = new Date(this.date.startsecond);
+      secondsemester.setHours(0, 0, 0, 0);
+      let summersemester = new Date(this.date.startsummer);
+      summersemester.setHours(0, 0, 0, 0);
+      let endfirst = new Date(this.date.endfirst);
+      endfirst.setHours(23, 59, 59, 59);
+      let endsecond = new Date(this.date.endsecond);
+      endsecond.setHours(23, 59, 59, 59);
+      console.log(newYear);
+      if (currentday < firstsemester || currentday > summersemester) {
+        this.current_semester = "summer";
+        this.current_academic = currentday.getFullYear() - 1;
+      } else if (currentday > firstsemester && currentday < secondsemester) {
+        this.current_semester = "first";
+        if (currentday < newYear) {
+          this.current_academic = currentday.getFullYear();
+        } else {
+          this.current_academic = currentday.getFullYear() - 1;
         }
-        console.log(this.current_semester,this.current_academic)
-    }
+      } else if (currentday > secondsemester && currentday < endsecond) {
+        this.current_semester = "second";
+        this.current_academic = currentday.getFullYear() - 1;
+      }
+      console.log(this.current_semester, this.current_academic);
+    },
   },
   mounted() {
     this.getDate();
@@ -511,21 +539,5 @@ span:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.p1Semeter::after {
-  content: " 1 Semeter";
-  font-weight: bold;
-}
-.p2Semeter::after {
-  content: " 2 Semeter";
-  font-weight: bold;
-}
-.pExceed::after {
-  content: " Exceed to undergraduate";
-  font-weight: bold;
-}
-.pLower::after {
-  content: " Lower to undergraduate";
-  font-weight: bold;
 }
 </style>
