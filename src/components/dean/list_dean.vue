@@ -125,11 +125,12 @@
                   class="btn btn-success w-100"
                   data-bs-toggle="modal"
                   data-bs-target="#Modal"
+                  v-on:click="checkempty"
                 >
                   Comfirm
                 </button>
                 <!-- Modal -->
-                <div
+                <div v-if="selectedformid.length!=0"
                   class="modal fade"
                   id="Modal"
                   tabindex="-1"
@@ -386,6 +387,11 @@ export default {
           return 0;
         }
       });
+    },
+    checkempty(){
+        if(this.selectedformid.length==0){
+          alert("please select atless one")
+        }
     },
     onChangeId() {
       this.checked = "id";

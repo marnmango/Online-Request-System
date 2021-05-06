@@ -231,10 +231,6 @@ export default {
         document.getElementById("request_radio_1").disabled = false;
         document.getElementById("request_radio_2").disabled = false;
         document.getElementById("Other").disabled = false;
-        // document.getElementById("semeterRe1").disabled = false;
-        // document.getElementById("academicYear1").disabled = false;
-        // document.getElementById("semeterRe2").disabled = false;
-        // document.getElementById("academicYear2").disabled = false;
       }
       }
     },
