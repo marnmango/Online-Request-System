@@ -251,21 +251,6 @@ export default {
           this.selectsemes = null
           return;
       }
-      
-      if (this.selectyear == this.toadmy) {
-        if (this.tosemes == "first") {
-          if (this.selectsemes == "first") {
-            console.log("good");
-          } else if (this.selectsemes == "second") {
-            alert("exceed to time");
-            this.selectsemes = "";
-          }
-        } else {
-          console.log("good");
-        }
-      } else {
-        console.log("good");
-      }
     },
   },
   mounted() {
