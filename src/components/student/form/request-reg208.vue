@@ -269,7 +269,7 @@ export default {
           current_semester: this.current_semester,
           current_academic: this.current_academic,
         });
-        this.disableSubmit();
+        // this.disableSubmit();
         for (let fileindex in this.files) {
           console.log(this.files[fileindex]);
           let data = new FormData();

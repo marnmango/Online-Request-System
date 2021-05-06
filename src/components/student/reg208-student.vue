@@ -130,6 +130,9 @@ export default {
       this.stphone = value.phone;
     },
     onSubmit(value) {
+      if(this.stphone==""){
+        alert("enter your phone number")
+      }else{
       this.from_semester = value.from_semester;
       this.from_academic = value.from_academic;
       this.to_semester = value.to_semester;
@@ -142,6 +145,7 @@ export default {
       this.current_semester=value.current_semester
       this.current_academic=value.current_academic
       this.sendformInfo();
+      }
     },
   },
   created() {

@@ -216,7 +216,6 @@ export default {
         this.selectyear_from = this.formInfo.request_from_academicyear;
         this.selectyear_to = this.formInfo.request_to_academicyear;
         this.re_text = this.formInfo.request_text;
-        this.re_doc =JSON.parse(this.formInfo.reason_doc)
         this.request_radio_1 = this.formInfo.reason_radio1;
         this.request_radio_2 = this.formInfo.reason_radio2;
         this.selectyear_from=parseInt(this.selectyear_from)

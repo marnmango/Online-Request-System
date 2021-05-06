@@ -8,6 +8,14 @@
       <img class="modal-content" id="imgInModal" />
       <div id="caption"></div>
     </div>
+    <button
+          type="submit"
+          class="btn btn-success"
+          id="delete"
+          @click="onDelete"
+        >
+          Submit
+        </button>
   </div>
 </template>
 
@@ -47,7 +55,9 @@ export default {
       span.onclick = function () {
         modal.style.display = "none";
       };
-    },
+    },onDelete(){
+      this.$emit("onDelete")
+    }
   },
   mounted() {
     this.newTab();

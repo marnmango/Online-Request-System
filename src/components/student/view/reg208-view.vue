@@ -39,7 +39,7 @@
             <template v-if="childDataLoaded">
               <div class="col-6" v-for="(pic, index) in picture" :key="index">
                 <div class="p-3 border bg-light">
-                  <RequestImg208 :picture="pic" />
+                  <RequestImg208 :picture="pic" @onDelete="()=>onDelete(index)"/>
                 </div>
               </div>
             </template>
@@ -106,7 +106,7 @@ export default {
       radio_1: "",
       radio_2: "",
       re_text: "",
-      re_doc: "",
+      re_doc: [],
       restict: true,
     };
   },
@@ -120,6 +120,7 @@ export default {
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
           let picturename = JSON.parse(this.formInfo.reason_doc);
+          this.re_doc = picturename
           for(let indexs in picturename){
             this.picture.push('http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/'+ picturename[indexs])
           }
@@ -199,6 +200,14 @@ export default {
           });
       });
     },
+    onDelete(index){
+      console.log(index)
+      this.$confirm("Are you sure?").then(() => {
+      this.re_doc.splice(index,1)
+      this.picture.splice(index,1)
+      this.$alert("the evidence was remove");
+      })
+    },
     onFix(value) {
       this.from_semester = value.from_semester;
       this.from_academic = value.from_academic;
@@ -207,7 +216,7 @@ export default {
       this.radio_1 = value.radio_1;
       this.radio_2 = value.radio_2;
       this.re_text = value.re_text;
-      this.re_doc = value.re_doc;
+      this.re_doc = this.re_doc.concat(value.re_doc);
       this.restict = value.restict;
       this.sendformInfo();
     },
