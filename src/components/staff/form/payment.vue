@@ -50,7 +50,7 @@
                 v-model="payment_amount"
                 disabled
               />
-              <span class="input-group-text">BATH</span>
+              <span class="input-group-text">BAHT</span>
             </div>
             <div
               class="row align-self-center justify-content-center"

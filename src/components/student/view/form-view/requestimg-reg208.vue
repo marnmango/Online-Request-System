@@ -8,14 +8,16 @@
       <img class="modal-content" id="imgInModal" />
       <div id="caption"></div>
     </div>
-    <button
-          type="submit"
-          class="btn btn-success"
-          id="delete"
-          @click="onDelete"
-        >
-          Submit
-        </button>
+    <div class="mt-3 d-grid">
+      <button
+        type="submit"
+        class="btn btn-outline-danger"
+        id="delete"
+        @click="onDelete"
+      >
+        Delete this image.
+      </button>
+    </div>
   </div>
 </template>
 
@@ -55,9 +57,10 @@ export default {
       span.onclick = function () {
         modal.style.display = "none";
       };
-    },onDelete(){
-      this.$emit("onDelete")
-    }
+    },
+    onDelete() {
+      this.$emit("onDelete");
+    },
   },
   mounted() {
     this.newTab();

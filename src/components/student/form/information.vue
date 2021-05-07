@@ -24,7 +24,7 @@
           disabled
         />
       </div>
-      <div class="col-md-7">
+      <div class="col-md-6">
         <label for="name" class="form-label m-0 mt-2">Name</label>
         <input
           type="text"
@@ -34,7 +34,7 @@
           disabled
         />
       </div>
-      <div class="col-md-3 col-sm-4">
+      <div class="col-md-4 col-sm-4">
         <label for="studentID" class="form-label m-0 mt-2">Student ID</label>
         <input
           type="number"
@@ -67,33 +67,35 @@
         />
       </div>
     </div>
-    <div>
-      <label for="gpax" class="form-label m-0 mt-2">Gpax</label>
-      <input
-        type="text"
-        class="form-control w-25"
-        id="gpax"
-        v-model="info.student_gpax"
-        disabled
-      />
-    </div>
-    <div class="mb-1">
-      <label for="phoneNumber" class="form-label mb-0 m-0 mt-2"
-        >Phone number</label
-      >
-      <input
-        type="tel"
-        maxlength="10"
-        min="0"
-        pattern="[0]{1}[0-9]{9}"
-        placeholder="0xxxxxxxxx"
-        v-model="phone"
-        class="form-control w-25"
-        id="phoneNumber"
-        @change="sendphone"
-        required
-      />
-      <p class="text-muted" style="font-size: 14px">Format: 0912345678</p>
+    <div class="row g-2">
+      <div class="col">
+        <label for="gpax" class="form-label m-0 mt-2">Gpax</label>
+        <input
+          type="text"
+          class="form-control"
+          id="gpax"
+          v-model="info.student_gpax"
+          disabled
+        />
+      </div>
+      <div class="mb-1 col">
+        <label for="phoneNumber" class="form-label mb-0 m-0 mt-2"
+          >Phone number</label
+        >
+        <input
+          type="tel"
+          maxlength="10"
+          min="0"
+          pattern="[0]{1}[0-9]{9}"
+          placeholder="0XXXXXXXXX"
+          v-model="phone"
+          class="form-control"
+          id="phoneNumber"
+          @change="sendphone"
+          required
+        />
+        <p class="text-muted" style="font-size: 14px">Format: 0912345678</p>
+      </div>
     </div>
   </div>
 </template>

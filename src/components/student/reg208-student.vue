@@ -8,15 +8,15 @@
             <h4>REGISTRAR DIVISION, MAE FAH LUANG UNIVERSITY</h4>
             <h4>Request Form for Leave of Absence : Undergraduate Student</h4>
           </div>
-          <div class="row gy-3 mx-5">
-            <div class="col">
+          <div class="row gy-3 mx-5 mb-3">
+            <div class="col-5">
               <div class="p-3 border bg-light">
                 <InformationForm :info="studentInfo" @onChange="onChange" />
               </div>
             </div>
-            <div class="col">
+            <div class="col col-md-7">
               <div class="p-3 border bg-light h-100" v-if="childonload">
-                <RequestForm208 @onSubmit="onSubmit" :date="date"/>
+                <RequestForm208 @onSubmit="onSubmit" :date="date" />
               </div>
             </div>
           </div>
@@ -53,25 +53,28 @@ export default {
       re_doc: "",
       studentid: "",
       restict: true,
-      date:"",
-      childonload:false,
-      current_semester:'',
-      current_academic:'',
+      date: "",
+      childonload: false,
+      current_semester: "",
+      current_academic: "",
     };
   },
   methods: {
     getstudentInfo() {
-      const path = axios.get(pathapi+"/?id="+this.studentid);
-      const path2 = axios.get(pathapi+"/getDate");
+      const path = axios.get(pathapi + "/?id=" + this.studentid);
+      const path2 = axios.get(pathapi + "/getDate");
       axios
-        .all([path,path2])
-        .then(axios.spread((...res) => {
-          this.studentInfo = res[0].data;
-          this.date=res[1].data
-        }))
+        .all([path, path2])
+        .then(
+          axios.spread((...res) => {
+            this.studentInfo = res[0].data;
+            this.date = res[1].data;
+          })
+        )
         .catch((error) => {
           console.log(error);
-        }).then(()=>this.childonload=true)
+        })
+        .then(() => (this.childonload = true));
     },
     sendformInfo() {
       // run function check เงื่อนไข gpax กับ radio2==true
@@ -106,8 +109,8 @@ export default {
         radio_2,
         re_text,
         re_doc,
-        current_semester:this.current_semester,
-        current_academic:this.current_academic
+        current_semester: this.current_semester,
+        current_academic: this.current_academic,
       });
       console.log(senddata);
       if (this.restict && phone != "") {
@@ -130,21 +133,21 @@ export default {
       this.stphone = value.phone;
     },
     onSubmit(value) {
-      if(this.stphone==""){
-        alert("enter your phone number")
-      }else{
-      this.from_semester = value.from_semester;
-      this.from_academic = value.from_academic;
-      this.to_semester = value.to_semester;
-      this.to_academic = value.to_academic;
-      this.radio_1 = value.radio_1;
-      this.radio_2 = value.radio_2;
-      this.re_text = value.re_text;
-      this.re_doc = value.re_doc;
-      this.restict = value.restict;
-      this.current_semester=value.current_semester
-      this.current_academic=value.current_academic
-      this.sendformInfo();
+      if (this.stphone == "") {
+        alert("enter your phone number");
+      } else {
+        this.from_semester = value.from_semester;
+        this.from_academic = value.from_academic;
+        this.to_semester = value.to_semester;
+        this.to_academic = value.to_academic;
+        this.radio_1 = value.radio_1;
+        this.radio_2 = value.radio_2;
+        this.re_text = value.re_text;
+        this.re_doc = value.re_doc;
+        this.restict = value.restict;
+        this.current_semester = value.current_semester;
+        this.current_academic = value.current_academic;
+        this.sendformInfo();
       }
     },
   },

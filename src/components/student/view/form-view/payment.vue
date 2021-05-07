@@ -13,7 +13,7 @@
             id="amount"
             readonly
           />
-          <span class="input-group-text">BATH</span>
+          <span class="input-group-text">BAHT</span>
         </div>
         <div
           v-if="formInfo.payment_doc == null && formInfo.progress_status == 4"
@@ -85,29 +85,34 @@ export default {
       ) {
         alert("Please select a valid image file (JPEG/JPG/PNG/GIF).");
       } else {
-        const myNewFile = new File([uploadedFiles[0]], 'pic'+Date.now()+'.jpg', {type: uploadedFiles[0].type});
+        const myNewFile = new File(
+          [uploadedFiles[0]],
+          "pic" + Date.now() + ".jpg",
+          { type: uploadedFiles[0].type }
+        );
         this.files = myNewFile;
       }
       console.log(this.files);
     },
     onSubmit() {
-        let data = new FormData();
-          data.append('uploadfile',this.files);
-          data.append('bucket', 'sp61');
-          data.append('prjid','sp_ors');
-          //build payload packet 
-          axios
-          .post('http://selab.mfu.ac.th:9001/upload', data,{
-            headers: {
-            'Content-Type': 'multipart/form-data'
-            }})
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((error) => {
-              console.log(error);
-          });
-          this.$emit("onSubmit", this.files.name);
+      let data = new FormData();
+      data.append("uploadfile", this.files);
+      data.append("bucket", "sp61");
+      data.append("prjid", "sp_ors");
+      //build payload packet
+      axios
+        .post("http://selab.mfu.ac.th:9001/upload", data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$emit("onSubmit", this.files.name);
     },
   },
   mounted() {

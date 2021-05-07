@@ -12,13 +12,16 @@
           v-model="payment_amount"
           readonly
         />
-        <span class="input-group-text">BATH</span>
+        <span class="input-group-text">BAHT</span>
       </div>
       <div class="row mx-0">
         <img
           class="myImages img-fluid pic rounded mx-auto d-block my-3 border p-0"
           id="myImg"
-          :src="'http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/'+ picture"
+          :src="
+            'http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/' +
+            picture
+          "
         />
 
         <div id="myModal" class="modal">
