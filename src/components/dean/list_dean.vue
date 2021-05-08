@@ -130,7 +130,8 @@
                   Comfirm
                 </button>
                 <!-- Modal -->
-                <div v-if="selectedformid.length!=0"
+                <div
+                  v-if="selectedformid.length != 0"
                   class="modal fade"
                   id="Modal"
                   tabindex="-1"
@@ -257,7 +258,7 @@
 </template>
 
 <script>
-import Navbar from "../student/navStudent";
+import Navbar from "../navbar.vue";
 import pathapi from "../../pathapi.js";
 import CommentDean from "./form/comment-dean.vue";
 import axios from "axios";
@@ -302,14 +303,14 @@ export default {
       this.selectrdformcat = [];
       this.selectrdformstuid = [];
       if (!this.selectAll) {
-        this.confirmAllRequest()
-        console.log(this.selectedformid)
-        console.log(this.selectrdformcat)
-        console.log(this.selectrdformstuid)
-      }else{
-        console.log(this.selectedformid)
-        console.log(this.selectrdformcat)
-        console.log(this.selectrdformstuid)
+        this.confirmAllRequest();
+        console.log(this.selectedformid);
+        console.log(this.selectrdformcat);
+        console.log(this.selectrdformstuid);
+      } else {
+        console.log(this.selectedformid);
+        console.log(this.selectrdformcat);
+        console.log(this.selectrdformstuid);
       }
     },
     getallform() {
@@ -388,10 +389,10 @@ export default {
         }
       });
     },
-    checkempty(){
-        if(this.selectedformid.length==0){
-          alert("please select atless one")
-        }
+    checkempty() {
+      if (this.selectedformid.length == 0) {
+        alert("please select atless one");
+      }
     },
     onChangeId() {
       this.checked = "id";

@@ -75,13 +75,8 @@
             </select>
           </div>
 
-          <div
-            class="border bg-white pt-3 ps-4 mt-3 mx-2 pb-0 text-start text-sm-start text-md-start"
-            style="width: 600px"
-          >
-            <p class="p-0" style="font-size: 15px; font-weight: bold" id="p1">
-              You request to leave:
-            </p>
+          <div class="text-center mb-0">
+            <p class="" style="font-size: 15px; font-weight: bold" id="p1"></p>
           </div>
         </div>
       </div>
@@ -419,22 +414,25 @@ export default {
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "second"
           ) {
+            document.getElementById("p1").classList.remove("leavenot");
             document.getElementById("p1").innerHTML =
               "You request to leave: 2 Semeters";
-
+            document.getElementById("p1").classList.add("leaveok");
             this.restict = true;
           } else if (
             this.selectsemes_from == "second" &&
             this.selectsemes_to == "first"
           ) {
+            document.getElementById("p1").classList.remove("leaveok");
             document.getElementById("p1").innerHTML =
               "You request to leave: Can not leave from future to past";
-
+            document.getElementById("p1").classList.add("leavenot");
             this.restict = false;
           } else {
+            document.getElementById("p1").classList.remove("leavenot");
             document.getElementById("p1").innerHTML =
               "You request to leave: 1 Semeter";
-
+            document.getElementById("p1").classList.add("leaveok");
             this.restict = true;
           }
         } else {
@@ -442,29 +440,37 @@ export default {
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "first"
           ) {
+            document.getElementById("p1").classList.remove("leaveok");
             document.getElementById("p1").innerHTML =
               "You request to leave: Exceed to undergraduate";
+            document.getElementById("p1").classList.add("leavenot");
             this.restict = false;
           } else if (
             this.selectsemes_from == "first" &&
             this.selectsemes_to == "second"
           ) {
+            document.getElementById("p1").classList.remove("leaveok");
             document.getElementById("p1").innerHTML =
               "You request to leave: Exceed to undergraduate";
+            document.getElementById("p1").classList.add("leavenot");
             this.restict = false;
           } else if (
             this.selectsemes_from == "second" &&
             this.selectsemes_to == "first"
           ) {
+            document.getElementById("p1").classList.remove("leavenot");
             document.getElementById("p1").innerHTML =
               "You request to leave: 2 Semeters";
+            document.getElementById("p1").classList.add("leaveok");
             this.restict = true;
           } else if (
             this.selectsemes_from == "second" &&
             this.selectsemes_to == "second"
           ) {
+            document.getElementById("p1").classList.remove("leaveok");
             document.getElementById("p1").innerHTML =
               "You request to leave: Exceed to undergraduate";
+            document.getElementById("p1").classList.add("leavenot");
             this.restict = false;
           }
         }
@@ -539,5 +545,21 @@ span:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.leaveok {
+  background-color: #28a745;
+  border: white 0.25px solid;
+  color: white;
+  padding: 10px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+.leavenot {
+  background-color: #dc3545;
+  border: white 0.25px solid;
+  color: white;
+  padding: 10px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 </style>

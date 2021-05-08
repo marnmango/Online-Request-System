@@ -1,10 +1,8 @@
 <template>
   <div style="text-align: left">
+    <h4>Staff's comment</h4>
     <div class="row mb-1 g-2">
       <div class="col p-3 border bg-white mx-3 shadow-sm">
-        <label for="exampleFormControlTextarea1" class="form-label"
-          >Staff's comment</label
-        >
         <textarea class="form-control" v-model="staffComment" rows="3" disabled>
         </textarea>
       </div>
@@ -23,7 +21,7 @@ export default {
     };
   },
   mounted() {
-      this.staffComment=this.staffcomment
+    this.staffComment = this.staffcomment;
   },
 };
 </script>

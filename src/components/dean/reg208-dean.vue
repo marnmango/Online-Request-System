@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import Navbar from "../student/navStudent.vue";
+import Navbar from "../navbar.vue";
 import InformationForm from "./form/information.vue";
 import RequestForm208 from "./form/request-reg208.vue";
 import Comment208 from "./form/comment-reg208.vue";
@@ -101,8 +101,11 @@ export default {
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
           let picturename = JSON.parse(this.formInfo.reason_doc);
-          for(let indexs in picturename){
-            this.picture.push('http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/'+ picturename[indexs])
+          for (let indexs in picturename) {
+            this.picture.push(
+              "http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/" +
+                picturename[indexs]
+            );
           }
           return this.formInfo.student_id;
         })

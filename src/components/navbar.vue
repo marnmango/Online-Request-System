@@ -12,7 +12,7 @@
             <p class="fontlogo mt-0">มหาวิทยาลัยแม่ฟ้าหลวง</p>
           </div>
         </a>
-        <li href="#" class="nav-link" @click="$router.push('/newrequest')">
+        <li href="#" class="nav-link">
           <span class="mx-2">New Requests</span>
         </li>
         <li href="#" class="nav-link">

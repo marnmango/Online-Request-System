@@ -26,9 +26,10 @@
                 @click="$router.push('/reg208_student')"
               >
                 <h6>Request Form for Leave of Absence Undergraduate Student</h6>
-                <p class="text-start">
+                <p class="text-center">(REG-208)</p>
+                <p class="m-0">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Sint, recusandae.
+                  Iure, nostrum.
                 </p>
               </div>
             </div>
@@ -38,9 +39,10 @@
                 @click="$router.push('/reg209_student')"
               >
                 <h6>Request Form for Re-entering Student</h6>
-                <p class="text-start">
+                <p class="text-center">(REG-209)</p>
+                <p class="m-0">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Sint, recusandae.
+                  Iure, nostrum.
                 </p>
               </div>
             </div>

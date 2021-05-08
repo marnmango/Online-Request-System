@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavStudent />
+    <Navbar />
     <div class="p-1 active-cont" style="text-align: center">
       <div class="mx-4">
         <div class="my-4">
@@ -52,7 +52,10 @@
                 </div>
                 <div class="col-4 align-self-center">
                   <template v-if="childDataLoaded">
-                  <CommentStaff :staffcomment="formInfo.staff_comment" @onSubmit="onSubmit" />
+                    <CommentStaff
+                      :staffcomment="formInfo.staff_comment"
+                      @onSubmit="onSubmit"
+                    />
                   </template>
                 </div>
               </div>
@@ -65,7 +68,7 @@
 </template>
 
 <script>
-import NavStudent from "../student/navStudent.vue";
+import Navbar from "../navbar.vue";
 import InformationForm from "../staff/form/information.vue";
 import RequestForm from "../staff/form/request.vue";
 import CommentForm from "../staff/form/comment.vue";
@@ -75,7 +78,7 @@ import pathapi from "../../pathapi.js";
 
 export default {
   components: {
-    NavStudent,
+    Navbar,
     InformationForm,
     RequestForm,
     CommentForm,
@@ -153,18 +156,18 @@ export default {
         const staffid = this.staff_id;
         const formcat = this.formInfo.form_cat;
         const advisorid = this.formInfo.advisor_id;
-        const studentid = this.formInfo.student_id
+        const studentid = this.formInfo.student_id;
         const staffcomment = value;
         const senddata = Object.assign(
           {},
-          { formid, staffid, formcat, advisorid, staffcomment,studentid }
+          { formid, staffid, formcat, advisorid, staffcomment, studentid }
         );
         const path = pathapi + "/staffsubmit";
         axios
           .post(path, senddata)
           .then((res) => {
             console.log(res.data);
-            this.$alert("the request had confirm");
+            this.$alert("The request had confirm");
             this.$router.push({ name: "List" });
           })
           .catch((error) => {

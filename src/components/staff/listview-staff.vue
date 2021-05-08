@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import Navbar from "../student/navStudent.vue";
+import Navbar from "../navbar.vue";
 import axios from "axios";
 import pathapi from "../../pathapi.js";
 export default {

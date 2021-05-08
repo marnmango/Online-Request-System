@@ -40,13 +40,18 @@ const routes = [{
     {
         path: '/newrequest',
         name: 'NewRequest',
-        component: NewRequest
+        component: NewRequest,
+        meta: {
+            requiresAuth: true,
+            is_student: true
+        }
     },
     {
         path: '/newrequest',
         redirect: {
             name: "NewRequest"
-        }
+        },
+
     },
     {
         path: '/reg209_student',

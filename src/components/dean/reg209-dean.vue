@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavStudent />
+    <Navbar />
     <div class="p-1 active-cont" style="text-align: center">
       <div class="mx-4">
         <div class="my-4">
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import NavStudent from "../student/navStudent.vue";
+import Navbar from "../navbar.vue";
 import InformationForm from "../dean/form/information.vue";
 import RequestForm from "../dean/form/request.vue";
 import CommentAdvisor from "../dean/form/comment-advisor.vue";
@@ -66,7 +66,7 @@ import pathapi from "../../pathapi.js";
 
 export default {
   components: {
-    NavStudent,
+    Navbar,
     InformationForm,
     RequestForm,
     CommentAdvisor,

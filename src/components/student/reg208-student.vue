@@ -119,7 +119,8 @@ export default {
             .post(path, senddata)
             .then((res) => {
               console.log(res.data);
-              this.$alert("the request had sent");
+              this.$alert("The request had sent");
+              this.$router.push({ name: "Liststudent" });
             })
             .catch((error) => {
               console.log(error);
@@ -134,7 +135,7 @@ export default {
     },
     onSubmit(value) {
       if (this.stphone == "") {
-        alert("enter your phone number");
+        alert("Enter your phone number");
       } else {
         this.from_semester = value.from_semester;
         this.from_academic = value.from_academic;

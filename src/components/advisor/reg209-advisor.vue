@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavStudent />
+    <Navbar />
     <div class="p-1 active-cont" style="text-align: center">
       <div class="mx-4">
         <div class="my-4">
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import NavStudent from "../student/navStudent.vue";
+import Navbar from "../navbar.vue";
 import InformationForm from "../advisor/form/information.vue";
 import RequestForm from "../advisor/form/request.vue";
 import CommentAdvisor from "../advisor/form/comment-advisor.vue";
@@ -66,7 +66,7 @@ import axios from "axios";
 
 export default {
   components: {
-    NavStudent,
+    Navbar,
     InformationForm,
     RequestForm,
     CommentAdvisor,

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Navbar from "../student/navStudent.vue";
+import Navbar from "../navbar.vue";
 
 export default {
   data() {
