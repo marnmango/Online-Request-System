@@ -10,6 +10,7 @@
     </div>
     <div class="mt-3 d-grid">
       <button
+        v-if="alter"
         type="submit"
         class="btn btn-outline-danger"
         id="delete"
@@ -25,6 +26,7 @@
 export default {
   props: {
     picture: String,
+    alter: Boolean,
   },
   // methods:{
   //   dataURLtoFile(dataurl, filename) {

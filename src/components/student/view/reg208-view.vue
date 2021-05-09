@@ -32,14 +32,18 @@
             <div class="col-6">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                  <RequestForm208 :formInfo="formInfo" @onFix="onFix"/>
+                  <RequestForm208 :formInfo="formInfo" @onFix="onFix" />
                 </template>
               </div>
             </div>
             <template v-if="childDataLoaded">
               <div class="col-6" v-for="(pic, index) in picture" :key="index">
                 <div class="p-3 border bg-light">
-                  <RequestImg208 :picture="pic" @onDelete="()=>onDelete(index)"/>
+                  <RequestImg208
+                    :picture="pic"
+                    :alter="alter"
+                    @onDelete="() => onDelete(index)"
+                  />
                 </div>
               </div>
             </template>
@@ -58,7 +62,8 @@
                   v-if="
                     childDataLoaded &&
                     (formInfo.progress_status == 4 ||
-                      formInfo.progress_status == 5) && formInfo.payment_amount != null
+                      formInfo.progress_status == 5) &&
+                    formInfo.payment_amount != null
                   "
                 >
                   <Payment :formInfo="formInfo" @onSubmit="onSubmit" />
@@ -108,6 +113,7 @@ export default {
       re_text: "",
       re_doc: [],
       restict: true,
+      alter: false,
     };
   },
   methods: {
@@ -119,10 +125,14 @@ export default {
           console.log(res.data);
           this.formInfo = res.data;
           this.st_phone = this.formInfo.phone;
+          this.alter = this.formInfo.alterform;
           let picturename = JSON.parse(this.formInfo.reason_doc);
-          this.re_doc = picturename
-          for(let indexs in picturename){
-            this.picture.push('http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/'+ picturename[indexs])
+          this.re_doc = picturename;
+          for (let indexs in picturename) {
+            this.picture.push(
+              "http://selab.mfu.ac.th:9001/download?bucket=sp61&filename=/sp_ors/" +
+                picturename[indexs]
+            );
           }
           return this.formInfo.student_id;
         })
@@ -200,13 +210,13 @@ export default {
           });
       });
     },
-    onDelete(index){
-      console.log(index)
+    onDelete(index) {
+      console.log(index);
       this.$confirm("Are you sure?").then(() => {
-      this.re_doc.splice(index,1)
-      this.picture.splice(index,1)
-      this.$alert("the evidence was remove");
-      })
+        this.re_doc.splice(index, 1);
+        this.picture.splice(index, 1);
+        this.$alert("The evidence was remove");
+      });
     },
     onFix(value) {
       this.from_semester = value.from_semester;

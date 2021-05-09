@@ -214,6 +214,7 @@ export default {
         payment: "#ffc107",
         completed: "#28a745",
         complete: "#28a745",
+        "Re-sending": "#b0b6ba",
       },
       head: 0,
       last: "",
