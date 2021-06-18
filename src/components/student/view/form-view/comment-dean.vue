@@ -1,8 +1,8 @@
 <template>
   <div style="text-align: left">
     <h4>Dean's comment</h4>
-    <div class="row mb-1 g-2">
-      <div class="col p-3 border bg-white mx-3 shadow-sm">
+    <div class="mb-0">
+      <div class="p-3 border bg-white shadow-sm">
         <textarea class="form-control" v-model="deanComment" rows="3" readonly>
         </textarea>
       </div>

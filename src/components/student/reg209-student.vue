@@ -1,19 +1,19 @@
 <template>
   <div>
     <NavStudent />
-    <div class="p-1 active-cont" style="text-align: center">
+    <div class="p-1 content" style="text-align: center">
       <div class="mx-4">
         <div class="my-4">
           <h4>REGISTRAR DIVISION, MAE FAH LUANG UNIVERSITY</h4>
           <h4>Request Form for Re-entering Student</h4>
         </div>
-        <div class="row gy-3 mx-5">
-          <div class="col-6">
+        <div class="row gy-3 mb-3">
+          <div class="col-xxl-5 col-md-12 col-sm-12 col-xl-12">
             <div class="p-3 border bg-light">
               <InformationForm :info="studentInfo" @onChange="onChange" />
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-xxl-7 col-md-12 col-sm-12 col-xl-12">
             <div class="p-3 border bg-light h-100">
               <template v-if="childDataLoaded">
                 <RequestForm
@@ -82,12 +82,8 @@ export default {
     sendformInfo() {
       const path = pathapi + "/send209";
       const formid = { formId: Date.now() };
-      const {
-        student_id,
-        student_advisor_id,
-        student_school,
-        student_name,
-      } = this.studentInfo;
+      const { student_id, student_advisor_id, student_school, student_name } =
+        this.studentInfo;
       const phone = this.stphone;
       const senddata = Object.assign({}, this.stRequest, formid, {
         phone,
@@ -135,7 +131,4 @@ export default {
 </script>
 
 <style scoped>
-.active-cont {
-  margin-left: 180px;
-}
 </style>

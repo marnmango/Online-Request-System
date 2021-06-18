@@ -3,24 +3,25 @@
     <Navbar />
     <div class="container">
       <div>
-        <div class="p-1 active-cont text-center">
+        <div class="content text-center mb-0">
           <div class="my-5">
             <h4>Request Form</h4>
           </div>
           <div class="row gy-2">
-            <div class="col-6">
-              <div class="p-3 border h-100 disable">
+            <div class="col-12 col-md-6 col-sm-12">
+              <div class="p-3 border bg-light h-100">
                 <h6>
                   Request Form for Register More/Less Credits than those
                   Stipulated
                 </h6>
-                <p class="text-start">
+                <p class="text-center">(REG-206)</p>
+                <p class="m-0">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Sint, recusandae.
+                  Iure, nostrum.
                 </p>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-sm-12">
               <div
                 class="p-3 border bg-light h-100"
                 @click="$router.push('/reg208_student')"
@@ -33,7 +34,7 @@
                 </p>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-sm-12">
               <div
                 class="p-3 border bg-light h-100"
                 @click="$router.push('/reg209_student')"
@@ -46,39 +47,43 @@
                 </p>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-sm-12">
               <div class="p-3 border disable h-100">
                 <h6>Request Form Being Reinstated to Student Status</h6>
+                <p class="text-center">(REG-210)</p>
                 <p class="text-start">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                   Sint, recusandae.
                 </p>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-sm-12">
               <div class="p-3 border disable h-100">
                 <h6>Request Form Maintaining Student Status</h6>
+                <p class="text-center">(REG-211)</p>
                 <p class="text-start">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                   Sint, recusandae.
                 </p>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-sm-12">
               <div class="p-3 border disable h-100">
                 <h6>Request Form Student Resignation</h6>
+                <p class="text-center">(REG-214)</p>
                 <p class="text-start">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                   Sint, recusandae.
                 </p>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-sm-12">
               <div class="p-3 border disable h-100">
                 <h6>
                   Request Form Enroll in courses with special concurrent
                   examinations
                 </h6>
+                <p class="text-center">(REG-217)</p>
                 <p class="text-start">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                   Sint, recusandae.
@@ -102,9 +107,6 @@ export default {
 </script>
 
 <style scoped>
-.active-cont {
-  margin-left: 12%;
-}
 .disable {
   background-color: #dddddd;
   color: #7e7e7e;

@@ -5,7 +5,7 @@
     <div>
       <p class="mb-1 mt-3">Request to Re-entering</p>
       <div class="row m-2 p-3 border pt-2">
-        <div class="col-4">
+        <div class="col-md-6 col-sm-12">
           <label for="semeterselect" class="form-label mb-0">Semeter</label>
           <input
             class="form-control"
@@ -14,7 +14,7 @@
             disabled
           />
         </div>
-        <div class="col-4 mx-0">
+        <div class="col-md-6 col-sm-12">
           <label for="academicselect" class="form-label mb-0"
             >Academic year</label
           >
@@ -32,7 +32,7 @@
     <div>
       <p class="mb-1 mt-3">Semeter to re-entering</p>
       <div class="row m-2 p-3 border">
-        <div class="col-md-3">
+        <div class="col-md-6 col-sm-12">
           <label for="from" class="form-label mb-0">From Semeter</label>
           <input
             type="text"
@@ -42,7 +42,7 @@
             disabled
           />
         </div>
-        <div class="col-md-3 mx-0">
+        <div class="col-md-6 col-sm-12">
           <label for="formaca" class="form-label mb-0">Academic year</label>
           <input
             type="number"
@@ -55,7 +55,7 @@
             disabled
           />
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6 col-sm-12">
           <label for="to" class="form-label mb-0">To Semeter</label>
           <input
             type="text"
@@ -65,7 +65,7 @@
             disabled
           />
         </div>
-        <div class="col-md-3 mx-0">
+        <div class="col-md-6 col-sm-12">
           <label for="toaca" class="form-label mb-0">Academic year</label>
           <input
             type="number"

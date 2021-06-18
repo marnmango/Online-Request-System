@@ -7,7 +7,7 @@
       <div>
         <p class="mb-4">Request to leave</p>
         <div class="row mb-1 g-3 border p-3 mx-3">
-          <div class="col-3 mt-0">
+          <div class="col-md-3 col-sm-12 mt-0">
             <label for="fromSemeter" class="form-label mb-0"
               >From Semeter</label
             >
@@ -25,7 +25,7 @@
               </option>
             </select>
           </div>
-          <div class="col-3 mt-0">
+          <div class="col-md-3 col-sm-12 mt-0">
             <label for="fromAcademic" class="form-label mb-0"
               >Academic Year</label
             >
@@ -43,7 +43,7 @@
               </option>
             </select>
           </div>
-          <div class="col-3 mt-0">
+          <div class="col-md-3 col-sm-12 mt-0">
             <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
             <select
               class="form-select"
@@ -56,7 +56,7 @@
               </option>
             </select>
           </div>
-          <div class="col-3 mt-0">
+          <div class="col-md-3 col-sm-12 mt-0">
             <label for="toAcademic" class="form-label mb-0"
               >Academic Year</label
             >
@@ -85,8 +85,8 @@
         <label for="name" class="form-label mb-0 mt-3"
           >Reasons for on leave</label
         >
-        <div class="row mx-4 my-2">
-          <div class="form-check col col-lg-6 col-md-6">
+        <div class="row ms-4 my-2">
+          <div class="form-check col-md-6 col-sm-12">
             <input
               class="form-check-input"
               type="radio"
@@ -99,7 +99,7 @@
               Illness with a document and the name of a medical provider
             </label>
           </div>
-          <div class="form-check col col-lg-6 col-md-6">
+          <div class="form-check col-md-6 col-sm-12">
             <input
               class="form-check-input"
               type="radio"
@@ -128,7 +128,7 @@
     </form>
     <!-- choose file -->
     <div class="row mt-3">
-      <div class="col-6 w-50 input-group h-100">
+      <div class="col-md-6 col-sm-12 input-group h-100 choosefile">
         <input
           type="file"
           class="form-control"
@@ -140,7 +140,7 @@
           required
         />
       </div>
-      <div class="col-6 text-end">
+      <div class="col-md-6 col-sm-12 text-end">
         <button
           type="button"
           class="btn btn-danger mx-2"
@@ -160,7 +160,7 @@
         </button>
       </div>
       <div
-        class="row text-start border bg-white mt-2 ms-1 w-75 p-0 pb-3"
+        class="row text-start border bg-white mt-2 ms-1 pb-3 remove"
         style="text-align: right"
         v-for="(file, key) in files"
         v-bind:key="key"
@@ -168,24 +168,24 @@
         <p class="mt-2 mb-1 fw-bold">Your file selected</p>
         <p class="m-0">
           {{ file.name
-          }}<span class="fw-bold mx-2 mt-0" v-on:click="removeFile(key)"
+          }}<span class="fw-bold ms-2 mt-0" v-on:click="removeFile(key)"
             >Remove</span
           >
         </p>
       </div>
     </div>
     <div class="row mt-1 g-3">
-      <div class="col-6 text-start">
-        <p class="m-0">Documents that need to be attached</p>
+      <div class="col-md-6 col-sm-12 text-start bg-white pt-3 border">
+        <p class="m-0 fw-bold fs-6">Documents that need to be attached</p>
         <ol>
           <li class="w-100 ms-3">
-            <p class="m-0">Medical certificate</p>
+            <p class="m-0 fs-7">Medical certificate</p>
           </li>
           <li class="w-100 ms-3">
-            <p class="m-0">Confirmation documents from parents</p>
+            <p class="m-0 fs-7">Confirmation documents from parents</p>
           </li>
           <li class="w-100 ms-3">
-            <p class="m-0">ID card copy (With parents’s signature)</p>
+            <p class="m-0 fs-7">ID card copy (With parents’s signature)</p>
           </li>
         </ol>
       </div>
@@ -547,7 +547,7 @@ span:hover {
   text-overflow: ellipsis;
 }
 .leaveok {
-  background-color: #28a745;
+  background-color: #52be80;
   border: white 0.25px solid;
   color: white;
   padding: 10px;
@@ -555,11 +555,52 @@ span:hover {
   margin-right: 100px;
 }
 .leavenot {
-  background-color: #dc3545;
+  background-color: #cd6155;
   border: white 0.25px solid;
   color: white;
   padding: 10px;
   margin-left: 100px;
   margin-right: 100px;
+}
+.choosefile {
+  width: 400px;
+}
+.remove {
+  width: 800px;
+}
+@media screen and (max-width: 1366px) {
+  .choosefile {
+    width: 550px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .choosefile {
+    width: 375px;
+  }
+  .remove {
+    width: 750px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .choosefile {
+    width: 350px;
+  }
+  .remove {
+    width: 690px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .choosefile {
+    width: 300px;
+    margin-bottom: 20px;
+  }
+  .remove {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .remove {
+    width: 250px;
+  }
 }
 </style>

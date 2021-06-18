@@ -1,7 +1,7 @@
 <template>
-  <div style="text-align: left">
+  <div style="text-align: left" class="mx-1">
     <h4>Comment</h4>
-    <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
+    <div class="row p-3 border bg-white mb-3 shadow-sm">
       <label for="exampleFormControlTextarea1" class="form-label m-0 text-start"
         >Staff's comment</label
       >
@@ -13,7 +13,7 @@
         readonly
       ></textarea>
     </div>
-    <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
+    <div class="row p-3 border bg-white mb-3 shadow-sm">
       <label for="exampleFormControlTextarea1" class="form-label m-0 text-start"
         >Advisor's comment</label
       >
@@ -26,7 +26,7 @@
         readonly
       ></textarea>
     </div>
-    <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
+    <div class="row p-3 border bg-white shadow-sm">
       <label for="exampleFormControlTextarea1" class="form-label m-0 text-start"
         >Dean's comment</label
       >
@@ -44,9 +44,9 @@
 <script>
 export default {
   props: {
-    staff_comment:String,
-    dean_comment:String,
-    advisor_comment:String
+    staff_comment: String,
+    dean_comment: String,
+    advisor_comment: String,
   },
   data() {
     return {
@@ -56,9 +56,9 @@ export default {
     };
   },
   mounted() {
-      this.staffcomment=this.staff_comment
-      this.deancomment=this.dean_comment
-      this.advisorcomment=this.advisor_comment
+    this.staffcomment = this.staff_comment;
+    this.deancomment = this.dean_comment;
+    this.advisorcomment = this.advisor_comment;
   },
 };
 </script>

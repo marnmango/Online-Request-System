@@ -1,13 +1,13 @@
 <template>
-  <div style="text-align: left">
+  <div class="text-start">
     <h4>Personal Information</h4>
     <div class="mb-1">
-      <label for="deanof" class="form-label mb-0"
+      <label for="deanof" class="form-label mb-0 mt-2"
         >To the dean of school of</label
       >
       <input
         type="text"
-        class="form-control w-50"
+        class="form-control"
         id="deanof"
         v-model="info.student_school"
         disabled
@@ -47,7 +47,7 @@
     </div>
     <div class="row g-2 mb-1">
       <div class="col-md">
-        <label for="schoolOf" class="form-label">School of</label>
+        <label for="schoolOf" class="form-label m-0 mt-2">School of</label>
         <input
           type="text"
           class="form-control"
@@ -57,7 +57,7 @@
         />
       </div>
       <div class="col-md">
-        <label for="programOf" class="form-label">Program of</label>
+        <label for="programOf" class="form-label m-0 mt-2">Program of</label>
         <input
           type="text"
           class="form-control"
@@ -78,7 +78,7 @@
           disabled
         />
       </div>
-      <div class="mb-1 col">
+      <div class="mb-1 col-md-6 col-sm-12">
         <label for="phoneNumber" class="form-label mb-0 mt-2"
           >Phone number</label
         >
@@ -151,4 +151,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+</style>

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div style="text-align: left">
+    <div style="text-align: left" class="mx-1">
       <h4>Payment</h4>
-      <div class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
+      <div class="row px-2 py-3 border bg-white mb-3 shadow-sm">
         <label>Total</label>
         <div class="input-group">
           <input
@@ -40,8 +40,8 @@
             </button>
           </div>
         </div>
-        <div class="row align-self-center m-0 justify-content-center">
-          <p class="mt-0 mb-0 badge fs-5" id="text"></p>
+        <div class="row align-self-center m-0">
+          <p class="mt-0 mb-0 fontpayment p-2 text-center" id="text"></p>
         </div>
       </div>
       <div id="example" class="row p-3 border bg-white mx-3 mb-3 shadow-sm">
@@ -140,4 +140,17 @@ export default {
 </script>
 
 <style scoped>
+/* badge */
+.fontpayment {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+}
+@media screen and (max-width: 400px) {
+  .fontpayment {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+  }
+}
 </style>
