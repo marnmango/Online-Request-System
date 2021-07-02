@@ -78,7 +78,7 @@
           disabled
         />
       </div>
-      <div class="mb-1 col">
+      <div class="mb-1 col-md-6 col-sm-12">
         <label for="phoneNumber" class="form-label m-0 mt-2"
           >Phone number</label
         >

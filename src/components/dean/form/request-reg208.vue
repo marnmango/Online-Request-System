@@ -5,7 +5,7 @@
     <!-- select semeter -->
     <form>
       <div class="row mb-1 g-3">
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
           <input
             id="fromSemeter"
@@ -14,7 +14,7 @@
             readonly
           />
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="fromAcademic" class="form-label mb-0"
             >Academic Year</label
           >
@@ -29,7 +29,7 @@
             readonly
           />
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
           <input
             class="form-control"
@@ -38,7 +38,7 @@
             readonly
           />
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="toAcademic" class="form-label mb-0">Academic Year</label>
           <input
             type="number"
@@ -135,7 +135,8 @@ export default {
       if (this.formInfo) {
         this.request_from_semester = this.formInfo.request_from_semester;
         this.request_to_semester = this.formInfo.request_to_semester;
-        this.request_from_academicyear = this.formInfo.request_from_academicyear;
+        this.request_from_academicyear =
+          this.formInfo.request_from_academicyear;
         this.request_to_academicyear = this.formInfo.request_to_academicyear;
         this.re_text = this.formInfo.request_text;
         this.request_checkbox_1 = this.formInfo.request_checkbox1;

@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class="mb-3">
     <Navbar />
     <div>
-      <div class="p-1 active-cont" style="text-align: center">
+      <div class="p-1 content" style="text-align: center">
         <div class="mx-4">
           <div class="my-4">
             <h4>REGISTRAR DIVISION, MAE FAH LUANG UNIVERSITY</h4>
             <h4>Request Form for Leave of Absence : Undergraduate Student</h4>
           </div>
-          <div class="container">
-            <ul class="progressbar">
+          <div>
+            <ul class="progressbar px-0">
               <li id="1">Student</li>
               <li id="2">Staff</li>
               <li id="3">Advisor</li>
@@ -18,8 +18,8 @@
               <li id="6">Finish</li>
             </ul>
           </div>
-          <div class="row gy-3 mx-5">
-            <div class="col-6">
+          <div class="row gy-3">
+            <div class="col-md-6 col-sm-12">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
                   <InformationForm
@@ -29,7 +29,7 @@
                 </template>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-md-6 col-sm-12">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
                   <RequestForm208 :formInfo="formInfo" />
@@ -37,13 +37,17 @@
               </div>
             </div>
             <template v-if="childDataLoaded">
-              <div class="col-6" v-for="(pic, index) in picture" :key="index">
+              <div
+                class="col-md-6 col-sm-12"
+                v-for="(pic, index) in picture"
+                :key="index"
+              >
                 <div class="p-3 border bg-light h-100">
                   <RequestImg208 :picture="pic" />
                 </div>
               </div>
             </template>
-            <div class="col-6">
+            <div class="col-md-6 col-sm-12">
               <div class="p-3 border bg-light">
                 <Comment208
                   :staffcomment="formInfo.staff_comment"

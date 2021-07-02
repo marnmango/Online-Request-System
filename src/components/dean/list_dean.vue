@@ -1,47 +1,31 @@
 <template>
   <div>
     <Navbar />
-    <div class="active-cont">
-      <div class="row g-0">
-        <div class="col-10">
-          <nav
-            class="navbar navbar-expand-lg navbar-light bg-light align-self-center justify-content-center"
-          >
-            <div class="row g-2">
-              <div class="col">
-                <input
-                  v-model="search"
-                  type="text"
-                  class="form-control"
-                  style="width: 500px; text-align: left"
-                  placeholder="Search"
-                />
-              </div>
-            </div>
-          </nav>
+    <div>
+      <!-- navbar search -->
+      <div
+        class="
+          navbar navbar-light
+          bg-light
+          align-self-center
+          justify-content-center
+          content
+        "
+      >
+        <input
+          v-model="search"
+          type="text"
+          class="form-control my-3"
+          style="width: 500px"
+          placeholder="Search"
+        />
 
-          <!-- เปลี่ยนหน้า array -->
-          <nav
-            class="navbar fixed-bottom navbar-light bg-light active-cont align-self-center justify-content-center"
-          >
-            <div style="margin-right: 180px">
-              <ul class="pagination pagination-sm">
-                <li
-                  class="page-item"
-                  v-for="(item, index) in numChangeTable"
-                  :key="index"
-                >
-                  <a
-                    class="page-link"
-                    v-on:click="() => onclickpage(item.start, item.stop)"
-                    >{{ item.i }}</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </nav>
-
-          <table class="table table-hover">
+        <div class="mb-3 mx-2"></div>
+      </div>
+      <!-- table -->
+      <div class="content p-0 row g-0 mb-5">
+        <div class="col-md-10 col-sm-12">
+          <table class="table table-hover mb-0 mb-3">
             <thead class="text-center">
               <tr>
                 <th scope="col">
@@ -62,7 +46,7 @@
               </tr>
             </thead>
 
-            <tbody class="text-center w-0">
+            <tbody class="text-center">
               <tr v-for="form in formInfoFilter" :key="form.form_id">
                 <td class="text-center">
                   <input
@@ -114,145 +98,161 @@
         </div>
 
         <!-- fillter -->
-        <div class="col-2 filter">
-          <div class="container side-right-navbar active-nav bg-light p-3 w-25">
-            <div class="w-50">
-              <h4 class="mb-2">Comfirm Request</h4>
-
-              <div class="m-2 justify-content-md-center">
-                <button
-                  type="button"
-                  class="btn btn-success w-100"
-                  data-bs-toggle="modal"
-                  data-bs-target="#Modal"
-                  v-on:click="checkempty"
-                >
-                  Comfirm
-                </button>
-                <!-- Modal -->
-                <div
-                  v-if="selectedformid.length != 0"
-                  class="modal fade"
-                  id="Modal"
-                  tabindex="-1"
-                  aria-labelledby="popup"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="popup">Comment</h5>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        <CommentDean
-                          @onCancel="onCancel"
-                          @onSubmit="confirmRequest"
-                        />
-                      </div>
-                      <!-- radio approve -->
+        <div class="col-md-2 col-sm-12">
+          <div class="bg-light p-3 h-100 position-fixed">
+            <h4 class="mb-2">Comfirm Request</h4>
+            <div class="m-2 justify-content-md-center">
+              <button
+                type="button"
+                class="btn btn-success w-100"
+                data-bs-toggle="modal"
+                data-bs-target="#Modal"
+                v-on:click="checkempty"
+              >
+                Comfirm
+              </button>
+              <div
+                v-if="selectedformid.length != 0"
+                class="modal fade"
+                id="Modal"
+                tabindex="-1"
+                aria-labelledby="popup"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="popup">Comment</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
                     </div>
+                    <div class="modal-body">
+                      <CommentDean
+                        @onCancel="onCancel"
+                        @onSubmit="confirmRequest"
+                      />
+                    </div>
+                    <!-- radio approve -->
                   </div>
                 </div>
               </div>
-              <h4 class="mt-3">Filter</h4>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="filter"
-                  id="formName"
-                  v-on:click="onChangeName"
-                />
-                <label class="form-check-label" for="formName">
-                  Form Name
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="filter"
-                  id="ID"
-                  v-on:click="onChangeId"
-                />
-                <label class="form-check-label" for="ID"> ID </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="filter"
-                  id="status"
-                  v-on:click="sortStatus"
-                />
-                <label class="form-check-label" for="status"> Status </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="filter"
-                  id="descending_date"
-                  v-on:click="sortDateDescend"
-                />
-                <label class="form-check-label" for="descending_date">
-                  Descending created date
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="filter"
-                  id="ascending_date"
-                  v-on:click="sortDateAscend"
-                />
-                <label class="form-check-label" for="ascending_date">
-                  Ascending created date
-                </label>
-              </div>
             </div>
-
-            <!-- ที่ใส่วันที่filter -->
-            <div class="w-50">
-              <div class="form-check mt-4 mb-2">
-                <p class="m-0">Start Date</p>
-                <input
-                  type="date"
-                  v-model="startDate"
-                  class="form-control form-control-edit"
-                />
-              </div>
-              <div class="form-check mb-2">
-                <p class="m-0">End Date</p>
-                <input
-                  type="date"
-                  v-model="endDate"
-                  class="form-control form-control-edit"
-                />
-                <!-- ปุ่มรีเฟรชหน้า -->
-                <div class="d-grid gap-2 mt-3">
-                  <button
-                    type="button"
-                    class="btn btn-outline-success smallfil"
-                    id="refresh"
-                    v-on:click="onRefresh"
-                  >
-                    Refresh Date
-                  </button>
-                </div>
+            <h4 class="mt-3">Filter</h4>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="filter"
+                id="formName"
+                v-on:click="onChangeName"
+              />
+              <label class="form-check-label" for="formName"> Form Name </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="filter"
+                id="ID"
+                v-on:click="onChangeId"
+              />
+              <label class="form-check-label" for="ID"> ID </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="filter"
+                id="status"
+                v-on:click="sortStatus"
+              />
+              <label class="form-check-label" for="status"> Status </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="filter"
+                id="descending_date"
+                v-on:click="sortDateDescend"
+              />
+              <label class="form-check-label" for="descending_date">
+                Descending created date
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="filter"
+                id="ascending_date"
+                v-on:click="sortDateAscend"
+              />
+              <label class="form-check-label" for="ascending_date">
+                Ascending created date
+              </label>
+            </div>
+            <div class="d-grid mt-4 mb-2">
+              <p class="m-0">Start Date</p>
+              <input
+                type="date"
+                v-model="startDate"
+                class="form-control form-control-edit"
+              />
+            </div>
+            <div class="d-grid mb-2">
+              <p class="m-0">End Date</p>
+              <input
+                type="date"
+                v-model="endDate"
+                class="form-control form-control-edit"
+              />
+              <!-- ปุ่มรีเฟรชหน้า -->
+              <div class="d-grid mt-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-success smallfil"
+                  id="refresh"
+                  v-on:click="onRefresh"
+                >
+                  Refresh Date
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <!-- fillter -->
       </div>
+      <!-- เปลี่ยนหน้า -->
+      <div
+        class="
+          navbar navbar-light
+          bg-light
+          active-cont
+          align-self-center
+          justify-content-center
+          fixed-bottom
+          content
+        "
+      >
+        <ul class="pagination pagination-sm mt-2">
+          <li
+            class="page-item"
+            v-for="(item, index) in numChangeTable"
+            :key="index"
+          >
+            <a
+              class="page-link"
+              v-on:click="() => onclickpage(item.start, item.stop)"
+              >{{ item.i }}</a
+            >
+          </li>
+        </ul>
+      </div>
+      <!-- fillter -->
     </div>
   </div>
 </template>
@@ -571,36 +571,11 @@ export default {
 </script>
 
 <style scoped>
-.active-cont {
-  margin-left: 180px;
-}
-.side-right-navbar {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-.active-nav {
-  margin: 0;
-}
 .fillter-link:active,
 .fillter-link:focus {
   background-color: #b6906490;
 }
 li {
   list-style-type: none;
-}
-.form-control-edit {
-  padding: 0;
-}
-
-@media screen and (max-width: 1400px) {
-  .smallfil {
-    font-size: 12px;
-    width: auto;
-    height: auto;
-  }
-  .form-control-edit {
-    font-size: 12px;
-  }
 }
 </style>
