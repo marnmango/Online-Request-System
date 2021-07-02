@@ -25,7 +25,7 @@
       <!-- table -->
       <div class="content p-0 row g-0 mb-5">
         <div class="col-md-10 col-sm-12">
-          <table class="table table-hover mb-0 mb-3">
+          <table class="table table-hover mb-3">
             <thead class="text-center">
               <tr>
                 <th scope="col">
