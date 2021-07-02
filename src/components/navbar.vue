@@ -1,35 +1,25 @@
 <template>
-  <nav>
-    <div
-      class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column"
-      id="sidebar"
-    >
-      <ul class="nav flex-column text-white w-100">
-        <a href="#" class="my-4 h3 text-white my-2">
-          <img class="logosize d-block mb-2" src="@/assets/logomfu.png" />
-          <div style="text-align: center">
-            <p class="fontlogo mb-0">MAE FAH LUANG UNIVERSITY</p>
-            <p class="fontlogo mt-0">มหาวิทยาลัยแม่ฟ้าหลวง</p>
-          </div>
-        </a>
-        <li href="#" class="nav-link">
-          <span class="mx-2">New Requests</span>
-        </li>
-        <li href="#" class="nav-link">
-          <span class="mx-2">On Process</span>
-        </li>
-        <li href="#" class="nav-link">
-          <span class="mx-2">Approve</span>
-        </li>
-        <li href="#" class="nav-link">
-          <span class="mx-2">Disapprove</span>
-        </li>
-        <li href="#" class="nav-link">
-          <span class="mx-2">Payment</span>
-        </li>
-      </ul>
+  <div>
+    <div class="sidebar">
+      <li class="active cursorDe">
+        <img class="logosize mb-2" src="@/assets/logomfu.png" />
+        <div style="text-align: center">
+          <p class="logotext mb-0" style="font-size: 12px">
+            MAE FAH LUANG UNIVERSITY
+          </p>
+          <p class="logotext mt-0" style="font-size: 14px">
+            มหาวิทยาลัยแม่ฟ้าหลวง
+          </p>
+        </div>
+      </li>
+      <div class="tab">
+        <li class="mt-0 cursorDe" href="#">New Requests</li>
+        <li class="cursorDe" href="#">Approved</li>
+        <li class="cursorDe" href="#">Disapproved</li>
+        <li class="cursorDe" href="#">Payment</li>
+      </div>
     </div>
-  </nav>
+  </div>
 </template>
 
 <script>
@@ -37,40 +27,92 @@ export default {};
 </script>
 
 <style>
-.side-navbar {
-  width: 180px;
-  height: 100%;
-  position: fixed;
-  margin-left: -300px;
-  background-color: #732f27;
-  transition: 0.5s;
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
 }
-
-.nav-link:active,
-.nav-link:focus,
-.nav-link:hover {
-  background-color: #b6906490;
+.logotext {
+  display: block;
 }
-
-.active-nav {
-  margin-left: 0;
-}
-
 .logosize {
   width: auto;
   height: 110px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  display: block;
+}
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #732f27;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
 }
 
-.fontlogo {
-  font-size: 10px;
+.sidebar li {
+  display: block;
+  color: white;
+  padding: 16px;
+  text-decoration: none;
 }
 
-li,
-a {
-  text-decoration: none !important;
+.sidebar {
+  background-color: #732f27;
+  color: white;
+}
+li.active {
+  margin-top: 20px;
+  background-color: #732f27;
+  color: white;
+  padding-bottom: 0;
+}
+.sidebar li:hover:not(.active) {
+  background-color: #b6906490;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+}
+
+.cursorDe {
   cursor: default;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar li {
+    float: none;
+    display: inline-block;
+  }
+  div.tab {
+    text-align: center;
+  }
+  div.content {
+    margin-left: 0;
+  }
+  .fontlogo {
+    font-size: 18px;
+  }
+  li.active {
+    margin-top: 0;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar li {
+    text-align: center;
+    /* float: none; */
+    display: block;
+  }
 }
 </style>

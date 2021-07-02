@@ -12,12 +12,11 @@
         rows="5"
       ></textarea>
       <div class="text-center mt-3">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <div class="d-grid gap-2">
           <button
             type="button"
             id="can"
             class="btn btn-outline-secondary"
-            style="width: 250px; width: 300px"
             v-on:click="onCancel"
           >
             Request more new documents

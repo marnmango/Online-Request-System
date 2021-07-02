@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class="mb-3">
     <Navbar />
-    <div class="p-1 active-cont" style="text-align: center">
+    <div class="p-1 content" style="text-align: center">
       <div class="mx-4">
         <div class="my-4">
           <h4>REGISTRAR DIVISION, MAE FAH LUANG UNIVERSITY</h4>
           <h4>Request Form for Re-entering Student</h4>
         </div>
         <!-- เดี๋ยวมาเพิ่ม -->
-        <div class="container">
-          <ul class="progressbar">
+        <div>
+          <ul class="progressbar px-0">
             <li id="1">Student</li>
             <li id="2">Advisor</li>
             <li id="3">Dean</li>
@@ -17,8 +17,8 @@
           </ul>
         </div>
         <!-- เดี๋ยวมาเพิ่ม -->
-        <div class="row gy-3 mx-5">
-          <div class="col-6">
+        <div class="row gy-3 mb-3">
+          <div class="col-md-6 col-sm-12">
             <div class="p-3 border bg-light shadow-sm h-100">
               <template v-if="childDataLoaded">
                 <InformationForm
@@ -28,7 +28,7 @@
               </template>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-md-6 col-sm-12">
             <div class="p-3 border bg-light h-100 shadow-sm">
               <template v-if="childDataLoaded && formInfo.progress_status == 1">
                 <RequestForm
@@ -42,15 +42,15 @@
               </template>
             </div>
           </div>
-          <div class="col">
-            <div class="p-3 border bg-light shadow-sm mb-3">
+          <div class="col-md-12 col-sm-12">
+            <div class="p-3 border bg-light shadow-sm h-100">
               <div class="row g-2">
-                <div class="col-8 m-0">
+                <div class="col-md-8 col-sm-12 m-0">
                   <template v-if="childDataLoaded">
                     <CommentForm :formInfo="formInfo" />
                   </template>
                 </div>
-                <div class="col-4 align-self-center">
+                <div class="col-md-4 col-sm-12 align-self-center m-0">
                   <template v-if="childDataLoaded">
                     <CommentStaff
                       :staffcomment="formInfo.staff_comment"
@@ -207,13 +207,6 @@ export default {
 </script>
 
 <style scoped>
-.active-cont {
-  margin-left: 180px;
-}
-.container {
-  width: 100%;
-}
-
 .progressbar li {
   list-style: none;
   display: inline-block;
@@ -221,6 +214,8 @@ export default {
   position: relative;
   text-align: center;
   cursor: pointer;
+  background-color: transparent;
+  color: black;
 }
 .progressbar li:before {
   content: "";
@@ -258,5 +253,10 @@ export default {
 li.wait:before {
   border-color: #ffc107;
   background-color: #ffc107;
+}
+@media screen and (max-width: 400px) {
+  .progressbar li {
+    width: 25%;
+  }
 }
 </style>

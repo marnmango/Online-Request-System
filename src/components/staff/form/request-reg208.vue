@@ -5,7 +5,7 @@
     <!-- select semeter -->
     <form>
       <div class="row mb-1 g-3">
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="fromSemeter" class="form-label mb-0">From Semeter</label>
           <select
             class="form-select"
@@ -19,7 +19,7 @@
             </option>
           </select>
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="fromAcademic" class="form-label mb-0"
             >Academic Year</label
           >
@@ -38,7 +38,7 @@
             </option>
           </select>
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="fromSemeter" class="form-label mb-0">To Semeter</label>
           <select
             class="form-select"
@@ -52,7 +52,7 @@
             </option>
           </select>
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 col-lg-6">
           <label for="toAcademic" class="form-label mb-0">Academic Year</label>
           <select
             class="form-select"
@@ -145,21 +145,21 @@ export default {
     getRequesttext() {
       console.log(this.formInfo);
       if (this.formInfo) {
-         this.selectsemes_from = this.formInfo.request_from_semester;
+        this.selectsemes_from = this.formInfo.request_from_semester;
         this.selectsemes_to = this.formInfo.request_to_semester;
         this.selectyear_from = this.formInfo.request_from_academicyear;
         this.selectyear_to = this.formInfo.request_to_academicyear;
         this.re_text = this.formInfo.request_text;
         this.request_radio_1 = this.formInfo.reason_radio1;
         this.request_radio_2 = this.formInfo.reason_radio2;
-        this.selectyear_from=parseInt(this.selectyear_from)
-          let minyear = this.selectyear_from
-          let maxyear = minyear + 1
-          let arrayYear =[]
-      for(var i = minyear; i <= maxyear; i++) {
-        arrayYear.push(i)
-      }
-      this.request_to_academicyear=arrayYear
+        this.selectyear_from = parseInt(this.selectyear_from);
+        let minyear = this.selectyear_from;
+        let maxyear = minyear + 1;
+        let arrayYear = [];
+        for (var i = minyear; i <= maxyear; i++) {
+          arrayYear.push(i);
+        }
+        this.request_to_academicyear = arrayYear;
       }
     },
     checkedRadio() {
@@ -168,13 +168,14 @@ export default {
       } else if (this.request_radio_2 == 1) {
         document.getElementById("request_radio_2").checked = true;
       }
-    },genYear() {
-      var minyear = this.selectyear_from
-      var maxyear = minyear + 3
-      for(var i = minyear; i <= maxyear; i++) {
-        this.request_from_academicyear.push(i)
+    },
+    genYear() {
+      var minyear = this.selectyear_from;
+      var maxyear = minyear + 3;
+      for (var i = minyear; i <= maxyear; i++) {
+        this.request_from_academicyear.push(i);
       }
-    }
+    },
   },
   mounted() {
     this.getRequesttext();

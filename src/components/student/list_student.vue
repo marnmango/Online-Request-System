@@ -71,7 +71,7 @@
           </table>
         </div>
         <div class="col-md-2 col-sm-12">
-          <div class="bg-light p-3 h-100">
+          <div class="bg-light p-3 h-100 position-fixed">
             <h4>Filter</h4>
             <div>
               <div class="form-check">

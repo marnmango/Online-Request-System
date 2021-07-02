@@ -7,7 +7,7 @@
           Select to set the payment
         </p>
         <div class="row mx-1">
-          <div class="col-md-5 ms-0 align-self-center">
+          <div class="col-md-5 col-sm-12 ms-0 align-self-center">
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -22,7 +22,7 @@
               </label>
             </div>
           </div>
-          <div class="col-md-3 me-0 align-self-center">
+          <div class="col-md-3 col-sm-12 me-0 align-self-center">
             <div class="form-check">
               <input
                 class="form-check-input"

@@ -1,5 +1,5 @@
 <template>
-  <div style="text-align: left">
+  <div class="text-start">
     <h4>Personal Information</h4>
     <div class="mb-1">
       <label for="deanof" class="form-label m-0 mt-2"
@@ -7,7 +7,7 @@
       >
       <input
         type="text"
-        class="form-control w-50"
+        class="form-control"
         id="deanof"
         v-model="info.student_school"
         disabled
@@ -78,7 +78,7 @@
           disabled
         />
       </div>
-      <div class="mb-1 col">
+      <div class="mb-1 col-md-6 col-sm-12">
         <label for="phoneNumber" class="form-label m-0 mt-2"
           >Phone number</label
         >

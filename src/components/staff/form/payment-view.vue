@@ -34,7 +34,6 @@
         <button
           type="button"
           class="btn btn-outline-secondary mx-1"
-          style="width: 300px"
           v-on:click="onDisapprove"
         >
           Request new payment image
