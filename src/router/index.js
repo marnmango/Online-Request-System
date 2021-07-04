@@ -136,7 +136,7 @@ const routes = [{
         component: Reg206Staff,
         meta: {
             requiresAuth: true,
-            is_student: true
+            is_staff: true
         }
     },
     {
