@@ -9,7 +9,10 @@
           </div>
           <div class="row gy-2">
             <div class="col-12 col-md-6 col-sm-12">
-              <div class="p-3 border bg-light h-100">
+              <div
+                class="p-3 border bg-light h-100"
+                @click="$router.push('/reg206_student')"
+              >
                 <h6>
                   Request Form for Register More/Less Credits than those
                   Stipulated

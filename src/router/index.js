@@ -20,6 +20,11 @@ import ViewReg209 from '../components/student/view/reg209-view.vue'
 import ViewReg208 from '../components/student/view/reg208-view.vue'
 import login from '../components/login.vue'
 import DatePicker from '../components/config.vue'
+import Reg206Student from '../components/student/reg206-student.vue'
+import ViewReg206 from '../components/student/view/reg206-view.vue'
+import Reg206Staff from '../components/staff/reg206-staff.vue'
+import Reg206Dean from '../components/dean/reg206-dean.vue'
+import Reg206Advisor from '../components/advisor/reg206-advisor.vue'
 
 Vue.use(VueRouter)
 
@@ -52,6 +57,15 @@ const routes = [{
             name: "NewRequest"
         },
 
+    },
+    {
+        path: '/reg206_student',
+        name: 'Reg206Student',
+        component: Reg206Student,
+        meta: {
+            requiresAuth: true,
+            is_student: true
+        }
     },
     {
         path: '/reg209_student',
@@ -90,6 +104,15 @@ const routes = [{
         }
     },
     {
+        path: '/reg206_view/:id',
+        name: 'ViewReg206',
+        component: ViewReg206,
+        meta: {
+            requiresAuth: true,
+            is_student: true
+        }
+    },
+    {
         path: '/reg209_staff/:id',
         name: 'Reg209Staff',
         component: Reg209Staff,
@@ -105,6 +128,15 @@ const routes = [{
         meta: {
             requiresAuth: true,
             is_staff: true
+        }
+    },
+    {
+        path: '/reg206_staff/:id',
+        name: 'Reg206Staff',
+        component: Reg206Staff,
+        meta: {
+            requiresAuth: true,
+            is_student: true
         }
     },
     {
@@ -131,6 +163,15 @@ const routes = [{
         }
     },
     {
+        path: '/reg206_advisor/:id',
+        name: 'Reg206Advisor',
+        component: Reg206Advisor,
+        meta: {
+            requiresAuth: true,
+            is_advisor: true
+        }
+    },
+    {
         path: '/reg209_dean/:id',
         name: 'Reg209Dean',
         component: Reg209Dean,
@@ -143,6 +184,15 @@ const routes = [{
         path: '/reg208_dean/:id',
         name: 'Reg208Dean',
         component: Reg208Dean,
+        meta: {
+            requiresAuth: true,
+            is_dean: true
+        }
+    },
+    {
+        path: '/reg206_dean/:id',
+        name: 'Reg206Dean',
+        component: Reg206Dean,
         meta: {
             requiresAuth: true,
             is_dean: true
