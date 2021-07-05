@@ -91,6 +91,7 @@
           class="form-control"
           id="phoneNumber"
           @change="sendphone"
+          disabled
         />
       </div>
     </div>

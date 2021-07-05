@@ -26,6 +26,11 @@
                 <TableCouse />
               </div>
             </div>
+            <div class="col-xxl-12 col-md-12 col-sm-12 col-xl-12">
+              <div class="p-3 border bg-light h-100">
+                <Comment />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -38,12 +43,14 @@ import Navbar from "../navbar.vue";
 import InformationForm from "./form/information.vue";
 import RequestForm from "./form/request-reg206.vue";
 import TableCouse from "./form/tablecourse.vue";
+import Comment from "./form/comment.vue";
 export default {
   components: {
     Navbar,
     InformationForm,
     RequestForm,
     TableCouse,
+    Comment,
   },
 };
 </script>
