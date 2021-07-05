@@ -309,7 +309,8 @@ export default {
   },
   created() {
     this.id = this.$route.params.id;
-    this.staff_id = this.$route.params.staff_id;
+    this.staff_id = JSON.parse(sessionStorage.getItem("user")).user_id;
+    console.log(this.staff_id);
     if (this.$route.query.debug) {
       this.debug = this.$route.query.debug;
     }

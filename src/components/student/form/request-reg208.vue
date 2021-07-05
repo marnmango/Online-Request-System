@@ -93,6 +93,32 @@
               name="request_radio"
               id="request_radio_1"
               v-bind:checked="request_radio_1"
+              v-on:click="disableMilliRadio"
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Military Service
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_2"
+              v-bind:checked="request_radio_2"
+              v-on:click="disableExRadio"
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Exchange Program
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_3"
+              v-bind:checked="request_radio_3"
               v-on:click="disableIllnessRadio"
             />
             <label class="form-check-label" for="request_readio_1">
@@ -104,12 +130,12 @@
               class="form-check-input"
               type="radio"
               name="request_radio"
-              id="request_radio_2"
-              v-bind:checked="request_radio_2"
+              id="request_radio_4"
+              v-bind:checked="request_radio_4"
               v-on:click="disableOtherRadio"
             />
             <label class="form-check-label" for="request_checkbox_2">
-              Other reason ( indicate )
+              Other reason ( please provide the information )
             </label>
           </div>
         </div>
@@ -209,6 +235,8 @@ export default {
       request_to_academicyear: [],
       request_radio_1: false,
       request_radio_2: false,
+      request_radio_3: false,
+      request_radio_4: false,
       files: [],
       re_doc: [],
       selectsemes_from: "",
@@ -242,8 +270,7 @@ export default {
         let from_academic = this.selectyear_from;
         let to_semester = this.selectsemes_to;
         let to_academic = this.selectyear_to;
-        let radio_1 = this.request_radio_1;
-        let radio_2 = this.request_radio_2;
+        let radio_list = [this.request_radio_1,this.request_radio_2,this.request_radio_3,this.request_radio_4];
         let re_doc = [];
         for (let x in this.files) {
           // this.getBase64(this.files[x]);
@@ -256,8 +283,7 @@ export default {
           from_academic,
           to_semester,
           to_academic,
-          radio_1,
-          radio_2,
+          radio_list,
           re_doc,
           re_text,
           restict: this.restict,
@@ -288,10 +314,16 @@ export default {
       }
     },
     disableOtherRadio: function () {
-      (this.request_radio_1 = false), (this.request_radio_2 = true);
+      (this.request_radio_1 = false),  (this.request_radio_2 = false), (this.request_radio_3 = false),(this.request_radio_4 = true);
     },
     disableIllnessRadio: function () {
-      (this.request_radio_1 = true), (this.request_radio_2 = false);
+     (this.request_radio_1 = false),  (this.request_radio_2 = false), (this.request_radio_3 = true), (this.request_radio_4 = false);
+    },
+    disableExRadio: function () {
+      (this.request_radio_1 = false), (this.request_radio_2 = true), (this.request_radio_3 = false), (this.request_radio_4 = false);
+    },
+    disableMilliRadio: function () {
+      (this.request_radio_1 = true), (this.request_radio_2 = false), (this.request_radio_3 = false), (this.request_radio_4 = false);
     },
     handleFilesUpload() {
       let uploadedFiles = this.$refs.files.files;

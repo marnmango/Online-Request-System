@@ -76,31 +76,57 @@
         <label for="name" class="form-label mb-0 mt-3"
           >Reasons for on leave</label
         >
-        <div class="row mx-4 my-2">
-          <div class="form-check col col-lg-6 col-md-6">
+        <div class="row ms-4 my-2">
+          <div class="form-check col-md-6 col-sm-12">
             <input
               class="form-check-input"
               type="radio"
               name="request_radio"
               id="request_radio_1"
-              v-bind:checked="request_radio_1"
+              v-bind:checked="radio_list[0]"
+              disabled
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Military Service
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_2"
+              v-bind:checked="radio_list[1]"
+              disabled
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Exchange Program
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_3"
+              v-bind:checked="radio_list[2]"
               disabled
             />
             <label class="form-check-label" for="request_readio_1">
               Illness with a document and the name of a medical provider
             </label>
           </div>
-          <div class="form-check col col-lg-6 col-md-6">
+          <div class="form-check col-md-6 col-sm-12">
             <input
               class="form-check-input"
               type="radio"
               name="request_radio"
-              id="request_radio_2"
-              v-bind:checked="request_radio_2"
+              id="request_radio_4"
+              v-bind:checked="radio_list[3]"
               disabled
             />
             <label class="form-check-label" for="request_checkbox_2">
-              Other reason ( indicate )
+              Other reason ( please provide the information )
             </label>
           </div>
         </div>
@@ -133,8 +159,7 @@ export default {
       request_to_semeter: ["first", "second"],
       request_from_academicyear: [],
       request_to_academicyear: [],
-      request_radio_1: false,
-      request_radio_2: false,
+      radio_list:[false,false,false,false],
       selectsemes_from: "",
       selectsemes_to: "",
       selectyear_from: "",
@@ -150,8 +175,7 @@ export default {
         this.selectyear_from = this.formInfo.request_from_academicyear;
         this.selectyear_to = this.formInfo.request_to_academicyear;
         this.re_text = this.formInfo.request_text;
-        this.request_radio_1 = this.formInfo.reason_radio1;
-        this.request_radio_2 = this.formInfo.reason_radio2;
+        this.radio_list = JSON.parse(this.formInfo.reason_list)
         this.selectyear_from = parseInt(this.selectyear_from);
         let minyear = this.selectyear_from;
         let maxyear = minyear + 1;
@@ -160,13 +184,6 @@ export default {
           arrayYear.push(i);
         }
         this.request_to_academicyear = arrayYear;
-      }
-    },
-    checkedRadio() {
-      if (this.request_radio_1 == 1) {
-        document.getElementById("request_radio_1").checked = true;
-      } else if (this.request_radio_2 == 1) {
-        document.getElementById("request_radio_2").checked = true;
       }
     },
     genYear() {
@@ -179,7 +196,6 @@ export default {
   },
   mounted() {
     this.getRequesttext();
-    this.checkedRadio();
     this.genYear();
   },
 };

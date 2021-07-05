@@ -77,13 +77,41 @@
           >Reasons for on leave</label
         >
         <div class="row ms-4 my-2">
-          <div class="form-check col-sm-12 col-md-6">
+          <div class="form-check col-md-6 col-sm-12">
             <input
               class="form-check-input"
               type="radio"
               name="request_radio"
               id="request_radio_1"
-              v-bind:checked="request_radio_1"
+              v-bind:checked="radio_list[0]"
+              v-on:click="disableMilliRadio"
+              disabled
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Military Service
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_2"
+              v-bind:checked="radio_list[1]"
+              v-on:click="disableExRadio"
+              disabled
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Exchange Program
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_3"
+              v-bind:checked="radio_list[2]"
               v-on:click="disableIllnessRadio"
               disabled
             />
@@ -91,18 +119,18 @@
               Illness with a document and the name of a medical provider
             </label>
           </div>
-          <div class="form-check col col-sm-12 col-md-6">
+          <div class="form-check col-md-6 col-sm-12">
             <input
               class="form-check-input"
               type="radio"
               name="request_radio"
-              id="request_radio_2"
-              v-bind:checked="request_radio_2"
+              id="request_radio_4"
+              v-bind:checked="radio_list[3]"
               v-on:click="disableOtherRadio"
               disabled
             />
             <label class="form-check-label" for="request_checkbox_2">
-              Other reason ( indicate )
+              Other reason ( please provide the information )
             </label>
           </div>
         </div>
@@ -193,8 +221,7 @@ export default {
       request_to_semeter: ["first", "second"],
       request_from_academicyear: [],
       request_to_academicyear: [],
-      request_radio_1: false,
-      request_radio_2: false,
+      radio_list:[false,false,false,false],
       files: [],
       re_doc: [],
       selectsemes_from: "",
@@ -216,8 +243,7 @@ export default {
         this.selectyear_from = this.formInfo.request_from_academicyear;
         this.selectyear_to = this.formInfo.request_to_academicyear;
         this.re_text = this.formInfo.request_text;
-        this.request_radio_1 = this.formInfo.reason_radio1;
-        this.request_radio_2 = this.formInfo.reason_radio2;
+        this.radio_list= JSON.parse(this.formInfo.reason_list);
         this.selectyear_from = parseInt(this.selectyear_from);
         let minyear = this.selectyear_from;
         let maxyear = minyear + 1;
@@ -229,16 +255,22 @@ export default {
         if (this.formInfo.alterform) {
           document.getElementById("request_radio_1").disabled = false;
           document.getElementById("request_radio_2").disabled = false;
+          document.getElementById("request_radio_3").disabled = false;
+          document.getElementById("request_radio_4").disabled = false;
           document.getElementById("Other").disabled = false;
         }
       }
     },
     checkedRadio() {
-      if (this.request_radio_1 == 1) {
+      if (this.radio_list[0] == 1) {
         document.getElementById("request_radio_1").checked = true;
-      } else if (this.request_radio_2 == 1) {
+      } else if (this.radio_list[1] == 1) {
         document.getElementById("request_radio_2").checked = true;
-      }
+      } else if (this.radio_list[2] == 1) {
+        document.getElementById("request_radio_3").checked = true;
+      } else if (this.radio_list[3] == 1) {
+        document.getElementById("request_radio_4").checked = true;
+      } 
     },
     onFix: async function () {
       //  this.submitFiles()
@@ -254,8 +286,7 @@ export default {
         let from_academic = this.selectyear_from;
         let to_semester = this.selectsemes_to;
         let to_academic = this.selectyear_to;
-        let radio_1 = this.request_radio_1;
-        let radio_2 = this.request_radio_2;
+        let radio_list = this.radio_list
         let re_doc = this.re_doc;
         for (let x in this.files) {
           // this.getBase64(this.files[x]);
@@ -268,8 +299,7 @@ export default {
           from_academic,
           to_semester,
           to_academic,
-          radio_1,
-          radio_2,
+          radio_list,
           re_doc,
           re_text,
           restict: this.restict,
@@ -298,10 +328,16 @@ export default {
       }
     },
     disableOtherRadio: function () {
-      (this.request_radio_1 = false), (this.request_radio_2 = true);
+      (this.radio_list[0] = false), (this.radio_list[1] = false), (this.radio_list[2] = false), (this.radio_list[3] = true);
     },
     disableIllnessRadio: function () {
-      (this.request_radio_1 = true), (this.request_radio_2 = false);
+      (this.radio_list[0] = false), (this.radio_list[1] = false), (this.radio_list[2] = true), (this.radio_list[3]= false);
+    },
+    disableExRadio: function () {
+      (this.radio_list[0] = false), (this.radio_list[1] = true), (this.radio_list[2]= false), (this.radio_list[3] = false);
+    },
+    disableMilliRadio: function () {
+      (this.radio_list[0] = true), (this.radio_list[1] = false), (this.radio_list[2] = false), (this.radio_list[3] = false);
     },
     handleFilesUpload() {
       let uploadedFiles = this.$refs.files.files;

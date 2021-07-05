@@ -47,8 +47,7 @@ export default {
       from_academic: "",
       to_semester: "",
       to_academic: "",
-      radio_1: "",
-      radio_2: "",
+      radio_list:[],
       re_text: "",
       re_doc: "",
       studentid: "",
@@ -84,8 +83,7 @@ export default {
       const from_academic = this.from_academic;
       const to_semester = this.to_semester;
       const to_academic = this.to_academic;
-      const radio_1 = this.radio_1;
-      const radio_2 = this.radio_2;
+      const radio_list = this.radio_list;
       const re_text = this.re_text;
       const re_doc = this.re_doc;
       const { student_id, student_advisor_id, student_school, student_name } =
@@ -101,8 +99,7 @@ export default {
         from_academic,
         to_semester,
         to_academic,
-        radio_1,
-        radio_2,
+        radio_list,
         re_text,
         re_doc,
         current_semester: this.current_semester,
@@ -137,8 +134,7 @@ export default {
         this.from_academic = value.from_academic;
         this.to_semester = value.to_semester;
         this.to_academic = value.to_academic;
-        this.radio_1 = value.radio_1;
-        this.radio_2 = value.radio_2;
+        this.radio_list = value.radio_list;
         this.re_text = value.re_text;
         this.re_doc = value.re_doc;
         this.restict = value.restict;
