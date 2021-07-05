@@ -26,6 +26,11 @@
                 <TableCourse />
               </div>
             </div>
+            <div class="col-xxl-12 col-md-12 col-sm-12 col-xl-12">
+              <div class="p-3 border bg-light h-100">
+                <Comment206 />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -38,12 +43,14 @@ import Navbar from "../navStudent.vue";
 import InformationForm from "./form-view/information.vue";
 import RequestForm from "./form-view/request-reg206.vue";
 import TableCourse from "./form-view/tablecourse.vue";
+import Comment206 from "./form-view/comment-reg206.vue";
 export default {
   components: {
     Navbar,
     InformationForm,
     RequestForm,
     TableCourse,
+    Comment206,
   },
 };
 </script>
