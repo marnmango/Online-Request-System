@@ -39,6 +39,8 @@
                   type="text"
                   name=""
                   id=""
+                  @change="getCourse"
+                  v-model="searchbox"
                   placeholder="Search"
                 />
               </div>
@@ -139,19 +141,31 @@
         />
       </div>
     </div>
+    <button
+        type="button"
+        class="btn btn-success"
+        id="submit"
+        v-on:click="onConfirm"
+      >
+        Submit
+      </button>
   </div>
 </template>
 
 <script>
+import pathapi from "../../../pathapi.js";
+import axios from "axios";
 export default {
   data() {
     return {
-      subject: [
-        { courseCode: "1305393", title: "a", credits: 3 },
-        { courseCode: "1305123", title: "b", credits: 3 },
-      ],
+      subject: [],
+      // subject: [
+      //   { courseCode: "1305393", title: "a", credits: 3 },
+      //   { courseCode: "1305123", title: "b", credits: 3 },
+      // ],
       datatable: [],
       totalCredits: 0,
+      searchbox:""
     };
   },
   methods: {
@@ -159,6 +173,12 @@ export default {
       let courseCode = code;
       let titles = title;
       let credit = credits;
+      for(let i in this.datatable){
+        if(courseCode==this.datatable[i].courseCode){
+          alert("You already selected this subject")
+          return ;
+        }
+      }
       this.datatable.push({ courseCode, titles, credit });
       this.totalCredits = this.totalCredits + credits;
 
@@ -175,6 +195,20 @@ export default {
       this.totalCredits = this.totalCredits - this.datatable[index].credit;
       this.datatable.splice(index, 1);
     },
+    getCourse(){
+      const path = pathapi + "/getsubject?code="+this.searchbox ;
+      console.log(path)
+       axios.get(path).then(
+          (res)=>{
+            this.subject = res.data
+          }
+        )
+        .catch(() => {
+          this.subject = []
+        })
+    },onConfirm(){
+      this.$emit("onConfirm", { datatable:this.datatable })
+    }
   },
 };
 </script>
