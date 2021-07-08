@@ -7,7 +7,7 @@
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"
-          v-model="advisorcomment"
+          v-model="advisor_comment"
           rows="5"
           readonly
         ></textarea>
@@ -17,7 +17,7 @@
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"
-          v-model="deancomment"
+          v-model="dean_comment"
           rows="5"
           readonly
         ></textarea>
@@ -27,7 +27,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props:{
+    advisor_comment:String,
+    dean_comment:String
+  }
+};
 </script>
 
 <style>

@@ -43,7 +43,7 @@
             <div class="col-xxl-12 col-md-12 col-sm-12 col-xl-12">
               <div class="p-3 border bg-light h-100">
                 <template v-if="childDataLoaded">
-                <Comment206 />
+                <Comment206 :advisor_comment="formInfo.advisor_comment" :dean_comment="formInfo.dean_comment"/>
                 </template>
               </div>
             </div>
