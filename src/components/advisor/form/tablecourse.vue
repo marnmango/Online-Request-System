@@ -16,8 +16,8 @@
         <tbody v-for="item in datatable" :key="item">
           <tr class="align-middle">
             <td>{{ item.courseCode }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.credits }}</td>
+            <td>{{ item.titles }}</td>
+            <td>{{ item.credit }}</td>
           </tr>
         </tbody>
       </table>
@@ -41,15 +41,20 @@
 
 <script>
 export default {
+  props:{
+    datatable:Array
+  },
   data() {
     return {
-      datatable: [
-        { courseCode: "1305393", title: "a", credits: 3 },
-        { courseCode: "1305123", title: "b", credits: 3 },
-      ],
       totalCredits: 0,
     };
   },
+  mounted(){
+    console.log(this.datatable)
+    for(let i in this.datatable){
+      this.totalCredits+=this.datatable[i].credit
+    }
+  }
 };
 </script>
 

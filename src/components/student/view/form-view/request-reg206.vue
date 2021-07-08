@@ -130,34 +130,7 @@ export default {
       selectyear:Number,
       reason_list:Array,
       recredit_list:Array
-  },
-  data() {
-    return {
-    
-    };
-  },
-   mounted() {
-    this.getRequesttext();
-    // this.checkedRadio();
-    
-  },
-  methods:{
-    getRequesttext() {
-       
-     
-        
-      },checkedRadio() {
-      if (this.radio_list[0] == 1) {
-        document.getElementById("request_radio_1").checked = true;
-      } else if (this.radio_list[1] == 1) {
-        document.getElementById("request_radio_2").checked = true;
-      } else if (this.radio_list[2] == 1) {
-        document.getElementById("request_radio_3").checked = true;
-      } else if (this.radio_list[3] == 1) {
-        document.getElementById("request_radio_4").checked = true;
-      } 
-    }
-    },
+  }
   }
 </script>
 
