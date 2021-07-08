@@ -9,7 +9,7 @@
           <input
             class="form-control"
             id="semeterselect"
-            v-model="semeter"
+            v-model="selectsemes"
             disabled
           />
         </div>
@@ -20,7 +20,7 @@
           <input
             class="form-control"
             id="academicselect"
-            v-model="year"
+            v-model="selectyear"
             disabled
           />
         </div>
@@ -29,49 +29,85 @@
         <div class="p-3">
           <p class="mb-2">Reason of request</p>
           <div class="ms-3">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="reason"
-                disabled
-              />
-              <label class="form-check-label" for="flexRadioDefault1">
-                Reason 1
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="reason"
-                disabled
-              />
-              <label class="form-check-label" for="flexRadioDefault2">
-                Reason 2
-              </label>
-            </div>
+            <div class="row ms-4 my-2">
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_1"
+              v-bind:checked="reason_list[0]"
+              disabled
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Military Service
+            </label>
           </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_2"
+              v-bind:checked="reason_list[1]"
+              disabled
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Exchange Program
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_3"
+              v-bind:checked="reason_list[2]"
+              disabled
+            />
+            <label class="form-check-label" for="request_readio_1">
+              Illness with a document and the name of a medical provider
+            </label>
+          </div>
+          <div class="form-check col-md-6 col-sm-12">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="request_radio"
+              id="request_radio_4"
+              v-bind:checked="reason_list[3]"
+              disabled
+            />
+            <label class="form-check-label" for="request_checkbox_2">
+              Other reason ( please provide the information )
+            </label>
+          </div>
+        </div>
+        </div>
           <p class="mt-3 mb-2">The total credits register</p>
           <div class="ms-3 row">
             <div class="form-check col-md-4">
               <input
-                class="form-check-input"
-                type="radio"
-                name="reason"
-                disabled
-              />
+              class="form-check-input"
+              type="radio"
+              name="wanted_radio"
+              id="wanted_radio1"
+              v-bind:checked="recredit_list[0]"
+              disabled
+            />
               <label class="form-check-label" for="flexRadioDefault1">
                 Less than 9 credits
               </label>
             </div>
             <div class="form-check col-md-4">
               <input
-                class="form-check-input"
-                type="radio"
-                name="reason"
-                disabled
-              />
+              class="form-check-input"
+              type="radio"
+              name="wanted_radio"
+              id="wanted_radio1"
+              v-bind:checked="recredit_list[1]"
+              disabled
+            />
               <label class="form-check-label" for="flexRadioDefault2">
                 More than 21 credits
               </label>
@@ -89,13 +125,13 @@
 
 <script>
 export default {
-  data() {
-    return {
-      semeter: 123,
-      year: 1234,
-    };
+  props:{
+      selectsemes:String,
+      selectyear:Number,
+      reason_list:Array,
+      recredit_list:Array
   },
-};
+  }
 </script>
 
 <style>

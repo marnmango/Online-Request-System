@@ -20,6 +20,11 @@
 				>
 				<textarea class="form-control" v-model="deancomment" rows="3" readonly>
 				</textarea>
+			</div><div class=" col p-3 border bg-white mx-3 shadow-sm">
+				<label for="exampleFormControlTextarea1" class="form-label"
+					>For staff Confirm the form</label
+				>
+				<button class="btn btn-success" id="submit" v-on:click="onSubmit">Submit</button>
 			</div>
 			<div class="text-end ">
 			</div>
@@ -36,6 +41,11 @@ data() {
     return {
       advisorcomment: "",
       deancomment:""    };
+  },
+  methods:{
+      onSubmit(){
+        this.$emit("onSubmit")
+      }
   },mounted(){
     if(this.formInfo.dean_comment!=null||this.formInfo.advisor_comment!=null){
       this.deancomment=this.formInfo.dean_comment

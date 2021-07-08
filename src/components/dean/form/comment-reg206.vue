@@ -7,7 +7,7 @@
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"
-          v-model="advisorcomment"
+          v-model="advisor_comment"
           rows="5"
           readonly
         ></textarea>
@@ -17,7 +17,7 @@
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"
-          v-model="deancomment"
+          v-model="deanComment"
           rows="5"
         ></textarea>
         <div class="modal-footer">
@@ -60,7 +60,55 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      deanComment: "",
+      approve: false,
+      disapprove: false,
+    }
+  },
+  props:{
+    advisor_comment:String
+  },
+  methods: {
+    onCancel: function () {
+      if (this.deanComment.trim() == "") {
+        this.$alert("please enter the comment");
+      } else if (this.deanComment.trim() != "") {
+        document.getElementById("submit").disabled = true;
+        this.$emit("onCancel", this.deanComment);
+      } else {
+        alert("error");
+      }
+    },
+    onSubmit: function () {
+      if (this.deanComment.trim() == "") {
+        this.$alert("please enter the comment");
+      } else if (this.deanComment.trim() != "") {
+        document.getElementById("submit").disabled = true;
+        this.$emit("onSubmit", this.deanComment);
+      } else {
+        alert("error");
+      }
+    },
+    deanchoice() {
+      if (this.approve == true) {
+        this.onSubmit();
+      } else if (this.disapprove == true) {
+        this.onCancel();
+      } else {
+        alert("please select one");
+      }
+    },
+    checkapprove: function () {
+      (this.approve = true), (this.disapprove = false);
+    },
+    checkdisapprove: function () {
+      (this.disapprove = true), (this.approve = false);
+    },
+  },
+};
 </script>
 
 <style>

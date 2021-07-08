@@ -243,6 +243,8 @@ export default {
         address = "Reg209Staff";
       } else if (form_cat == 208) {
         address = "Reg208Staff";
+      }else if (form_cat == 206) {
+        address = "Reg206Staff";
       }
       this.$router.push({ name: address, params: { id: id } });
     },

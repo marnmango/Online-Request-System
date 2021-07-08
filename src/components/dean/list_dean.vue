@@ -61,7 +61,7 @@
                       () =>
                         addSelected(
                           form.form_id,
-                          form.form_aka,
+                          form.form_cat,
                           form.student_id
                         )
                     "
@@ -340,6 +340,8 @@ export default {
         address = "Reg209Dean";
       } else if (form_cat == 208) {
         address = "Reg208Dean";
+      }else if (form_cat == 206) {
+        address = "Reg206Dean";
       }
       this.$router.push({ name: address, params: { id: id } });
     },
