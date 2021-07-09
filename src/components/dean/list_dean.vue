@@ -99,7 +99,7 @@
 
         <!-- fillter -->
         <div class="col-md-2 col-sm-12">
-          <div class="bg-light p-3 h-100 position-fixed">
+          <div class="bg-light p-3 h-100 position-absolute">
             <h4 class="mb-2">Comfirm Request</h4>
             <div class="m-2 justify-content-md-center">
               <button
@@ -340,7 +340,7 @@ export default {
         address = "Reg209Dean";
       } else if (form_cat == 208) {
         address = "Reg208Dean";
-      }else if (form_cat == 206) {
+      } else if (form_cat == 206) {
         address = "Reg206Dean";
       }
       this.$router.push({ name: address, params: { id: id } });
