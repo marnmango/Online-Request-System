@@ -1,3 +1,3 @@
-const pathapi = "http://127.0.0.1:5000"
+const pathapi = "http://selab.mfu.ac.th:8315"
 
 export default pathapi
