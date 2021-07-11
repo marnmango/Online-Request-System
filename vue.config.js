@@ -3,3 +3,4 @@ module.exports = {
       port: 8215,
       host: 'selab.mfu.ac.th',
     }
+}
